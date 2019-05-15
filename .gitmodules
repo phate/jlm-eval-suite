@@ -1,0 +1,6 @@
+[submodule "jlm"]
+	path = jlm
+	url = https://github.com/phate/jlm.git
+[submodule "polybench-jlm"]
+	path = polybench-jlm
+	url = https://github.com/phate/polybench-jlm.git
