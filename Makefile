@@ -44,13 +44,6 @@ include $(LLVMSTRIP_ROOT)/Makefile.sub
 # Silent locale warnings from perl
 export LC_CTYPE=en_US.UTF-8
 
-# Compilation flags
-LDFLAGS += $(shell $(LLVMCONFIG) --libs core irReader) $(shell $(LLVMCONFIG) --ldflags) $(shell $(LLVMCONFIG) --system-libs) -L$(JIVE_ROOT)
-
-OPTFLAGS=`llvm-as < /dev/null | opt -O3 -disable-output -debug-pass=Arguments 2>&1 | awk '{if(NR==2)print}' | sed 's/Pass Arguments: //' | sed 's/-loop-vectorize //' | sed 's/-slp-vectorize //'`
-export OPTCFLAGS := $(OPTFLAGS)
-export JLMFLAGS := --iln --inv --red --dne --ivt --inv --dne --psh --inv --dne --url --inv --red --cne --dne --pll --inv --dne
-
 .PHONY: all
 all: jive jlm llvm-strip
 
