@@ -29,7 +29,7 @@ DIR := .
 BIN := $(DIR)/bin
 JLM_ROOT := $(DIR)/jlm
 JIVE_ROOT := $(JLM_ROOT)/external/jive
-POLYBENCH_ROOT := $(DIR)/polybench-jlm
+POLYBENCH_ROOT := $(DIR)/polybench
 LLVMSTRIP_ROOT := $(POLYBENCH_ROOT)/external/llvm-strip
 
 # Set necessary paths
