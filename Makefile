@@ -103,4 +103,4 @@ clean:
 	@rm -rf $(BIN)
 
 .PHONY: deep-clean
-deep-clean: clean jive-clean jlm-clean polybench-clean-all llvm-strip-clean
+deep-clean: clean jive-clean jlm-clean polybench-purge llvm-strip-clean
