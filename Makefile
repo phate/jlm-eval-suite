@@ -54,7 +54,7 @@ endif
 export LC_CTYPE=en_US.UTF-8
 
 .PHONY: all
-all: jive jlm llvm-strip
+all: jive-release jlm-release llvm-strip
 
 ### SUBMODULE
 
