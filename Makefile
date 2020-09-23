@@ -6,6 +6,8 @@ echo ""
 echo "Evalution Suite Make Targets"
 echo "--------------------------------------------------------------------------------"
 echo "submodule              Initializes all the dependent git submodules"
+echo "install                Installs the source code, require argument"
+echo "                       cpu2017=[name].tar.xz"
 echo "all                    Compiles jive, jlm, and llvm-strip"
 echo "clean                  Deletes the bin directory"
 echo "deep-clean             Calls clean for jive, jlm, and polybench."
@@ -14,9 +16,12 @@ endef
 help:
 	@$(HELP_TEXT)
 	@$(HELP_TEXT_POLYBENCH)
+	@$(HELP_TEXT_CPU2017)
 	@$(HELP_TEXT_JLM)
 	@$(HELP_TEXT_JIVE)
 	@$(HELP_TEXT_LLVMSTRIP)
+
+SHELL=/bin/bash
 
 # Set these if not using default names for the tools
 LLVMCONFIG=llvm-config-7
@@ -25,15 +30,16 @@ OPT=opt-7
 LLC=llc-7
 
 # Necessary variables
-DIR := .
+DIR := $(PWD)
 BIN := $(DIR)/bin
-JLM_ROOT := $(DIR)/jlm
-JIVE_ROOT := $(JLM_ROOT)/external/jive
+JLM_ROOT       := $(DIR)/jlm
+JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
+CPU2017_ROOT   := $(DIR)/cpu2017
 LLVMSTRIP_ROOT := $(POLYBENCH_ROOT)/external/llvm-strip
 
 # Set necessary paths
-export PATH := $(BIN):$(JLM_ROOT)/bin:$(PATH)
+export PATH := $(BIN):$(JLM_ROOT)/bin:$(LLVMSTIP_ROOT)/bin/:$(PATH)
 export JLMROOT := $(JLM_ROOT)
 
 # Include Makefiles for the tools, libraries, and benchmarks to be built
@@ -45,6 +51,9 @@ include $(JLM_ROOT)/Makefile.sub
 endif
 ifneq ("$(wildcard $(POLYBENCH_ROOT)/Makefile.sub)","")
 include $(POLYBENCH_ROOT)/Makefile.sub
+endif
+ifneq ("$(wildcard $(CPU2017_ROOT)/Makefile.sub)","")
+include $(CPU2017_ROOT)/Makefile.sub
 endif
 ifneq ("$(wildcard $(LLVMSTRIP_ROOT)/Makefile.sub)","")
 include $(LLVMSTRIP_ROOT)/Makefile.sub

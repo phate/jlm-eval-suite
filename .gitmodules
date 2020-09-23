@@ -4,3 +4,6 @@
 [submodule "polybench-jlm"]
 	path = polybench
 	url = https://github.com/phate/polybench-jlm.git
+[submodule "cpu2017"]
+	path = cpu2017
+	url = https://github.com/phate/spec-cpu2017-jlm.git
