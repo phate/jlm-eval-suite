@@ -10,7 +10,8 @@ echo "install                Installs the source code, require argument"
 echo "                       cpu2017=[name].tar.xz"
 echo "all                    Compiles jive, jlm, and llvm-strip"
 echo "clean                  Deletes the bin directory"
-echo "deep-clean             Calls clean for jive, jlm, and polybench."
+echo "deep-clean             Calls clean for jive, jlm, polybench, cpu2017, and"
+echo "                       csmith."
 endef
 .PHONY: help
 help:
@@ -20,6 +21,7 @@ help:
 	@$(HELP_TEXT_JLM)
 	@$(HELP_TEXT_JIVE)
 	@$(HELP_TEXT_LLVMSTRIP)
+	@$(HELP_TEXT_CSMITH)
 
 SHELL=/bin/bash
 
@@ -37,6 +39,7 @@ JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
 LLVMSTRIP_ROOT := $(POLYBENCH_ROOT)/external/llvm-strip
+CSMITH_ROOT    := $(DIR)/csmith
 
 # Set necessary paths
 export PATH := $(BIN):$(JLM_ROOT)/bin:$(LLVMSTIP_ROOT)/bin/:$(PATH)
@@ -57,6 +60,9 @@ include $(CPU2017_ROOT)/Makefile.sub
 endif
 ifneq ("$(wildcard $(LLVMSTRIP_ROOT)/Makefile.sub)","")
 include $(LLVMSTRIP_ROOT)/Makefile.sub
+endif
+ifneq ("$(wildcard $(CSMITH_ROOT)/Makefile.sub)","")
+include $(CSMITH_ROOT)/Makefile.sub
 endif
 
 # Silent locale warnings from perl
@@ -112,4 +118,4 @@ clean:
 	@rm -rf $(BIN)
 
 .PHONY: deep-clean
-deep-clean: clean jive-clean jlm-clean polybench-purge llvm-strip-clean
+deep-clean: clean jive-clean jlm-clean polybench-purge llvm-strip-clean csmith-clean

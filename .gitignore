@@ -1,1 +1,3 @@
 bin
+csmith
+test.c.orig
