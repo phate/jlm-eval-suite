@@ -26,10 +26,13 @@ help:
 SHELL=/bin/bash
 
 # Set these if not using default names for the tools
-LLVMCONFIG=llvm-config-7
-CLANG=clang-7
-OPT=opt-7
-LLC=llc-7
+LLVM_VERSION ?= -7
+LLVMCONFIG=llvm-config$(LLVM_VERSION)
+CLANG=clang$(LLVM_VERSION)
+OPT=opt$(LLVM_VERSION)
+LLC=llc$(LLVM_VERSION)
+CC=$(CLANG)
+CXX=clang++$(LLVM_VERSION)
 
 # Necessary variables
 DIR := $(PWD)
