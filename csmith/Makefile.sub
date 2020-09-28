@@ -20,7 +20,21 @@ NCORES ?= 4
 
 ### CSMITH
 
-$(CSMITH_ROOT)/src/csmith:
+CSMITH_BIN = $(CSMITH_ROOT)/src/csmith
+CSMITH_FLAGS = \
+	--no-volatiles \
+	--no-volatile-pointers \
+	--max-array-dim 1 \
+	--max-array-len-per-dim 256 \
+	--max-block-depth 1 \
+	--max-block-size 4 \
+	--max-expr-complexity 1 \
+	--max-funcs 1 \
+	--max-pointer-depth 1 \
+	--max-struct-fields 1 \
+	--max-union-fields 1
+
+$(CSMITH_BIN):
 	$(error "You don't seem to have installed csmith")	
 
 .PHONY: csmith-install
@@ -34,31 +48,34 @@ csmith-install: csmith-purge
 .PHONY: csmith-run-abort
 csmith-run-abort: $(CSMITH_ROOT)/src/csmith
 	set -e;  while [ true ]; do \
-		$(CSMITH_ROOT)/src/csmith > $(CSMITH_ROOT)/test.c; \
+		$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c; \
 		$(JLM_ROOT)/bin/jlc -I${CSMITH_ROOT}/runtime -O $(CSMITH_ROOT)/test.c -o /dev/null; \
 	done
 
 .PHONY: csmith-run
 csmith-run: $(CSMITH_ROOT)/src/csmith
-	set -e;  while [ true ]; do \
-		$(CSMITH_ROOT)/src/csmith > $(CSMITH_ROOT)/test.c; \
+	while [ true ]; do \
+		rm -f $(CSMITH_ROOT)/test.*; \
+		$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c; \
 		$(JLM_ROOT)/bin/jlc -I${CSMITH_ROOT}/runtime -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.jlc; \
 		$(CLANG) -I${CSMITH_ROOT}/runtime -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.clang; \
-		$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output; \
-		$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output; \
+		timeout 2s $(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output; \
+		timeout 3s $(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output; \
 		diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output; \
-		if !($$status) then \
-			exit 0; \
+	        if [ $$? -ne 0 ]; then \
+			echo "SUCCESS: Found a case that generates different results." \
+			set -e; \
+			exit 1; \
 		fi; \
 	done
 
 .PHONY: csmith-jlc-compile
 csmith-jlc-compile:
-		$(JLM_ROOT)/bin/jlc -I${CSMITH_ROOT}/runtime -O $(csmith-file) -o /dev/null;
+		$(JLM_ROOT)/bin/jlc -I${CSMITH_ROOT}/runtime -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc;
 
 .PHONY: test.c
 test.c:
-	$(CSMITH_ROOT)/src/csmith > $(CSMITH_ROOT)/test.c
+	$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c
 
 .PHONY: csmith-clean
 csmith-clean:
@@ -93,23 +110,19 @@ $(CSMITH_ROOT)/test-creduce-compare.sh:
 	@echo "rm -f $(CSMITH_ROOT)/test.clang*" >> $@
 	@echo "export PATH=${JLM_ROOT}/bin:$$PATH" >> $@
 	@echo "jlc -I${CSMITH_ROOT}/runtime -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.jlc 2> /dev/null" >> $@
-	@echo 'if [ $$? -eq 1 ]; then' >> $@
+	@echo 'if [ $$? -ne 0 ]; then' >> $@
 	@echo "	   exit 1;" >> $@
 	@echo "fi;" >> $@
 	@echo "$(CLANG) -I${CSMITH_ROOT}/runtime -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.clang 2> /dev/null" >> $@
-	@echo 'if [ $$? -eq 1 ]; then' >> $@
+	@echo 'if [ $$? -ne 0 ]; then' >> $@
 	@echo "	   exit 1;" >> $@
 	@echo "fi;" >> $@
-	@echo "$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output" >> $@
 	@echo "$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output" >> $@
-	@echo 'if [ $$? -eq 1 ]; then' >> $@
+	@echo "$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output" >> $@
+	@echo 'if [ $$? -ne 0 ]; then' >> $@
 	@echo "	   exit 1;" >> $@
 	@echo "fi;" >> $@
-	@echo "diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output" >> $@
-	@echo 'if [ $$? -eq 1 ]; then' >> $@
-	@echo "	   exit 0;" >> $@
-	@echo "fi;" >> $@
-	@echo "exit 1" >> $@
+	@echo "! diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output" >> $@
 	@chmod +x $@
 
 .PHONY: $(CSMITH_ROOT)/creduse-run-abort
