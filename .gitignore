@@ -1,3 +1,2 @@
 bin
-csmith
-test.c.orig
+csmith/test*
