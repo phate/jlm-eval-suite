@@ -35,9 +35,11 @@ CC=$(CLANG)
 CXX=clang++$(LLVM_VERSION)
 
 # Necessary variables
-DIR := $(PWD)
-BIN := $(DIR)/bin
+DIR            := $(PWD)
+BIN            := $(DIR)/bin
 JLM_ROOT       := $(DIR)/jlm
+JLM_BIN        := $(JLM_ROOT)/bin
+JLC            := $(JLM_BIN)/jlc
 JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
@@ -45,7 +47,7 @@ LLVMSTRIP_ROOT := $(POLYBENCH_ROOT)/external/llvm-strip
 CSMITH_ROOT    := $(DIR)/csmith
 
 # Set necessary paths
-export PATH := $(BIN):$(JLM_ROOT)/bin:$(LLVMSTIP_ROOT)/bin/:$(PATH)
+export PATH := $(BIN):$(JLM_BIN):$(LLVMSTIP_ROOT)/bin/:$(PATH)
 export JLMROOT := $(JLM_ROOT)
 
 # Include Makefiles for the tools, libraries, and benchmarks to be built
