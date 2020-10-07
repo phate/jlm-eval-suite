@@ -14,9 +14,20 @@ help:
 	@echo "clean                  Alias for csmith-clean"
 	@echo "purge                  Alias for csmith-purge"
 
-SCMITH_ROOT ?= .
+CSMITH_ROOT ?= .
+JLM_ROOT = ../jlm
+JLM_BIN  = $(JLM_ROOT)/bin
+JLC      = $(JLM_BIN)/jlc
 
-include $(SCMITH_ROOT)/Makefile.sub
+LLVM_VERSION ?= -7
+LLVMCONFIG=llvm-config$(LLVM_VERSION)
+CLANG=clang$(LLVM_VERSION)
+
+# Set necessary paths
+export PATH    := $(JLM_BIN):$(PATH)
+export JLMROOT := $(JLM_ROOT)
+
+include $(CSMITH_ROOT)/Makefile.sub
 
 .PHONY: submodule
 submodule:
