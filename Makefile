@@ -8,7 +8,7 @@ echo "--------------------------------------------------------------------------
 echo "submodule              Initializes all the dependent git submodules"
 echo "install                Installs the source code, require argument"
 echo "                       cpu2017=[name].tar.xz"
-echo "all                    Compiles jive, jlm, and llvm-strip"
+echo "all                    Compiles jive and jlm"
 echo "clean                  Deletes the bin directory"
 echo "deep-clean             Calls clean for jive, jlm, polybench, cpu2017, and"
 echo "                       csmith."
@@ -20,7 +20,6 @@ help:
 	@$(HELP_TEXT_CPU2017)
 	@$(HELP_TEXT_JLM)
 	@$(HELP_TEXT_JIVE)
-	@$(HELP_TEXT_LLVMSTRIP)
 	@$(HELP_TEXT_CSMITH)
 
 SHELL=/bin/bash
@@ -43,11 +42,10 @@ JLC            := $(JLM_BIN)/jlc
 JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
-LLVMSTRIP_ROOT := $(POLYBENCH_ROOT)/external/llvm-strip
 CSMITH_ROOT    := $(DIR)/csmith
 
 # Set necessary paths
-export PATH := $(BIN):$(JLM_BIN):$(LLVMSTIP_ROOT)/bin/:$(PATH)
+export PATH := $(BIN):$(JLM_BIN):$(PATH)
 export JLMROOT := $(JLM_ROOT)
 
 # Include Makefiles for the tools, libraries, and benchmarks to be built
@@ -63,9 +61,6 @@ endif
 ifneq ("$(wildcard $(CPU2017_ROOT)/Makefile.sub)","")
 include $(CPU2017_ROOT)/Makefile.sub
 endif
-ifneq ("$(wildcard $(LLVMSTRIP_ROOT)/Makefile.sub)","")
-include $(LLVMSTRIP_ROOT)/Makefile.sub
-endif
 ifneq ("$(wildcard $(CSMITH_ROOT)/Makefile.sub)","")
 include $(CSMITH_ROOT)/Makefile.sub
 endif
@@ -74,7 +69,7 @@ endif
 export LC_CTYPE=en_US.UTF-8
 
 .PHONY: all
-all: jive-release jlm-release llvm-strip
+all: jive-release jlm-release
 
 ### SUBMODULE
 
@@ -123,4 +118,4 @@ clean:
 	@rm -rf $(BIN)
 
 .PHONY: deep-clean
-deep-clean: clean jive-clean jlm-clean polybench-purge llvm-strip-clean csmith-clean
+deep-clean: clean jive-clean jlm-clean polybench-purge csmith-clean
