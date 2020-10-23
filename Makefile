@@ -9,8 +9,7 @@ echo "submodule              Initializes all the dependent git submodules"
 echo "install                Installs the source code, require argument"
 echo "                       cpu2017=[name].tar.xz"
 echo "all                    Compiles jive and jlm"
-echo "clean                  Deletes the bin directory"
-echo "deep-clean             Calls clean for jive, jlm, polybench, cpu2017, and"
+echo "clean                  Calls clean for jive, jlm, polybench, cpu2017, and"
 echo "                       csmith."
 endef
 .PHONY: help
@@ -24,18 +23,15 @@ help:
 
 SHELL=/bin/bash
 
-# Set these if not using default names for the tools
-LLVM_VERSION ?= -7
-LLVMCONFIG=llvm-config$(LLVM_VERSION)
-CLANG=clang$(LLVM_VERSION)
-OPT=opt$(LLVM_VERSION)
-LLC=llc$(LLVM_VERSION)
+# LLVM related variables
+LLVMCONFIG ?= llvm-config-10
+CLANG_BIN=$(shell $(LLVMCONFIG) --bindir)
+CLANG=$(CLANG_BIN)/clang
 CC=$(CLANG)
-CXX=clang++$(LLVM_VERSION)
+CXX=$(CLANG_BIN)/clang++
 
 # Necessary variables
 DIR            := $(PWD)
-BIN            := $(DIR)/bin
 JLM_ROOT       := $(DIR)/jlm
 JLM_BIN        := $(JLM_ROOT)/bin
 JLC            := $(JLM_BIN)/jlc
@@ -45,7 +41,7 @@ CPU2017_ROOT   := $(DIR)/cpu2017
 CSMITH_ROOT    := $(DIR)/csmith
 
 # Set necessary paths
-export PATH := $(BIN):$(JLM_BIN):$(PATH)
+export PATH := $(JLM_BIN):$(PATH)
 export JLMROOT := $(JLM_ROOT)
 
 # Include Makefiles for the tools, libraries, and benchmarks to be built
@@ -80,42 +76,17 @@ submodule:
 ### GENERIC
 
 %.la: %.cpp
-	$(CXX) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) -o $@ $<
 
 %.la: %.c
-	$(CXX) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) $(CPPFLAGS) -o $@ $<
 
 %.a:
 	rm -f $@
 	ar clqv $@ $^
 	ranlib $@
 
-### SYMLINKS
-
-.PHONY: symlinks
-symlinks: $(BIN)/llvm-config $(BIN)/clang $(BIN)/opt $(BIN)/llc
-
-$(BIN)/llvm-config:
-	@mkdir -p $(BIN)
-	@which $(LLVMCONFIG) | xargs -I % sh -c 'ln -s % $@'
-
-$(BIN)/clang:
-	@mkdir -p $(BIN)
-	@which $(CLANG) | xargs -I % sh -c 'ln -s % $@'
-
-$(BIN)/opt:
-	@mkdir -p $(BIN)
-	@which $(OPT) | xargs -I % sh -c 'ln -s % $@'
-
-$(BIN)/llc:
-	@mkdir -p $(BIN)
-	@which $(LLC) | xargs -I % sh -c 'ln -s % $@'
-
 ### CLEAN
 
 .PHONY: clean
-clean:
-	@rm -rf $(BIN)
-
-.PHONY: deep-clean
-deep-clean: clean jive-clean jlm-clean polybench-purge csmith-clean
+clean: jive-clean jlm-clean polybench-purge cpu2017-clean csmith-clean
