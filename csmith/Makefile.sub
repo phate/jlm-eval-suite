@@ -43,22 +43,22 @@ CSMITH_FLAGS = \
 	--max-union-fields 1
 
 $(CSMITH_BIN):
-	$(error "You don't seem to have installed csmith")	
+	@$(error "You don't seem to have installed csmith")
 
 .PHONY: csmith-install
 csmith-install:
-	cd $(CSMITH_SRC) && ./configure && make -j $(NCORES)
+	@cd $(CSMITH_SRC) && ./configure && make -j $(NCORES)
 
 .PHONY: csmith-run-abort
 csmith-run-abort: $(CSMITH_BIN)
-	set -e;  while [ true ]; do \
+	@set -e;  while [ true ]; do \
 		$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c; \
 		$(JLC) -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o /dev/null; \
 	done
 
 .PHONY: csmith-run
 csmith-run: $(CSMITH_BIN)
-	while [ true ]; do \
+	@while [ true ]; do \
 		rm -f $(CSMITH_ROOT)/test.*; \
 		$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c; \
 		$(JLC)   -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.jlc; \
@@ -77,25 +77,25 @@ csmith-run: $(CSMITH_BIN)
 
 .PHONY: csmith-compare
 csmith-compare:
-	$(JLC)   -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc
-	$(CLANG) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.clang
-	$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output
-	$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output
-	diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output
+	@$(JLC)   -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc
+	@$(CLANG) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.clang
+	@$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output
+	@$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output
+	@diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output
 
 .PHONY: csmith-jlc-compile
 csmith-jlc-compile:
-		$(JLC) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc;
+	@$(JLC) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc;
 
 .PHONY: csmith-clean
 csmith-clean:
-	rm -rf $(CSMITH_ROOT)/test*
+	@rm -rf $(CSMITH_ROOT)/test*
 
 .PHONY: csmith-purge
 csmith-purge: csmith-clean
-	make -C $(CSMITH_SRC) clean
-	rm $(CSMITH_SRC)/config.h
-	rm $(CSMITH_SRC)/stamp-h1
+	@make -C $(CSMITH_SRC) clean
+	@rm $(CSMITH_SRC)/config.h
+	@rm $(CSMITH_SRC)/stamp-h1
 
 ### CREDUCE
 
@@ -129,8 +129,8 @@ $(CSMITH_ROOT)/test-creduce-compare.sh:
 
 .PHONY: $(CSMITH_ROOT)/creduse-run-abort
 creduse-run-abort: $(CSMITH_ROOT)/test-creduce-abort.sh
-	cd $(CSMITH_ROOT); creduce --n $(NCORES) $^ test.c
+	@cd $(CSMITH_ROOT); creduce --n $(NCORES) $^ test.c
 
 .PHONY: $(CSMITH_ROOT)/creduse-run
 creduse-run: $(CSMITH_ROOT)/test-creduce-compare.sh
-	cd $(CSMITH_ROOT); creduce --n $(NCORES) $^ test.c
+	@cd $(CSMITH_ROOT); creduce --n $(NCORES) $^ test.c
