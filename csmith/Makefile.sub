@@ -32,15 +32,15 @@ CSMITH_FLAGS = \
 	--concise \
 	--no-volatiles \
 	--no-volatile-pointers \
-	--max-array-dim 1 \
+	--max-array-dim 2 \
 	--max-array-len-per-dim 8 \
-	--max-block-depth 1 \
-	--max-block-size 4 \
-	--max-expr-complexity 1 \
+	--max-struct-fields 2 \
 	--max-funcs 1 \
+	--max-block-size 4 \
+	--max-block-depth 2 \
 	--max-pointer-depth 1 \
-	--max-struct-fields 1 \
-	--max-union-fields 1
+	--max-union-fields 2 \
+	--max-expr-complexity 2 \
 
 $(CSMITH_BIN):
 	@$(error "You don't seem to have installed csmith")
@@ -58,13 +58,20 @@ csmith-run-abort: $(CSMITH_BIN)
 
 .PHONY: csmith-run
 csmith-run: $(CSMITH_BIN)
-	@while [ true ]; do \
+	@echo "Running with the following flags for csmith"; \
+	echo $(CSMITH_FLAGS); \
+	while [ true ]; do \
 		rm -f $(CSMITH_ROOT)/test.*; \
+		echo "Running csmith"; \
 		$(CSMITH_BIN) $(CSMITH_FLAGS) > $(CSMITH_ROOT)/test.c; \
-		$(JLC)   -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.jlc; \
-		$(CLANG) -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.clang; \
-		timeout 2s $(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output; \
-		timeout 2s $(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output; \
+		echo "Compiling with jlc"; \
+		$(JLC) -Wno-everything -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.jlc; \
+		echo "Compiling with clang"; \
+		$(CLANG) -Wno-everything -I${CSMITH_RUNTIME} -O $(CSMITH_ROOT)/test.c -o $(CSMITH_ROOT)/test.clang; \
+		echo "Running jlc version"; \
+		timeout 5s $(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output; \
+		echo "Running clang version"; \
+		timeout 5s $(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output; \
 		diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output; \
 	        if [ $$? -ne 0 ]; then \
 			echo "POTENTIAL SUCCESS: Found a case that generates different results."; \
@@ -77,11 +84,11 @@ csmith-run: $(CSMITH_BIN)
 
 .PHONY: csmith-compare
 csmith-compare:
-	@$(JLC)   -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc
-	@$(CLANG) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.clang
-	@$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output
-	@$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output
-	@diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output
+	$(JLC)   -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.jlc
+	$(CLANG) -I${CSMITH_RUNTIME} -O $(csmith-file) -o $(CSMITH_ROOT)/test.clang
+	$(CSMITH_ROOT)/test.jlc > $(CSMITH_ROOT)/test.jlc-output
+	$(CSMITH_ROOT)/test.clang > $(CSMITH_ROOT)/test.clang-output
+	diff $(CSMITH_ROOT)/test.jlc-output $(CSMITH_ROOT)/test.clang-output
 
 .PHONY: csmith-jlc-compile
 csmith-jlc-compile:
