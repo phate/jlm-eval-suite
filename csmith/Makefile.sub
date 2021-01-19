@@ -32,7 +32,7 @@ CSMITH_FLAGS = \
 	--concise \
 	--no-volatiles \
 	--no-volatile-pointers \
-	--max-array-dim 2 \
+#	--max-array-dim 2 \
 	--max-array-len-per-dim 8 \
 	--max-struct-fields 2 \
 	--max-funcs 1 \
@@ -40,7 +40,7 @@ CSMITH_FLAGS = \
 	--max-block-depth 2 \
 	--max-pointer-depth 1 \
 	--max-union-fields 2 \
-	--max-expr-complexity 2 \
+	--max-expr-complexity 3 \
 
 $(CSMITH_BIN):
 	@$(error "You don't seem to have installed csmith")
@@ -77,6 +77,7 @@ csmith-run: $(CSMITH_BIN)
 			echo "POTENTIAL SUCCESS: Found a case that generates different results."; \
 			echo "Check that the difference isn't due to a timeout for one of the executables."; \
 			echo "This can be done with make csmith-compare"; \
+			wc $(CSMITH_ROOT)/test.c; \
 			set -e; \
 			exit 1; \
 		fi; \
