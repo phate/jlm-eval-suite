@@ -1,0 +1,623 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dba0063a..19adba37 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -116,7 +116,7 @@ set(TEST_SUITE_RUN_TYPE "train" CACHE STRING
+ 
+ get_filename_component(CMAKE_C_COMPILER_DIRECTORY ${CMAKE_C_COMPILER} DIRECTORY)
+ 
+-option(TEST_SUITE_COLLECT_CODE_SIZE "Measure code size of binaries" ON)
++option(TEST_SUITE_COLLECT_CODE_SIZE "Measure code size of binaries" OFF)
+ if(TEST_SUITE_COLLECT_CODE_SIZE)
+   find_program(TEST_SUITE_LLVM_SIZE NAMES "llvm-size"
+                HINTS ${CMAKE_C_COMPILER_DIRECTORY})
+diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
+index a73acd56..cb4fe478 100644
+--- a/MultiSource/Applications/CMakeLists.txt
++++ b/MultiSource/Applications/CMakeLists.txt
+@@ -1,14 +1,14 @@
+-add_subdirectory(JM)
++#add_subdirectory(JM)
+ add_subdirectory(SIBsim4)
+ add_subdirectory(aha)
+-add_subdirectory(d)
++#add_subdirectory(d)
+ if(NOT ARCH STREQUAL "PowerPC")
+ # This test has problems running on powerpc starting with r295538 and should
+ # be restored when the issue is corrected.
+-  add_subdirectory(oggenc)
++#  add_subdirectory(oggenc)
+ endif()
+ add_subdirectory(sgefa)
+-add_subdirectory(spiff)
++#add_subdirectory(spiff)
+ add_subdirectory(viterbi)
+ 
+ add_subdirectory(ALAC)
+@@ -19,26 +19,26 @@ if(NOT TARGET_OS STREQUAL "SunOS")
+   add_subdirectory(hexxagon)
+ endif()
+ if(NOT DEFINED SMALL_PROBLEM_SIZE)
+-  add_subdirectory(lua)
++	#  add_subdirectory(lua)
+ endif()
+ if((TARGET_OS STREQUAL "Linux" OR TARGET_OS STREQUAL "Darwin") AND (NOT ARCH STREQUAL "XCore"))
+-  add_subdirectory(obsequi)
++	#  add_subdirectory(obsequi)
+ endif()
+ if(NOT TARGET_OS STREQUAL "SunOS")
+   add_subdirectory(kimwitu++)
+ endif()
+ if(NOT TARGET_OS STREQUAL "SunOS")
+-  add_subdirectory(SPASS)
++	#  add_subdirectory(SPASS)
+ endif()
+ if(NOT ARCH STREQUAL "XCore")
+-  add_subdirectory(ClamAV)
++	#  add_subdirectory(ClamAV)
+   add_subdirectory(lemon)
+-  add_subdirectory(siod)
++  #  add_subdirectory(siod)
+ endif()
+ if((NOT ARCH STREQUAL "PowerPC") AND (NOT ARCH STREQUAL "XCore"))
+-  add_subdirectory(sqlite3)
++	#  add_subdirectory(sqlite3)
+ endif()
+ if(NOT TEST_SUITE_BENCHMARKING_ONLY)
+-  add_subdirectory(Burg)
+-  add_subdirectory(treecc)
++	#  add_subdirectory(Burg)
++	#  add_subdirectory(treecc)
+ endif()
+diff --git a/MultiSource/Benchmarks/CMakeLists.txt b/MultiSource/Benchmarks/CMakeLists.txt
+index 61d1fd08..97ae3a55 100644
+--- a/MultiSource/Benchmarks/CMakeLists.txt
++++ b/MultiSource/Benchmarks/CMakeLists.txt
+@@ -4,19 +4,19 @@ add_subdirectory(BitBench)
+ add_subdirectory(Fhourstones)
+ add_subdirectory(Fhourstones-3.1)
+ add_subdirectory(FreeBench)
+-add_subdirectory(MallocBench)
++#add_subdirectory(MallocBench)
+ add_subdirectory(McCat)
+ add_subdirectory(NPB-serial)
+ add_subdirectory(Olden)
+-add_subdirectory(Prolangs-C)
++#add_subdirectory(Prolangs-C)
+ add_subdirectory(Ptrdist)
+ add_subdirectory(SciMark2-C)
+ add_subdirectory(Trimaran)
+ add_subdirectory(VersaBench)
+-add_subdirectory(llubenchmark)
++#add_subdirectory(llubenchmark)
+ add_subdirectory(mediabench)
+-add_subdirectory(nbench)
+-add_subdirectory(sim)
++#add_subdirectory(nbench)
++#add_subdirectory(sim)
+ add_subdirectory(Rodinia)
+ 
+ if((NOT "${TARGET_OS}" STREQUAL "Darwin") OR (NOT "${ARCH}" STREQUAL "ARM"))
+@@ -31,9 +31,9 @@ if(NOT "${ARCH}" STREQUAL "Hexagon")
+   add_subdirectory(MiBench)
+ endif()
+ if(NOT "${ARCH}" STREQUAL "XCore")
+-  add_subdirectory(7zip)
++	#  add_subdirectory(7zip)
+   add_subdirectory(PAQ8p)
+ endif()
+ if(NOT DEFINED SMALL_PROBLEM_SIZE)
+-  add_subdirectory(mafft)
++	#  add_subdirectory(mafft)
+ endif()
+diff --git a/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt b/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
+index 0214eeb2..a7ea89cd 100644
+--- a/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
++++ b/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ add_subdirectory(HPCCG)
+ add_subdirectory(PENNANT)
+ add_subdirectory(miniFE)
+-add_subdirectory(CLAMR)
++#add_subdirectory(CLAMR)
+ add_subdirectory(HACCKernels)
+diff --git a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
+index f576f499..8ef73f16 100644
+--- a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
++++ b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ add_subdirectory(XSBench)
+-add_subdirectory(Pathfinder)
++#add_subdirectory(Pathfinder)
+ add_subdirectory(miniAMR)
+ add_subdirectory(miniGMG)
+ add_subdirectory(RSBench)
+ add_subdirectory(SimpleMOC)
+-add_subdirectory(CoMD)
++#add_subdirectory(CoMD)
+diff --git a/MultiSource/Benchmarks/FreeBench/CMakeLists.txt b/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
+index a19ae6a2..92cee231 100644
+--- a/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
++++ b/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ add_subdirectory(distray)
+ add_subdirectory(fourinarow)
+-add_subdirectory(mason)
++#add_subdirectory(mason)
+ add_subdirectory(neural)
+ add_subdirectory(pcompress2)
+ add_subdirectory(pifft)
+diff --git a/MultiSource/Benchmarks/McCat/CMakeLists.txt b/MultiSource/Benchmarks/McCat/CMakeLists.txt
+index e8b48a51..b844251f 100644
+--- a/MultiSource/Benchmarks/McCat/CMakeLists.txt
++++ b/MultiSource/Benchmarks/McCat/CMakeLists.txt
+@@ -6,7 +6,7 @@ add_subdirectory(08-main)
+ add_subdirectory(09-vor)
+ add_subdirectory(12-IOtest)
+ add_subdirectory(17-bintr)
+-add_subdirectory(18-imp)
++#add_subdirectory(18-imp)
+ if(NOT TEST_SUITE_BENCHMARKING_ONLY)
+   add_subdirectory(15-trie)
+ endif()
+diff --git a/MultiSource/Benchmarks/MiBench/CMakeLists.txt b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
+index e3062a5e..98d92342 100644
+--- a/MultiSource/Benchmarks/MiBench/CMakeLists.txt
++++ b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
+@@ -2,22 +2,22 @@ add_subdirectory(automotive-basicmath)
+ add_subdirectory(automotive-bitcount)
+ add_subdirectory(automotive-susan)
+ add_subdirectory(consumer-jpeg)
+-add_subdirectory(consumer-typeset)
++#add_subdirectory(consumer-typeset)
+ add_subdirectory(network-dijkstra)
+ add_subdirectory(network-patricia)
+ add_subdirectory(security-rijndael)
+ add_subdirectory(security-sha)
+ add_subdirectory(telecomm-CRC32)
+ add_subdirectory(telecomm-FFT)
+-add_subdirectory(telecomm-gsm)
++#add_subdirectory(telecomm-gsm)
+ if(NOT "${ARCH}" STREQUAL "XCore")
+-  add_subdirectory(consumer-lame)
++	#  add_subdirectory(consumer-lame)
+ endif()
+ if(NOT TEST_SUITE_BENCHMARKING_ONLY)
+   add_subdirectory(office-stringsearch)
+   add_subdirectory(security-blowfish)
+   add_subdirectory(telecomm-adpcm)
+   if((NOT "${ARCH}" STREQUAL "XCore") AND (NOT "${ARCH}" STREQUAL "ARM"))
+-    add_subdirectory(office-ispell)
++	  #    add_subdirectory(office-ispell)
+   endif()
+ endif()
+diff --git a/MultiSource/Benchmarks/Olden/CMakeLists.txt b/MultiSource/Benchmarks/Olden/CMakeLists.txt
+index 0f2dc911..3af27e8e 100644
+--- a/MultiSource/Benchmarks/Olden/CMakeLists.txt
++++ b/MultiSource/Benchmarks/Olden/CMakeLists.txt
+@@ -2,9 +2,9 @@ add_subdirectory(bh)
+ add_subdirectory(bisort)
+ add_subdirectory(em3d)
+ add_subdirectory(health)
+-add_subdirectory(mst)
+-add_subdirectory(perimeter)
++#add_subdirectory(mst)
++#add_subdirectory(perimeter)
+ add_subdirectory(power)
+ add_subdirectory(treeadd)
+-add_subdirectory(tsp)
++#add_subdirectory(tsp)
+ add_subdirectory(voronoi)
+diff --git a/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt b/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
+index 8871ce79..f23fb25e 100644
+--- a/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
++++ b/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ add_subdirectory(anagram)
+-add_subdirectory(bc)
++#add_subdirectory(bc)
+ add_subdirectory(ft)
+ add_subdirectory(ks)
+ add_subdirectory(yacr2)
+diff --git a/MultiSource/Benchmarks/Trimaran/CMakeLists.txt b/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
+index 46435bfb..9b8d6fd8 100644
+--- a/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
++++ b/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ add_subdirectory(enc-3des)
+ add_subdirectory(enc-md5)
+-add_subdirectory(enc-pc1)
++#add_subdirectory(enc-pc1)
+ add_subdirectory(enc-rc4)
+ add_subdirectory(netbench-crc)
+ add_subdirectory(netbench-url)
+diff --git a/MultiSource/Benchmarks/VersaBench/CMakeLists.txt b/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
+index 4e503005..f47c3d54 100644
+--- a/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
++++ b/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-add_subdirectory(beamformer)
++#add_subdirectory(beamformer)
+ add_subdirectory(bmm)
+ add_subdirectory(dbms)
+ add_subdirectory(ecbdes)
+diff --git a/MultiSource/Benchmarks/mediabench/CMakeLists.txt b/MultiSource/Benchmarks/mediabench/CMakeLists.txt
+index b375382d..2aef68df 100644
+--- a/MultiSource/Benchmarks/mediabench/CMakeLists.txt
++++ b/MultiSource/Benchmarks/mediabench/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ add_subdirectory(adpcm)
+ add_subdirectory(g721)
+-add_subdirectory(gsm)
++#add_subdirectory(gsm)
+ add_subdirectory(jpeg)
+ add_subdirectory(mpeg2)
+diff --git a/SingleSource/Benchmarks/CMakeLists.txt b/SingleSource/Benchmarks/CMakeLists.txt
+index 72ce8b06..e317ceca 100644
+--- a/SingleSource/Benchmarks/CMakeLists.txt
++++ b/SingleSource/Benchmarks/CMakeLists.txt
+@@ -4,7 +4,7 @@ add_subdirectory(CoyoteBench)
+ add_subdirectory(Dhrystone)
+ add_subdirectory(Linpack)
+ add_subdirectory(McGill)
+-add_subdirectory(Misc)
++#add_subdirectory(Misc)
+ add_subdirectory(Misc-C++)
+ add_subdirectory(Misc-C++-EH)
+ add_subdirectory(Polybench)
+diff --git a/SingleSource/Regression/C/2004-03-15-IndirectGoto.c b/SingleSource/Regression/C/2004-03-15-IndirectGoto.c
+deleted file mode 100644
+index 204dce93..00000000
+--- a/SingleSource/Regression/C/2004-03-15-IndirectGoto.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-#include <stdio.h>
+-int main() {
+-  static const void *L[] = {&&L1, &&L2, &&L3, &&L4, 0 };
+-  unsigned i = 0;
+-  printf("A\n");
+-L1:
+-  printf("B\n");
+-L2:
+-  printf("C\n");
+-L3:
+-  printf("D\n");
+-  goto *L[i++];
+-L4: 
+-  printf("E\n");
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/CMakeLists.txt b/SingleSource/Regression/C/CMakeLists.txt
+index 0acc7b84..b839ab69 100644
+--- a/SingleSource/Regression/C/CMakeLists.txt
++++ b/SingleSource/Regression/C/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
+    ARCH MATCHES "SystemZ" OR ARCH MATCHES "Mips" OR
+    ARCH MATCHES "AArch64" OR ARCH MATCHES "ARM")
+-  add_subdirectory(gcc-c-torture)
++#  add_subdirectory(gcc-c-torture)
+ endif()
+ 
+ list(APPEND LDFLAGS -lm)
+diff --git a/SingleSource/Regression/C/Makefile b/SingleSource/Regression/C/Makefile
+index 1cc49737..9569db00 100644
+--- a/SingleSource/Regression/C/Makefile
++++ b/SingleSource/Regression/C/Makefile
+@@ -6,6 +6,9 @@ EXEC_XFAILS = casts
+ endif
+ endif
+ 
++PROGRAMS_TO_SKIP += \
++	2004-03-15-IndirectGoto \
++
+ ifdef BENCHMARKING_ONLY
+ PROGRAMS_TO_SKIP += \
+ 	2003-05-14-initialize-string \
+diff --git a/SingleSource/Regression/C/PR10189.c b/SingleSource/Regression/C/PR10189.c
+deleted file mode 100644
+index 454431ad..00000000
+--- a/SingleSource/Regression/C/PR10189.c
++++ /dev/null
+@@ -1,81 +0,0 @@
+-unsigned short
+-safe_53 (int short ui1, int short ui2)
+-{
+-  return ui1 - ui2;
+-}
+-
+-int short
+-safe_60 (int short left, int right)
+-{
+-  return right ? 0 : left >> right;
+-}
+-
+-struct S0
+-{
+-  int f;
+-};
+-
+-struct S1
+-{
+-  int f3;
+-};
+-
+-struct S2
+-{
+-  volatile struct S0 f2;
+-};
+-
+-struct S3
+-{
+-  int f;
+-};
+-
+-int short g_8;
+-int g_20[][1][0];
+-int g_37;
+-
+-struct S2 g_6;
+-
+-struct S3 g_169;
+-
+-struct S1 g_177;
+-struct S2 g_1639[];
+-
+-char func_13 (unsigned, unsigned short, short);
+-
+-char func_21 (unsigned char, unsigned, int *);
+-
+-struct S2 func_1 (vo)
+-{
+-  int l_2 = 1;
+-  l_2 && func_13 (0, 0, 0), 0;
+-  return g_1639[0];
+-}
+-
+-char func_13 (unsigned p_, unsigned short p_15, short p_1)
+-{
+-  int l_346;
+-  int *l_701 = &g_37;
+-  for (l_346 = 2; l_346 >= 0; l_346 -= 1)
+-    {
+-      for (; g_177.f3; g_177.f3 += 1);
+-      for (p_15 = 0; p_15 <= 2; p_15 += 1)
+-	*l_701 = safe_60 (g_6.f2.f, func_21 (g_169.f, 0, 0)) > 0;
+-    }
+-  return 0;
+-}
+-
+-char
+-func_21 (unsigned char p_, unsigned p_2, int *p_24)
+-{
+-  int *l_30 = &g_20[0][0][1];
+-  int **l_29 = &l_30;
+-  **l_29 = safe_53 (*l_30, g_8);
+-  return **l_29;
+-}
+-
+-int main (void)
+-{
+-  func_1 ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
+index 99cf2047..2f4e08e5 100644
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
++++ b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ add_subdirectory(ieee)
+ 
+ # GCC C Torture Suite is conventionally run without warnings
+-list(APPEND CFLAGS "-w")
++#list(APPEND CFLAGS "-w")
+ 
+ set(TestsToSkip)
+ 
+diff --git a/SingleSource/UnitTests/2003-05-07-VarArgs.c b/SingleSource/UnitTests/2003-05-07-VarArgs.c
+deleted file mode 100644
+index 5eb1f97a..00000000
+--- a/SingleSource/UnitTests/2003-05-07-VarArgs.c
++++ /dev/null
+@@ -1,79 +0,0 @@
+-#include <stdio.h>
+-#include <stdarg.h>
+-
+-/* 5 bytes. */
+-typedef struct DWordS_struct    { int i; char c; } DWordS;
+-
+-/* 12 bytes if d is 4-byte aligned; 16 bytes if d is 8-byte aligned. */
+-typedef struct QuadWordS_struct { int i; double d; } QuadWordS;
+-
+-/* 20 bytes if d is 4-byte aligned; 28 bytes if d is 8-byte aligned
+- * (assuming pointer size is 4 bytes and 8 bytes respectively). */
+-typedef struct LargeS_struct { int i; double d; DWordS* ptr; int j; } LargeS;
+-
+-void test(char *fmt, ...) {
+-  va_list ap, aq;
+-  int d;
+-  char c, *s;
+-  DWordS dw;
+-  QuadWordS qw;
+-  LargeS ls;
+-
+-  va_start(ap, fmt);
+-
+-  va_copy(aq, ap);    /* test va_copy */
+-  va_end(aq);
+-
+-  while (*fmt)
+-    switch(*fmt++) {
+-    case 's':           /* string */
+-      s = va_arg(ap, char *);
+-      printf("string %s\n", s);
+-      break;
+-    case 'i':           /* int */
+-      d = va_arg(ap, int);
+-      printf("int %d\n", d);
+-      break;
+-    case 'd':
+-      printf("double %f\n", va_arg(ap, double));
+-      break;
+-    case 'l':
+-      printf("long long %lld\n", va_arg(ap, long long));
+-      break;
+-    case 'c':           /* char */
+-      /* need a cast here since va_arg only
+-         takes fully promoted types */
+-      c = (char) va_arg(ap, int);
+-      printf("char %c\n", c);
+-      break;
+-    case 'D':
+-      dw = va_arg(ap, DWordS);
+-      printf("DWord { %d, %c }\n", dw.i, dw.c);
+-      break;
+-    case 'Q':
+-      qw = va_arg(ap, QuadWordS);
+-      printf("QuadWord { %d, %f }\n", qw.i, qw.d);
+-      break;
+-    case 'L':
+-      ls = va_arg(ap, LargeS);
+-      printf("LargeS { %d, %f, 0x%d, %d }\n", ls.i, ls.d, ls.ptr != 0, ls.j);
+-      break;
+-    }
+-  va_end(ap);
+-}
+-
+-int main() {
+-  DWordS dw = { 18, 'a' };
+-  QuadWordS qw = { 19, 20.0 };
+-  LargeS ls = { 21, 22.0, &dw, 23 };
+-
+-  test("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
+-
+-  /* test promotion & 64-bit types */
+-  test("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
+-
+-  /* test passing structs by value to varargs */
+-  test("DQL", dw, qw, ls);
+-
+-  return 0;
+-}
+diff --git a/SingleSource/UnitTests/2003-08-11-VaListArg.c b/SingleSource/UnitTests/2003-08-11-VaListArg.c
+deleted file mode 100644
+index f72f56c5..00000000
+--- a/SingleSource/UnitTests/2003-08-11-VaListArg.c
++++ /dev/null
+@@ -1,96 +0,0 @@
+-/*
+- * Test passing a va_list argument to a function and other uses
+- * of va_list, in things other than va_arg.
+- */
+-#include <stdio.h>
+-#include <stdarg.h>
+-
+-/* 5 bytes. */
+-typedef struct DWordS_struct    { int i; char c; } DWordS;
+-
+-/* 12 bytes if d is 4-byte aligned; 16 bytes if d is 8-byte aligned. */
+-typedef struct QuadWordS_struct { int i; double d; } QuadWordS;
+-
+-/* 20 bytes if d is 4-byte aligned; 28 bytes if d is 8-byte aligned
+- * (assuming pointer size is 4 bytes and 8 bytes respectively). */
+-typedef struct LargeS_struct { int i; double d; DWordS* ptr; int j; } LargeS;
+-
+-void test(char *fmt, va_list ap) {
+-  int d;
+-  char c, *s;
+-  DWordS dw;
+-  QuadWordS qw;
+-  LargeS ls;
+-
+-  while (*fmt)
+-    switch(*fmt++) {
+-    case 's':           /* string */
+-      s = va_arg(ap, char *);
+-      printf("string %s\n", s);
+-      break;
+-    case 'i':           /* int */
+-      d = va_arg(ap, int);
+-      printf("int %d\n", d);
+-      break;
+-    case 'd':
+-      printf("double %f\n", va_arg(ap, double));
+-      break;
+-    case 'l':
+-      printf("long long %lld\n", va_arg(ap, long long));
+-      break;
+-    case 'c':           /* char */
+-      /* need a cast here since va_arg only
+-         takes fully promoted types */
+-      c = (char) va_arg(ap, int);
+-      printf("char %c\n", c);
+-      break;
+-    case 'D':
+-      dw = va_arg(ap, DWordS);
+-      printf("DWord { %d, %c }\n", dw.i, dw.c);
+-      break;
+-    case 'Q':
+-      qw = va_arg(ap, QuadWordS);
+-      printf("QuadWord { %d, %f }\n", qw.i, qw.d);
+-      break;
+-    case 'L':
+-      ls = va_arg(ap, LargeS);
+-      printf("LargeS { %d, %f, 0x%d, %d }\n", ls.i, ls.d, ls.ptr != 0, ls.j);
+-      break;
+-    }
+-  va_end(ap);
+-}
+-
+-void testVaListArg(char *fmt, ...) {
+-  va_list ap;
+-  va_start(ap, fmt);
+-  test(fmt, ap);
+-  va_end(ap);
+-}
+-
+-void testVaCopyArg(char *fmt, ...) {
+-  va_list ap, aq;
+-  va_start(ap, fmt);
+-  va_copy(aq, ap);    /* test va_copy */
+-  test(fmt, aq);
+-  va_end(aq);
+-  va_end(ap);
+-}
+-
+-int main() {
+-  DWordS dw = { 18, 'a' };
+-  QuadWordS qw = { 19, 20.0 };
+-  LargeS ls = { 21, 22.0, &dw, 23 };
+-
+-  testVaListArg("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
+-  testVaCopyArg("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
+-
+-  /* test promotion & 64-bit types */
+-  testVaListArg("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
+-  testVaCopyArg("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
+-
+-  /* test passing structs by value to varargs */
+-  testVaListArg("DQL", dw, qw, ls);
+-  testVaCopyArg("DQL", dw, qw, ls);
+-
+-  return 0;
+-}
+diff --git a/SingleSource/UnitTests/CMakeLists.txt b/SingleSource/UnitTests/CMakeLists.txt
+index b3b16477..9be9a21c 100644
+--- a/SingleSource/UnitTests/CMakeLists.txt
++++ b/SingleSource/UnitTests/CMakeLists.txt
+@@ -3,7 +3,7 @@ include(CheckCCompilerFlag)
+ add_subdirectory(C++11)
+ add_subdirectory(SignlessTypes)
+ add_subdirectory(Threads)
+-add_subdirectory(Vector)
++#add_subdirectory(Vector)
+ add_subdirectory(Vectorizer)
+ # FIXME: Disable SJLJ tests for now, until EH edges are represented.
+ # add_subdirectory(SetjmpLongjmp)
+@@ -60,4 +60,6 @@ else()
+   list(REMOVE_ITEM Source matrix-types-spec.cpp)
+ endif()
+ 
++list(REMOVE_ITEM Source	AtomicOps.c)
++
+ llvm_singlesource()

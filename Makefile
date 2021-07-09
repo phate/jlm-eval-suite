@@ -17,6 +17,7 @@ help:
 	@$(HELP_TEXT)
 	@$(HELP_TEXT_POLYBENCH)
 	@$(HELP_TEXT_CPU2017)
+	@$(HELP_TEXT_LLVM_TEST)
 	@$(HELP_TEXT_JLM)
 	@$(HELP_TEXT_JIVE)
 	@$(HELP_TEXT_CSMITH)
@@ -39,6 +40,7 @@ JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
 CSMITH_ROOT    := $(DIR)/csmith
+LLVM_TEST_ROOT := $(DIR)/llvm-test-suite
 
 # Set necessary paths
 export PATH := $(JLM_BIN):$(PATH)
@@ -59,6 +61,9 @@ include $(CPU2017_ROOT)/Makefile.sub
 endif
 ifneq ("$(wildcard $(CSMITH_ROOT)/Makefile.sub)","")
 include $(CSMITH_ROOT)/Makefile.sub
+endif
+ifneq ("$(wildcard $(LLVM_TEST_ROOT)/Makefile.sub)","")
+include $(LLVM_TEST_ROOT)/Makefile.sub
 endif
 
 # Silent locale warnings from perl
