@@ -1,3 +1,4 @@
 bin
 csmith/test*
 csmith/platform.info
+llvm-test-suite/build*
