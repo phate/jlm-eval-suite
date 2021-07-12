@@ -9,8 +9,6 @@ echo "submodule              Initializes all the dependent git submodules except
 echo "                       cpu2017 since it requires private access"
 echo "submodule-2017         Initializes all the dependent git submodules including"
 echo "                       cpu2017"
-echo "install                Installs the source code, require argument"
-echo "                       cpu2017=[name].tar.xz"
 echo "all                    Compiles jive and jlm"
 echo "clean                  Calls clean for jive, jlm, polybench, cpu2017, csmith,"
 echo "                       and llvm-test."
