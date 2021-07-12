@@ -5,12 +5,15 @@ echo "Version 1.0 - 2019-06-18"
 echo ""
 echo "Evalution Suite Make Targets"
 echo "--------------------------------------------------------------------------------"
-echo "submodule              Initializes all the dependent git submodules"
+echo "submodule              Initializes all the dependent git submodules except"
+echo "                       cpu2017 since it requires private access"
+echo "submodule-2017         Initializes all the dependent git submodules including"
+echo "                       cpu2017"
 echo "install                Installs the source code, require argument"
 echo "                       cpu2017=[name].tar.xz"
 echo "all                    Compiles jive and jlm"
-echo "clean                  Calls clean for jive, jlm, polybench, cpu2017, and"
-echo "                       csmith."
+echo "clean                  Calls clean for jive, jlm, polybench, cpu2017, csmith,"
+echo "                       and llvm-test."
 endef
 .PHONY: help
 help:
@@ -76,7 +79,11 @@ all: jive-release jlm-release
 
 .PHONY: submodule
 submodule:
-	git submodule update --init --recursive
+	git -c submodule.cpu2017.update=none submodule update --init --recursive
+
+.PHONY: submodule-cpu2017
+submodule-2017:
+	git -c submodule update --init --recursive
 
 ### GENERIC
 
@@ -94,4 +101,4 @@ submodule:
 ### CLEAN
 
 .PHONY: clean
-clean: jive-clean jlm-clean polybench-purge cpu2017-clean csmith-clean
+clean: jive-clean jlm-clean polybench-purge cpu2017-clean csmith-clean llvm-test
