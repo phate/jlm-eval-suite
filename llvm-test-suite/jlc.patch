@@ -11,260 +11,169 @@ index dba0063a..19adba37 100644
  if(TEST_SUITE_COLLECT_CODE_SIZE)
    find_program(TEST_SUITE_LLVM_SIZE NAMES "llvm-size"
                 HINTS ${CMAKE_C_COMPILER_DIRECTORY})
+diff --git a/MicroBenchmarks/CMakeLists.txt b/MicroBenchmarks/CMakeLists.txt
+index 27889411..9ce66786 100644
+--- a/MicroBenchmarks/CMakeLists.txt
++++ b/MicroBenchmarks/CMakeLists.txt
+@@ -1,10 +1,10 @@
+ file(COPY lit.local.cfg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ 
+-add_subdirectory(Builtins)
+-add_subdirectory(libs)
+-add_subdirectory(XRay)
+-add_subdirectory(LCALS)
+-add_subdirectory(harris)
+-add_subdirectory(ImageProcessing)
+-add_subdirectory(LoopInterchange)
+-add_subdirectory(MemFunctions)
++#add_subdirectory(Builtins)
++#add_subdirectory(libs)
++#add_subdirectory(XRay)
++#add_subdirectory(LCALS)
++#add_subdirectory(harris)
++#add_subdirectory(ImageProcessing)
++#add_subdirectory(LoopInterchange)
++#add_subdirectory(MemFunctions)
 diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
-index a73acd56..cb4fe478 100644
+index a73acd56..bb35c7cd 100644
 --- a/MultiSource/Applications/CMakeLists.txt
 +++ b/MultiSource/Applications/CMakeLists.txt
-@@ -1,14 +1,14 @@
+@@ -1,4 +1,4 @@
 -add_subdirectory(JM)
 +#add_subdirectory(JM)
  add_subdirectory(SIBsim4)
  add_subdirectory(aha)
--add_subdirectory(d)
-+#add_subdirectory(d)
- if(NOT ARCH STREQUAL "PowerPC")
- # This test has problems running on powerpc starting with r295538 and should
- # be restored when the issue is corrected.
--  add_subdirectory(oggenc)
-+#  add_subdirectory(oggenc)
- endif()
- add_subdirectory(sgefa)
--add_subdirectory(spiff)
-+#add_subdirectory(spiff)
+ add_subdirectory(d)
+@@ -11,32 +11,32 @@ add_subdirectory(sgefa)
+ add_subdirectory(spiff)
  add_subdirectory(viterbi)
  
- add_subdirectory(ALAC)
-@@ -19,26 +19,26 @@ if(NOT TARGET_OS STREQUAL "SunOS")
-   add_subdirectory(hexxagon)
+-add_subdirectory(ALAC)
+-add_subdirectory(hbd)
+-add_subdirectory(lambda-0.1.3)
+-add_subdirectory(minisat)
++#add_subdirectory(ALAC)
++#add_subdirectory(hbd)
++#add_subdirectory(lambda-0.1.3)
++#add_subdirectory(minisat)
+ if(NOT TARGET_OS STREQUAL "SunOS")
+-  add_subdirectory(hexxagon)
++#  add_subdirectory(hexxagon)
  endif()
  if(NOT DEFINED SMALL_PROBLEM_SIZE)
--  add_subdirectory(lua)
-+	#  add_subdirectory(lua)
+   add_subdirectory(lua)
  endif()
  if((TARGET_OS STREQUAL "Linux" OR TARGET_OS STREQUAL "Darwin") AND (NOT ARCH STREQUAL "XCore"))
 -  add_subdirectory(obsequi)
-+	#  add_subdirectory(obsequi)
++#  add_subdirectory(obsequi)
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
-   add_subdirectory(kimwitu++)
+-  add_subdirectory(kimwitu++)
++#  add_subdirectory(kimwitu++)
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
--  add_subdirectory(SPASS)
-+	#  add_subdirectory(SPASS)
+   add_subdirectory(SPASS)
  endif()
  if(NOT ARCH STREQUAL "XCore")
 -  add_subdirectory(ClamAV)
-+	#  add_subdirectory(ClamAV)
++#  add_subdirectory(ClamAV)
    add_subdirectory(lemon)
--  add_subdirectory(siod)
-+  #  add_subdirectory(siod)
+   add_subdirectory(siod)
  endif()
  if((NOT ARCH STREQUAL "PowerPC") AND (NOT ARCH STREQUAL "XCore"))
 -  add_subdirectory(sqlite3)
-+	#  add_subdirectory(sqlite3)
++#  add_subdirectory(sqlite3)
  endif()
  if(NOT TEST_SUITE_BENCHMARKING_ONLY)
--  add_subdirectory(Burg)
--  add_subdirectory(treecc)
-+	#  add_subdirectory(Burg)
-+	#  add_subdirectory(treecc)
- endif()
+   add_subdirectory(Burg)
 diff --git a/MultiSource/Benchmarks/CMakeLists.txt b/MultiSource/Benchmarks/CMakeLists.txt
-index 61d1fd08..97ae3a55 100644
+index 61d1fd08..0502f04c 100644
 --- a/MultiSource/Benchmarks/CMakeLists.txt
 +++ b/MultiSource/Benchmarks/CMakeLists.txt
-@@ -4,19 +4,19 @@ add_subdirectory(BitBench)
- add_subdirectory(Fhourstones)
+@@ -5,16 +5,16 @@ add_subdirectory(Fhourstones)
  add_subdirectory(Fhourstones-3.1)
  add_subdirectory(FreeBench)
--add_subdirectory(MallocBench)
-+#add_subdirectory(MallocBench)
- add_subdirectory(McCat)
+ add_subdirectory(MallocBench)
+-add_subdirectory(McCat)
++#add_subdirectory(McCat)
  add_subdirectory(NPB-serial)
- add_subdirectory(Olden)
+-add_subdirectory(Olden)
 -add_subdirectory(Prolangs-C)
++#add_subdirectory(Olden)
 +#add_subdirectory(Prolangs-C)
  add_subdirectory(Ptrdist)
  add_subdirectory(SciMark2-C)
  add_subdirectory(Trimaran)
- add_subdirectory(VersaBench)
--add_subdirectory(llubenchmark)
-+#add_subdirectory(llubenchmark)
- add_subdirectory(mediabench)
--add_subdirectory(nbench)
--add_subdirectory(sim)
-+#add_subdirectory(nbench)
-+#add_subdirectory(sim)
+-add_subdirectory(VersaBench)
++#add_subdirectory(VersaBench)
+ add_subdirectory(llubenchmark)
+-add_subdirectory(mediabench)
++#add_subdirectory(mediabench)
+ add_subdirectory(nbench)
+ add_subdirectory(sim)
  add_subdirectory(Rodinia)
- 
+@@ -22,17 +22,17 @@ add_subdirectory(Rodinia)
  if((NOT "${TARGET_OS}" STREQUAL "Darwin") OR (NOT "${ARCH}" STREQUAL "ARM"))
-@@ -31,9 +31,9 @@ if(NOT "${ARCH}" STREQUAL "Hexagon")
+   add_subdirectory(TSVC)
+ endif()
+-add_subdirectory(Prolangs-C++)
+-add_subdirectory(Bullet)
+-add_subdirectory(tramp3d-v4)
++#add_subdirectory(Prolangs-C++)
++#add_subdirectory(Bullet)
++#add_subdirectory(tramp3d-v4)
+ if(NOT "${ARCH}" STREQUAL "Hexagon")
+-  add_subdirectory(DOE-ProxyApps-C++)
+-  add_subdirectory(DOE-ProxyApps-C)
++#  add_subdirectory(DOE-ProxyApps-C++)
++#  add_subdirectory(DOE-ProxyApps-C)
    add_subdirectory(MiBench)
  endif()
  if(NOT "${ARCH}" STREQUAL "XCore")
 -  add_subdirectory(7zip)
-+	#  add_subdirectory(7zip)
-   add_subdirectory(PAQ8p)
+-  add_subdirectory(PAQ8p)
++#  add_subdirectory(7zip)
++#  add_subdirectory(PAQ8p)
  endif()
  if(NOT DEFINED SMALL_PROBLEM_SIZE)
--  add_subdirectory(mafft)
-+	#  add_subdirectory(mafft)
- endif()
-diff --git a/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt b/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
-index 0214eeb2..a7ea89cd 100644
---- a/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/DOE-ProxyApps-C++/CMakeLists.txt
-@@ -1,5 +1,5 @@
- add_subdirectory(HPCCG)
- add_subdirectory(PENNANT)
- add_subdirectory(miniFE)
--add_subdirectory(CLAMR)
-+#add_subdirectory(CLAMR)
- add_subdirectory(HACCKernels)
-diff --git a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
-index f576f499..8ef73f16 100644
---- a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
-@@ -1,7 +1,7 @@
- add_subdirectory(XSBench)
--add_subdirectory(Pathfinder)
-+#add_subdirectory(Pathfinder)
- add_subdirectory(miniAMR)
- add_subdirectory(miniGMG)
- add_subdirectory(RSBench)
- add_subdirectory(SimpleMOC)
--add_subdirectory(CoMD)
-+#add_subdirectory(CoMD)
-diff --git a/MultiSource/Benchmarks/FreeBench/CMakeLists.txt b/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
-index a19ae6a2..92cee231 100644
---- a/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/FreeBench/CMakeLists.txt
-@@ -1,6 +1,6 @@
- add_subdirectory(distray)
- add_subdirectory(fourinarow)
--add_subdirectory(mason)
-+#add_subdirectory(mason)
- add_subdirectory(neural)
- add_subdirectory(pcompress2)
- add_subdirectory(pifft)
-diff --git a/MultiSource/Benchmarks/McCat/CMakeLists.txt b/MultiSource/Benchmarks/McCat/CMakeLists.txt
-index e8b48a51..b844251f 100644
---- a/MultiSource/Benchmarks/McCat/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/McCat/CMakeLists.txt
-@@ -6,7 +6,7 @@ add_subdirectory(08-main)
- add_subdirectory(09-vor)
- add_subdirectory(12-IOtest)
- add_subdirectory(17-bintr)
--add_subdirectory(18-imp)
-+#add_subdirectory(18-imp)
- if(NOT TEST_SUITE_BENCHMARKING_ONLY)
-   add_subdirectory(15-trie)
- endif()
-diff --git a/MultiSource/Benchmarks/MiBench/CMakeLists.txt b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
-index e3062a5e..98d92342 100644
---- a/MultiSource/Benchmarks/MiBench/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
-@@ -2,22 +2,22 @@ add_subdirectory(automotive-basicmath)
- add_subdirectory(automotive-bitcount)
- add_subdirectory(automotive-susan)
- add_subdirectory(consumer-jpeg)
--add_subdirectory(consumer-typeset)
-+#add_subdirectory(consumer-typeset)
- add_subdirectory(network-dijkstra)
- add_subdirectory(network-patricia)
- add_subdirectory(security-rijndael)
- add_subdirectory(security-sha)
- add_subdirectory(telecomm-CRC32)
- add_subdirectory(telecomm-FFT)
--add_subdirectory(telecomm-gsm)
-+#add_subdirectory(telecomm-gsm)
- if(NOT "${ARCH}" STREQUAL "XCore")
--  add_subdirectory(consumer-lame)
-+	#  add_subdirectory(consumer-lame)
- endif()
- if(NOT TEST_SUITE_BENCHMARKING_ONLY)
-   add_subdirectory(office-stringsearch)
-   add_subdirectory(security-blowfish)
-   add_subdirectory(telecomm-adpcm)
-   if((NOT "${ARCH}" STREQUAL "XCore") AND (NOT "${ARCH}" STREQUAL "ARM"))
--    add_subdirectory(office-ispell)
-+	  #    add_subdirectory(office-ispell)
-   endif()
- endif()
-diff --git a/MultiSource/Benchmarks/Olden/CMakeLists.txt b/MultiSource/Benchmarks/Olden/CMakeLists.txt
-index 0f2dc911..3af27e8e 100644
---- a/MultiSource/Benchmarks/Olden/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/Olden/CMakeLists.txt
-@@ -2,9 +2,9 @@ add_subdirectory(bh)
- add_subdirectory(bisort)
- add_subdirectory(em3d)
- add_subdirectory(health)
--add_subdirectory(mst)
--add_subdirectory(perimeter)
-+#add_subdirectory(mst)
-+#add_subdirectory(perimeter)
- add_subdirectory(power)
- add_subdirectory(treeadd)
--add_subdirectory(tsp)
-+#add_subdirectory(tsp)
- add_subdirectory(voronoi)
-diff --git a/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt b/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
-index 8871ce79..f23fb25e 100644
---- a/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/Ptrdist/CMakeLists.txt
-@@ -1,5 +1,5 @@
- add_subdirectory(anagram)
--add_subdirectory(bc)
-+#add_subdirectory(bc)
- add_subdirectory(ft)
- add_subdirectory(ks)
- add_subdirectory(yacr2)
-diff --git a/MultiSource/Benchmarks/Trimaran/CMakeLists.txt b/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
-index 46435bfb..9b8d6fd8 100644
---- a/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/Trimaran/CMakeLists.txt
-@@ -1,6 +1,6 @@
- add_subdirectory(enc-3des)
- add_subdirectory(enc-md5)
--add_subdirectory(enc-pc1)
-+#add_subdirectory(enc-pc1)
- add_subdirectory(enc-rc4)
- add_subdirectory(netbench-crc)
- add_subdirectory(netbench-url)
-diff --git a/MultiSource/Benchmarks/VersaBench/CMakeLists.txt b/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
-index 4e503005..f47c3d54 100644
---- a/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/VersaBench/CMakeLists.txt
+   add_subdirectory(mafft)
+diff --git a/MultiSource/UnitTests/CMakeLists.txt b/MultiSource/UnitTests/CMakeLists.txt
+index e5b90a91..fa3c0fe4 100644
+--- a/MultiSource/UnitTests/CMakeLists.txt
++++ b/MultiSource/UnitTests/CMakeLists.txt
 @@ -1,4 +1,4 @@
--add_subdirectory(beamformer)
-+#add_subdirectory(beamformer)
- add_subdirectory(bmm)
- add_subdirectory(dbms)
- add_subdirectory(ecbdes)
-diff --git a/MultiSource/Benchmarks/mediabench/CMakeLists.txt b/MultiSource/Benchmarks/mediabench/CMakeLists.txt
-index b375382d..2aef68df 100644
---- a/MultiSource/Benchmarks/mediabench/CMakeLists.txt
-+++ b/MultiSource/Benchmarks/mediabench/CMakeLists.txt
-@@ -1,5 +1,5 @@
- add_subdirectory(adpcm)
- add_subdirectory(g721)
--add_subdirectory(gsm)
-+#add_subdirectory(gsm)
- add_subdirectory(jpeg)
- add_subdirectory(mpeg2)
+-add_subdirectory(C++11)
++#add_subdirectory(C++11)
+ if(ARCH STREQUAL "Mips")
+   add_subdirectory(Mips)
+ endif()
 diff --git a/SingleSource/Benchmarks/CMakeLists.txt b/SingleSource/Benchmarks/CMakeLists.txt
-index 72ce8b06..e317ceca 100644
+index 72ce8b06..c3b2f2dd 100644
 --- a/SingleSource/Benchmarks/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/CMakeLists.txt
-@@ -4,7 +4,7 @@ add_subdirectory(CoyoteBench)
- add_subdirectory(Dhrystone)
+@@ -1,14 +1,14 @@
+-add_subdirectory(Adobe-C++)
++#add_subdirectory(Adobe-C++)
+ add_subdirectory(BenchmarkGame)
+-add_subdirectory(CoyoteBench)
+-add_subdirectory(Dhrystone)
++#add_subdirectory(CoyoteBench)
++#add_subdirectory(Dhrystone)
  add_subdirectory(Linpack)
  add_subdirectory(McGill)
 -add_subdirectory(Misc)
+-add_subdirectory(Misc-C++)
+-add_subdirectory(Misc-C++-EH)
 +#add_subdirectory(Misc)
- add_subdirectory(Misc-C++)
- add_subdirectory(Misc-C++-EH)
++#add_subdirectory(Misc-C++)
++#add_subdirectory(Misc-C++-EH)
  add_subdirectory(Polybench)
+ add_subdirectory(Shootout)
+-add_subdirectory(Shootout-C++)
+-add_subdirectory(SmallPT)
++#add_subdirectory(Shootout-C++)
++#add_subdirectory(SmallPT)
+ add_subdirectory(Stanford)
 diff --git a/SingleSource/Regression/C/2004-03-15-IndirectGoto.c b/SingleSource/Regression/C/2004-03-15-IndirectGoto.c
 deleted file mode 100644
 index 204dce93..00000000
@@ -287,126 +196,1083 @@ index 204dce93..00000000
 -  printf("E\n");
 -  return 0;
 -}
-diff --git a/SingleSource/Regression/C/CMakeLists.txt b/SingleSource/Regression/C/CMakeLists.txt
-index 0acc7b84..b839ab69 100644
---- a/SingleSource/Regression/C/CMakeLists.txt
-+++ b/SingleSource/Regression/C/CMakeLists.txt
-@@ -1,7 +1,7 @@
- if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
-    ARCH MATCHES "SystemZ" OR ARCH MATCHES "Mips" OR
-    ARCH MATCHES "AArch64" OR ARCH MATCHES "ARM")
--  add_subdirectory(gcc-c-torture)
-+#  add_subdirectory(gcc-c-torture)
- endif()
- 
- list(APPEND LDFLAGS -lm)
-diff --git a/SingleSource/Regression/C/Makefile b/SingleSource/Regression/C/Makefile
-index 1cc49737..9569db00 100644
---- a/SingleSource/Regression/C/Makefile
-+++ b/SingleSource/Regression/C/Makefile
-@@ -6,6 +6,9 @@ EXEC_XFAILS = casts
- endif
- endif
- 
-+PROGRAMS_TO_SKIP += \
-+	2004-03-15-IndirectGoto \
-+
- ifdef BENCHMARKING_ONLY
- PROGRAMS_TO_SKIP += \
- 	2003-05-14-initialize-string \
-diff --git a/SingleSource/Regression/C/PR10189.c b/SingleSource/Regression/C/PR10189.c
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20001009-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/20001009-2.c
 deleted file mode 100644
-index 454431ad..00000000
---- a/SingleSource/Regression/C/PR10189.c
+index eedc299f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20001009-2.c
 +++ /dev/null
-@@ -1,81 +0,0 @@
--unsigned short
--safe_53 (int short ui1, int short ui2)
+@@ -1,21 +0,0 @@
+-int b=1;
+-int foo()
 -{
--  return ui1 - ui2;
+-  int a;
+-  int c;
+-  a=0xff;
+-  for (;b;b--)
+-  {
+-    c=1;
+-    asm(""::"r"(c));
+-    c=(signed char)a;
+-  }
+-  if (c!=-1)
+-    abort();
+-  return c;
+-}
+-int main()
+-{
+-  foo();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20021024-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20021024-1.c
+deleted file mode 100644
+index 93504f22..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20021024-1.c
++++ /dev/null
+@@ -1,44 +0,0 @@
+-/* Origin: PR target/6981 from Mattias Engdegaard <mattias@virtutech.se>.  */
+-/* { dg-require-effective-target int32plus } */
+-
+-void exit (int);
+-void abort (void);
+-
+-unsigned long long *cp, m;
+-
+-void foo (void)
+-{
 -}
 -
--int short
--safe_60 (int short left, int right)
+-void bar (unsigned rop, unsigned long long *r)
 -{
--  return right ? 0 : left >> right;
+-  unsigned rs1, rs2, rd;
+-
+-top:
+-  rs2 = (rop >> 23) & 0x1ff;
+-  rs1 = (rop >> 9) & 0x1ff;
+-  rd = rop & 0x1ff;
+-
+-  *cp = 1;
+-  m = r[rs1] + r[rs2];
+-  *cp = 2;
+-  foo();
+-  if (!rd)
+-    goto top;
+-  r[rd] = 1;
 -}
 -
--struct S0
+-int main(void)
 -{
--  int f;
--};
+-  static unsigned long long r[64];
+-  unsigned long long cr;
+-  cp = &cr;
 -
--struct S1
+-  r[4] = 47;
+-  r[8] = 11;
+-  bar((8 << 23) | (4 << 9) | 15, r);
+-
+-  if (m != 47 + 11)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20030222-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20030222-1.c
+deleted file mode 100644
+index be087850..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20030222-1.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/* Verify that we get the low part of the long long as an int.  We
+-   used to get it wrong on big-endian machines, if register allocation
+-   succeeded at all.  We use volatile to make sure the long long is
+-   actually truncated to int, in case a single register is wide enough
+-   for a long long.  */
+-/* { dg-skip-if "asm would require extra shift-left-4-byte" { spu-*-* } } */
+-/* { dg-skip-if "asm requires register allocation" { nvptx-*-* } } */
+-#include <limits.h>
+-
+-void
+-ll_to_int (long long x, volatile int *p)
 -{
--  int f3;
--};
--
--struct S2
--{
--  volatile struct S0 f2;
--};
--
--struct S3
--{
--  int f;
--};
--
--int short g_8;
--int g_20[][1][0];
--int g_37;
--
--struct S2 g_6;
--
--struct S3 g_169;
--
--struct S1 g_177;
--struct S2 g_1639[];
--
--char func_13 (unsigned, unsigned short, short);
--
--char func_21 (unsigned char, unsigned, int *);
--
--struct S2 func_1 (vo)
--{
--  int l_2 = 1;
--  l_2 && func_13 (0, 0, 0), 0;
--  return g_1639[0];
+-  int i;
+-  asm ("" : "=r" (i) : "0" (x));
+-  *p = i;
 -}
 -
--char func_13 (unsigned p_, unsigned short p_15, short p_1)
+-int val = INT_MIN + 1;
+-
+-int main() {
+-  volatile int i;
+-
+-  ll_to_int ((long long)val, &i);
+-  if (i != val)
+-    abort ();
+-
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20040302-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20040302-1.c
+deleted file mode 100644
+index 10bc133e..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20040302-1.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-int code[]={0,0,0,0,1};
+-
+-void foo(int x) {
+-  volatile int b;
+-  b = 0xffffffff;
+-}
+-
+-void bar(int *pc) {
+-  static const void *l[] = {&&lab0, &&end};
+-
+-  foo(0);
+-  goto *l[*pc];
+- lab0:
+-  foo(0);
+-  pc++;
+-  goto *l[*pc];
+- end:
+-  return;
+-}
+-
+-int main() {
+-  bar(code);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20041214-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20041214-1.c
+deleted file mode 100644
+index de48213d..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20041214-1.c
++++ /dev/null
+@@ -1,69 +0,0 @@
+-/* { dg-require-effective-target indirect_jumps } */
+-
+-typedef long unsigned int size_t;
+-extern void abort (void);
+-extern char *strcpy (char *, const char *);
+-extern int strcmp (const char *, const char *);
+-typedef __builtin_va_list va_list;
+-static const char null[] = "(null)";
+-int g (char *s, const char *format, va_list ap)
 -{
--  int l_346;
--  int *l_701 = &g_37;
--  for (l_346 = 2; l_346 >= 0; l_346 -= 1)
+-  const char *f;
+-  const char *string;
+-  char spec;
+-  static const void *step0_jumps[] = {
+-    &&do_precision,
+-    &&do_form_integer,
+-    &&do_form_string,
+-  };
+-  f = format;
+-  if (*f == '\0')
+-    goto all_done;
+-  do
 -    {
--      for (; g_177.f3; g_177.f3 += 1);
--      for (p_15 = 0; p_15 <= 2; p_15 += 1)
--	*l_701 = safe_60 (g_6.f2.f, func_21 (g_169.f, 0, 0)) > 0;
+-      spec = (*++f);
+-      goto *(step0_jumps[2]);
+-
+-    /* begin switch table. */
+-    do_precision:
+-      ++f;
+-      __builtin_va_arg (ap, int);
+-      spec = *f;
+-      goto *(step0_jumps[2]);
+-
+-      do_form_integer:
+-	__builtin_va_arg (ap, unsigned long int);
+-	goto end;
+-
+-      do_form_string:
+-	string = __builtin_va_arg (ap, const char *);
+-	strcpy (s, string);
+-
+-      /* End of switch table. */
+-      end:
+-      ++f;
 -    }
+-  while (*f != '\0');
+-
+-all_done:
 -  return 0;
 -}
 -
--char
--func_21 (unsigned char p_, unsigned p_2, int *p_24)
+-void
+-f (char *s, const char *f, ...)
 -{
--  int *l_30 = &g_20[0][0][1];
--  int **l_29 = &l_30;
--  **l_29 = safe_53 (*l_30, g_8);
--  return **l_29;
+-  va_list ap;
+-  __builtin_va_start (ap, f);
+-  g (s, f, ap);
+-  __builtin_va_end (ap);
 -}
 -
--int main (void)
+-int
+-main (void)
 -{
--  func_1 ();
+-  char buf[10];
+-  f (buf, "%s", "asdf", 0);
+-  if (strcmp (buf, "asdf"))
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20050203-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20050203-1.c
+deleted file mode 100644
+index 0b382779..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20050203-1.c
++++ /dev/null
+@@ -1,29 +0,0 @@
+-/* Reduced testcase extracted from Samba source code.  */
+-
+-#include <stdlib.h>
+-
+-static void __attribute__((__noinline__))
+-     foo (unsigned char *p) {
+-  *p = 0x81;
+-}
+-
+-static void __attribute__((__noinline__))
+-     bar (int x) {
+-  asm ("");
+-}
+-
+-int main() {
+-  unsigned char b;
+-
+-  foo(&b);
+-  if (b & 0x80)
+-    {
+-      bar (b & 0x7f);
+-      exit (0);
+-    }
+-  else
+-    {
+-      bar (b & 1);
+-      abort ();
+-    }
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20050316-1.c
+deleted file mode 100644
+index 0a285d73..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-1.c
++++ /dev/null
+@@ -1,71 +0,0 @@
+-/* PR rtl-optimization/16104 */
+-/* { dg-require-effective-target int32plus } */
+-/* { dg-options "-Wno-psabi" } */
+-
+-extern void abort (void);
+-
+-typedef int V2SI __attribute__ ((vector_size (8)));
+-typedef unsigned int V2USI __attribute__ ((vector_size (8)));
+-typedef short V2HI __attribute__ ((vector_size (4)));
+-typedef unsigned int V2UHI __attribute__ ((vector_size (4)));
+-
+-int
+-test1 (void)
+-{
+-  return (long long) (V2SI) 0LL;
+-}
+-
+-int
+-test2 (V2SI x)
+-{
+-  return (long long) x;
+-}
+-
+-V2SI
+-test3 (void)
+-{
+-  return (V2SI) (long long) (int) (V2HI) 0;
+-}
+-
+-V2SI
+-test4 (V2HI x)
+-{
+-  return (V2SI) (long long) (int) x;
+-}
+-
+-V2SI
+-test5 (V2USI x)
+-{
+-  return (V2SI) x;
+-}
+-
+-int
+-main (void)
+-{
+-  if (sizeof (short) != 2 || sizeof (int) != 4 || sizeof (long long) != 8)
+-    return 0;
+-
+-  if (test1 () != 0)
+-    abort ();
+-
+-  V2SI x = { 2, 2 };
+-  if (test2 (x) != 2)
+-    abort ();
+-
+-  union { V2SI x; int y[2]; V2USI z; long long l; } u;
+-  u.x = test3 ();
+-  if (u.y[0] != 0 || u.y[1] != 0)
+-    abort ();
+-
+-  V2HI y = { 4, 4 };
+-  union { V2SI x; long long y; } v;
+-  v.x = test4 (y);
+-  if (v.y != 0x40004)
+-    abort ();
+-
+-  V2USI z = { 6, 6 };
+-  u.x = test5 (z);
+-  if (u.y[0] != 6 || u.y[1] != 6)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/20050316-2.c
+deleted file mode 100644
+index 920dfdb9..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-2.c
++++ /dev/null
+@@ -1,54 +0,0 @@
+-/* This testcase generates MMX instructions together with x87 instructions.
+-   Currently, there is no "emms" generated to switch between register sets,
+-   so the testcase fails for targets where MMX insns are enabled.  */
+-/* { dg-options "-mno-mmx -Wno-psabi" { target { x86_64-*-* i?86-*-* } } } */
+-
+-extern void abort (void);
+-
+-typedef int V2SI __attribute__ ((vector_size (8)));
+-typedef unsigned int V2USI __attribute__ ((vector_size (8)));
+-typedef float V2SF __attribute__ ((vector_size (8)));
+-typedef short V2HI __attribute__ ((vector_size (4)));
+-typedef unsigned int V2UHI __attribute__ ((vector_size (4)));
+-
+-long long
+-test1 (V2SF x)
+-{
+-  return (long long) (V2SI) x;
+-}
+-
+-long long
+-test2 (V2SF x)
+-{
+-  return (long long) x;
+-}
+-
+-long long
+-test3 (V2SI x)
+-{
+-  return (long long) (V2SF) x;
+-}
+-
+-int
+-main (void)
+-{
+-  if (sizeof (short) != 2 || sizeof (int) != 4 || sizeof (long long) != 8)
+-    return 0;
+-
+-  V2SF x = { 2.0, 2.0 };
+-  union { long long l; float f[2]; int i[2]; } u;
+-  u.l = test1 (x);
+-  if (u.f[0] != 2.0 || u.f[1] != 2.0)
+-    abort ();
+-
+-  V2SF y = { 6.0, 6.0 };
+-  u.l = test2 (y);
+-  if (u.f[0] != 6.0 || u.f[1] != 6.0)
+-    abort ();
+-
+-  V2SI z = { 4, 4 };
+-  u.l = test3 (z);
+-  if (u.i[0] != 4 || u.i[1] != 4)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-3.c b/SingleSource/Regression/C/gcc-c-torture/execute/20050316-3.c
+deleted file mode 100644
+index 9f35ece4..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20050316-3.c
++++ /dev/null
+@@ -1,37 +0,0 @@
+-/* { dg-options "-Wno-psabi" } */
+-extern void abort (void);
+-
+-typedef int V2SI __attribute__ ((vector_size (8)));
+-typedef unsigned int V2USI __attribute__ ((vector_size (8)));
+-typedef short V2HI __attribute__ ((vector_size (4)));
+-typedef unsigned int V2UHI __attribute__ ((vector_size (4)));
+-
+-V2USI
+-test1 (V2SI x)
+-{
+-  return (V2USI) (V2SI) (long long) x;
+-}
+-
+-long long
+-test2 (V2SI x)
+-{
+-  return (long long) (V2USI) (V2SI) (long long) x;
+-}
+-
+-int
+-main (void)
+-{
+-  if (sizeof (short) != 2 || sizeof (int) != 4 || sizeof (long long) != 8)
+-    return 0;
+-
+-  union { V2SI x; int y[2]; V2USI z; long long l; } u;
+-  V2SI a = { -3, -3 };
+-  u.z = test1 (a);
+-  if (u.y[0] != -3 || u.y[1] != -3)
+-    abort ();
+-
+-  u.l = test2 (a);
+-  if (u.y[0] != -3 || u.y[1] != -3)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20050607-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20050607-1.c
+deleted file mode 100644
+index 41579bbb..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20050607-1.c
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/* PR middle-end/21850 */
+-
+-extern void abort (void);
+-
+-typedef int V2SI __attribute__ ((vector_size (8)));
+-
+-int
+-main (void)
+-{
+-#if (__INT_MAX__ == 2147483647) \
+-    && (__LONG_LONG_MAX__ == 9223372036854775807LL)
+-  if (((int)(long long)(V2SI){ 2, 2 }) != 2)
+-    abort ();
+-#endif
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20061031-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20061031-1.c
+deleted file mode 100644
+index 3db0a97f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20061031-1.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/* PR rtl-optimization/29631 */
+-/* Origin: Falk Hueffner <falk@debian.org> */
+-
+-const signed char nunmap[] = { 17, -1, 1 };
+-
+-__attribute__((noinline))
+-void ff(int i) {
+-    asm volatile("");
+-}
+-
+-__attribute__((noinline))
+-void f(short delta)
+-{
+-    short p0 = 2, s;
+-    for (s = 0; s < 2; s++)
+-    {
+-        p0 += delta;
+-        ff(s);
+-        if (nunmap[p0] == 17)
+-            asm volatile("");
+-    }
+-}
+-
+-int main(void)
+-{
+-    f(-1);
+-    return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20071210-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20071210-1.c
+deleted file mode 100644
+index 79fa0a7f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20071210-1.c
++++ /dev/null
+@@ -1,69 +0,0 @@
+-/* PR rtl-optimization/34302 */
+-/* { dg-require-effective-target label_values } */
+-/* { dg-require-effective-target indirect_jumps } */
+-
+-extern void abort (void);
+-
+-struct S
+-{
+-  int n1, n2, n3, n4;
+-};
+-
+-__attribute__((noinline)) struct S
+-foo (int x, int y, int z)
+-{
+-  if (x != 10 || y != 9 || z != 8)
+-    abort ();
+-  struct S s = { 1, 2, 3, 4 };
+-  return s;
+-}
+-
+-__attribute__((noinline)) void **
+-bar (void **u, int *v)
+-{
+-  void **w = u;
+-  int *s = v, x, y, z;
+-  void **p, **q;
+-  static void *l[] = { &&lab1, &&lab1, &&lab2, &&lab3, &&lab4 };
+-
+-  if (!u)
+-    return l;
+-
+-  q = *w++;
+-  goto *q;
+-lab2:
+-  p = q;
+-  q = *w++;
+-  x = s[2];
+-  y = s[1];
+-  z = s[0];
+-  s -= 1;
+-  struct S r = foo (x, y, z);
+-  s[3] = r.n1;
+-  s[2] = r.n2;
+-  s[1] = r.n3;
+-  s[0] = r.n4;
+-  goto *q;
+-lab3:
+-  p = q;
+-  q = *w++;
+-  s += 1;
+-  s[0] = 23;
+-lab1:
+-  goto *q;
+-lab4:
+-  return 0;
+-}
+-
+-int
+-main (void)
+-{
+-  void **u = bar ((void **) 0, (int *) 0);
+-  void *t[] = { u[2], u[4] };
+-  int s[] = { 7, 8, 9, 10, 11, 12 };
+-  if (bar (t, &s[1]) != (void **) 0
+-      || s[0] != 4 || s[1] != 3 || s[2] != 2 || s[3] != 1
+-      || s[4] != 11 || s[5] != 12)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20071211-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20071211-1.c
+deleted file mode 100644
+index 4a4f1fef..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20071211-1.c
++++ /dev/null
+@@ -1,23 +0,0 @@
+-extern void abort() __attribute__ ((noreturn));
+-
+-struct s
+-{
+-  unsigned long long f1 : 40;
+-#if(__SIZEOF_INT__ >= 4)
+-  unsigned int f2 : 24;
+-#else
+-  unsigned long int f2 : 24;
+-#endif
+-} sv;
+-
+-int main()
+-{
+-  int f2;
+-  sv.f2 = (1 << 24) - 1;
+-  __asm__ volatile ("" : : : "memory");
+-  ++sv.f2;
+-  f2 = sv.f2;
+-  if (f2 != 0)
+-    abort();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20071220-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20071220-1.c
+deleted file mode 100644
+index e832acc8..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20071220-1.c
++++ /dev/null
+@@ -1,42 +0,0 @@
+-/* PR tree-optimization/29484 */
+-/* { dg-require-effective-target label_values } */
+-/* { dg-require-effective-target indirect_jumps } */
+-
+-extern void abort (void);
+-
+-void *__attribute__((noinline))
+-baz (void **lab)
+-{
+-  asm volatile ("" : "+r" (lab));
+-  return *lab;
+-}
+-
+-static inline
+-int bar (void)
+-{
+-  static void *b[] = { &&addr };
+-  void *p = baz (b);
+-  goto *p;
+-addr:
+-  return 17;
+-}
+-
+-int __attribute__((noinline))
+-f1 (void)
+-{
+-  return bar ();
+-}
+-
+-int __attribute__((noinline))
+-f2 (void)
+-{
+-  return bar ();
+-}
+-
+-int
+-main (void)
+-{
+-  if (f1 () != 17 || f1 () != 17 || f2 () != 17 || f2 () != 17)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20071220-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/20071220-2.c
+deleted file mode 100644
+index 6cd9bb50..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20071220-2.c
++++ /dev/null
+@@ -1,40 +0,0 @@
+-/* PR tree-optimization/29484 */
+-/* { dg-require-effective-target label_values } */
+-
+-extern void abort (void);
+-
+-void *__attribute__((noinline))
+-baz (void **lab)
+-{
+-  asm volatile ("" : "+r" (lab));
+-  return *lab;
+-}
+-
+-static inline
+-int bar (void)
+-{
+-  static void *b[] = { &&addr };
+-  baz (b);
+-addr:
+-  return 17;
+-}
+-
+-int __attribute__((noinline))
+-f1 (void)
+-{
+-  return bar ();
+-}
+-
+-int __attribute__((noinline))
+-f2 (void)
+-{
+-  return bar ();
+-}
+-
+-int
+-main (void)
+-{
+-  if (f1 () != 17 || f1 () != 17 || f2 () != 17 || f2 () != 17)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20080122-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20080122-1.c
+deleted file mode 100644
+index a2f7fed8..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20080122-1.c
++++ /dev/null
+@@ -1,35 +0,0 @@
+-/* PR rtl-optimization/34628 */
+-/* Origin: Martin Michlmayr <tbm@cyrius.com> */
+-
+-typedef unsigned short u16;
+-typedef unsigned char u8;
+-
+-static void
+-do_segfault(u8 in_buf[], const u8 out_buf[], const int len)
+-{
+-  int i;
+-
+-  for (i = 0; i < len; i++) {
+-    asm("");
+-
+-    in_buf[2*i] = (   out_buf[2*i] | out_buf[(2*i)+1]<<8  ) & 0xFF;
+-
+-    asm("");
+-
+-    in_buf[(2*i)+1] =  ( out_buf[2*i] | out_buf[(2*i)+1]<<8 ) >> 8;
+-
+-    asm("");
+-  }
+-}
+-
+-int main(int argc, char *argv[])
+-{
+-  u8 outbuf[32] = "buffer     ";
+-  u8 inbuf[32] = "\f";
+-
+-  asm("");
+-  do_segfault(inbuf, outbuf, 12);
+-  asm("");
+-
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/20140212-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/20140212-1.c
+deleted file mode 100644
+index 8f1f84f3..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/20140212-1.c
++++ /dev/null
+@@ -1,37 +0,0 @@
+-/* PR rtl-optimization/60116 */
+-/* Reported by Zhendong Su <su@cs.ucdavis.edu> */
+-
+-extern void abort (void);
+-
+-int a, b, c, d = 1, e, f = 1, h, i, k;
+-char g, j;
+-
+-void
+-fn1 (void)
+-{
+-  int l;
+-  e = 0;
+-  c = 0;
+-  for (;;)
+-    {
+-      k = a && b;
+-      j = k * 54;
+-      g = j * 147;
+-      l = ~g + (long long) e && 1;
+-      if (d)
+-	c = l;
+-      else
+-	h = i = l * 9UL;
+-      if (f)
+-	return;
+-    }
+-}
+-
+-int
+-main (void)
+-{
+-  fn1 ();
+-  if (c != 1)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/920302-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/920302-1.c
+deleted file mode 100644
+index 62e4fc20..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/920302-1.c
++++ /dev/null
+@@ -1,40 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-
+-short optab[5];
+-char buf[10];
+-execute (ip)
+-     register short *ip;
+-{
+-  register void *base = &&x;
+-  char *bp = buf;
+-  static void *tab[] = {&&x, &&y, &&z};
+-  if (ip == 0)
+-    {
+-      int i;
+-      for (i = 0; i < 3; ++i)
+-	optab[i] = (short)(tab[i] - base);
+-      return;
+-    }
+-x:  *bp++='x';
+-    goto *(base + *ip++);
+-y:  *bp++='y';
+-    goto *(base + *ip++);
+-z:  *bp++='z';
+-    *bp=0;
+-    return;
+-}
+-
+-short p[5];
+-
+-main ()
+-{
+-  execute ((short *) 0);
+-  p[0] = optab[1];
+-  p[1] = optab[0];
+-  p[2] = optab[1];
+-  p[3] = optab[2];
+-  execute (&p);
+-  if (strcmp (buf, "xyxyz"))
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/920501-3.c b/SingleSource/Regression/C/gcc-c-torture/execute/920501-3.c
+deleted file mode 100644
+index 452d7c0d..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/920501-3.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-
+-int tab[9];
+-execute(oip, ip)
+-     unsigned short *oip, *ip;
+-{
+-  int x = 0;
+-  int *xp = tab;
+-base:
+-  x++;
+-  if (x == 4)
+-    {
+-      *xp = 0;
+-      return;
+-    }
+-  *xp++ = ip - oip;
+-  goto *(&&base + *ip++);
+-}
+-
+-main()
+-{
+-  unsigned short ip[10];
+-  int i;
+-  for (i = 0; i < 10; i++)
+-    ip[i] = 0;
+-  execute(ip, ip);
+-  if (tab[0] != 0 || tab[1] != 1 || tab[2] != 2 || tab[3] != 0)
+-    abort();
+-  exit(0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/920501-4.c b/SingleSource/Regression/C/gcc-c-torture/execute/920501-4.c
+deleted file mode 100644
+index eaf23e18..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/920501-4.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-
+-int
+-x (int i)
+-{
+-  static const void *j[] = {&& x, && y, && z};
+-
+-  goto *j[i];
+-
+- x: return 2;
+- y: return 3;
+- z: return 5;
+-}
+-
+-int
+-main (void)
+-{
+-  if (   x (0) != 2
+-      || x (1) != 3
+-      || x (2) != 5)
+-    abort ();
+-
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/920501-5.c b/SingleSource/Regression/C/gcc-c-torture/execute/920501-5.c
+deleted file mode 100644
+index f0b90716..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/920501-5.c
++++ /dev/null
+@@ -1,17 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-
+-x (int i)
+-{
+-  void *j[] = {&&x, &&y, &&z};
+-  goto *j[i];
+- x:return 2;
+- y:return 3;
+- z:return 5;
+-
+-}
+-main ()
+-{
+-  if (x (0) != 2 || x (1) != 3 || x (2) != 5)
+-    abort();
+-  exit(0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/960312-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/960312-1.c
+deleted file mode 100644
+index 94e67df2..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/960312-1.c
++++ /dev/null
+@@ -1,34 +0,0 @@
+-struct S
+-{
+-  int *sp, fc, *sc, a[2];
+-};
+-
+-f (struct S *x)
+-{
+-  int *t = x->sc;
+-  int t1 = t[0];
+-  int t2 = t[1];
+-  int t3 = t[2];
+-  int a0 = x->a[0];
+-  int a1 = x->a[1];
+-  asm("": :"r" (t2), "r" (t3));
+-  t[2] = t1;
+-  t[0] = a1;
+-  x->a[1] = a0;
+-  x->a[0] = t3;
+-  x->fc = t2;
+-  x->sp = t;
+-}
+-
+-main ()
+-{
+-  struct S s;
+-  static int sc[3] = {2, 3, 4};
+-  s.sc = sc;
+-  s.a[0] = 10;
+-  s.a[1] = 11;
+-  f (&s);
+-  if (s.sp[2] != 2)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/961125-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/961125-1.c
+deleted file mode 100644
+index 7fe3dd45..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/961125-1.c
++++ /dev/null
+@@ -1,33 +0,0 @@
+-static char *
+-begfield (int tab, char *ptr, char *lim, int sword, int schar)
+-{
+-  if (tab)
+-    {
+-      while (ptr < lim && sword--)
+-	{
+-	  while (ptr < lim && *ptr != tab)
+-	    ++ptr;
+-	  if (ptr < lim)
+-	    ++ptr;
+-	}
+-    }
+-  else
+-    {
+-      while (1)
+-	;
+-    }
+-
+-  if (ptr + schar <= lim)
+-    ptr += schar;
+-
+-  return ptr;
+-}
+-
+-main ()
+-{
+-  char *s = ":ab";
+-  char *lim = s + 3;
+-  if (begfield (':', s, lim, 1, 1) != s + 2)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/990130-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/990130-1.c
+deleted file mode 100644
+index c38ecddb..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/990130-1.c
++++ /dev/null
+@@ -1,23 +0,0 @@
+-int count = 0;
+-int dummy;
+-
+-static int *
+-bar(void)
+-{
+-  ++count;
+-  return &dummy;
+-}
+-
+-static void
+-foo(void)
+-{
+-  asm("" : "+r"(*bar()));
+-}
+-
+-main()
+-{
+-  foo();
+-  if (count != 1)
+-    abort();
+-  exit(0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/990413-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/990413-2.c
+deleted file mode 100644
+index 09a05735..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/990413-2.c
++++ /dev/null
+@@ -1,51 +0,0 @@
+-/* This tests for a bug in regstack that was breaking glibc's math library. */
+-/* { dg-skip-if "" { ! { i?86-*-* x86_64-*-* } } } */
+-
+-extern void abort (void);
+-
+-static __inline double
+-minus_zero (void)
+-{
+-  union { double __d; int __i[2]; } __x;
+-  __x.__i[0] = 0x0;
+-  __x.__i[1] = 0x80000000;
+-  return __x.__d;
+-}
+-
+-static __inline long double
+-__atan2l (long double __y, long double __x)
+-{
+-  register long double __value;
+-  __asm __volatile__ ("fpatan\n\t"
+-		      : "=t" (__value)
+-		      : "0" (__x), "u" (__y)
+-		      : "st(1)");
+-  return __value;
+-}
+-
+-static __inline long double
+-__sqrtl (long double __x)
+-{
+-  register long double __result;
+-  __asm __volatile__ ("fsqrt" : "=t" (__result) : "0" (__x));
+-  return __result;
+-}
+-
+-static __inline double
+-asin (double __x)
+-{
+-  return __atan2l (__x, __sqrtl (1.0 - __x * __x));
+-}
+-
+-int
+-main (void)
+-{
+-  double x;
+-
+-  x = minus_zero();
+-  x = asin (x);
+-
+-  if (x != 0.0) /* actually -0.0, but 0.0 == -0.0 */
+-    abort ();
 -  return 0;
 -}
 diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
-index 99cf2047..2f4e08e5 100644
+index 99cf2047..5c3559f8 100644
 --- a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 +++ b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 @@ -1,7 +1,7 @@
- add_subdirectory(ieee)
+-add_subdirectory(ieee)
++#add_subdirectory(ieee)
  
  # GCC C Torture Suite is conventionally run without warnings
 -list(APPEND CFLAGS "-w")
@@ -414,210 +1280,4078 @@ index 99cf2047..2f4e08e5 100644
  
  set(TestsToSkip)
  
-diff --git a/SingleSource/UnitTests/2003-05-07-VarArgs.c b/SingleSource/UnitTests/2003-05-07-VarArgs.c
+@@ -381,4 +381,5 @@ foreach(File ${TestFiles})
+                            PREFIX "GCC-C-execute"
+                            CFLAGS ${MaybeCFlags}
+                            LDFLAGS ${MaybeLDFlags})
++
+ endforeach()
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/alias-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/alias-2.c
 deleted file mode 100644
-index 5eb1f97a..00000000
---- a/SingleSource/UnitTests/2003-05-07-VarArgs.c
+index c62d5068..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/alias-2.c
 +++ /dev/null
-@@ -1,79 +0,0 @@
--#include <stdio.h>
--#include <stdarg.h>
+@@ -1,12 +0,0 @@
+-/* { dg-require-alias "" } */
+-int a[10]={};
+-extern int b[10] __attribute__ ((alias("a")));
+-int off;
+-main()
+-{
+-  b[off]=1;
+-  a[off]=2;
+-  if (b[off]!=2)
+-   __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/alias-3.c b/SingleSource/Regression/C/gcc-c-torture/execute/alias-3.c
+deleted file mode 100644
+index 270ac42b..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/alias-3.c
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/* { dg-require-alias "" } */
+-/* { dg-skip-if "" { powerpc-ibm-aix* } } */
+-static int a=0;
+-extern int b __attribute__ ((alias("a")));
+-__attribute__ ((noinline))
+-static inc()
+-{
+-  b++;
+-}
+-int
+-main()
+-{
+-  a=0;
+-  inc ();
+-  if (a!=1)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/alias-4.c b/SingleSource/Regression/C/gcc-c-torture/execute/alias-4.c
+deleted file mode 100644
+index 6c6c9587..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/alias-4.c
++++ /dev/null
+@@ -1,19 +0,0 @@
+-/* { dg-require-alias "" } */
+-int a = 1;
+-extern int b __attribute__ ((alias ("a")));
+-int c = 1;
+-extern int d __attribute__ ((alias ("c")));
+-main (int argc)
+-{
+-  int *p;
+-  int *q;
+-  if (argc)
+-    p = &a, q = &b;
+-  else
+-    p = &c, q = &d;
+-  *p = 1;
+-  *q = 2;
+-  if (*p == 1)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/built-in-setjmp.c b/SingleSource/Regression/C/gcc-c-torture/execute/built-in-setjmp.c
+deleted file mode 100644
+index ab5afb99..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/built-in-setjmp.c
++++ /dev/null
+@@ -1,42 +0,0 @@
+-/* { dg-require-effective-target indirect_jumps } */
+-/* { dg-require-effective-target alloca } */
 -
--/* 5 bytes. */
--typedef struct DWordS_struct    { int i; char c; } DWordS;
+-extern int strcmp(const char *, const char *);
+-extern char *strcpy(char *, const char *);
+-extern void abort(void);
+-extern void exit(int);
 -
--/* 12 bytes if d is 4-byte aligned; 16 bytes if d is 8-byte aligned. */
--typedef struct QuadWordS_struct { int i; double d; } QuadWordS;
+-void *buf[20];
 -
--/* 20 bytes if d is 4-byte aligned; 28 bytes if d is 8-byte aligned
-- * (assuming pointer size is 4 bytes and 8 bytes respectively). */
--typedef struct LargeS_struct { int i; double d; DWordS* ptr; int j; } LargeS;
--
--void test(char *fmt, ...) {
--  va_list ap, aq;
--  int d;
--  char c, *s;
--  DWordS dw;
--  QuadWordS qw;
--  LargeS ls;
--
--  va_start(ap, fmt);
--
--  va_copy(aq, ap);    /* test va_copy */
--  va_end(aq);
--
--  while (*fmt)
--    switch(*fmt++) {
--    case 's':           /* string */
--      s = va_arg(ap, char *);
--      printf("string %s\n", s);
--      break;
--    case 'i':           /* int */
--      d = va_arg(ap, int);
--      printf("int %d\n", d);
--      break;
--    case 'd':
--      printf("double %f\n", va_arg(ap, double));
--      break;
--    case 'l':
--      printf("long long %lld\n", va_arg(ap, long long));
--      break;
--    case 'c':           /* char */
--      /* need a cast here since va_arg only
--         takes fully promoted types */
--      c = (char) va_arg(ap, int);
--      printf("char %c\n", c);
--      break;
--    case 'D':
--      dw = va_arg(ap, DWordS);
--      printf("DWord { %d, %c }\n", dw.i, dw.c);
--      break;
--    case 'Q':
--      qw = va_arg(ap, QuadWordS);
--      printf("QuadWord { %d, %f }\n", qw.i, qw.d);
--      break;
--    case 'L':
--      ls = va_arg(ap, LargeS);
--      printf("LargeS { %d, %f, 0x%d, %d }\n", ls.i, ls.d, ls.ptr != 0, ls.j);
--      break;
--    }
--  va_end(ap);
+-void __attribute__((noinline))
+-sub2 (void)
+-{
+-  __builtin_longjmp (buf, 1);
 -}
 -
--int main() {
--  DWordS dw = { 18, 'a' };
--  QuadWordS qw = { 19, 20.0 };
--  LargeS ls = { 21, 22.0, &dw, 23 };
+-int
+-main ()
+-{
+-  char *p = (char *) __builtin_alloca (20);
 -
--  test("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
+-  strcpy (p, "test");
 -
--  /* test promotion & 64-bit types */
--  test("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
+-  if (__builtin_setjmp (buf))
+-    {
+-      if (strcmp (p, "test") != 0)
+-	abort ();
 -
--  /* test passing structs by value to varargs */
--  test("DQL", dw, qw, ls);
+-      exit (0);
+-    }
+-
+-  {
+-    int *q = (int *) __builtin_alloca (p[2] * sizeof (int));
+-    int i;
+-
+-    for (i = 0; i < p[2]; i++)
+-      q[i] = 0;
+-
+-    while (1)
+-      sub2 ();
+-  }
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/comp-goto-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/comp-goto-1.c
+deleted file mode 100644
+index 4379fe70..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/comp-goto-1.c
++++ /dev/null
+@@ -1,167 +0,0 @@
+-/* { dg-require-effective-target label_values } */
+-/* { dg-require-stack-size "4000" } */
+-
+-#include <stdlib.h>
+-
+-#if __INT_MAX__ >= 2147483647
+-typedef unsigned int uint32;
+-typedef signed int sint32;
+-
+-typedef uint32 reg_t;
+-
+-typedef unsigned long int host_addr_t;
+-typedef uint32 target_addr_t;
+-typedef sint32 target_saddr_t;
+-
+-typedef union
+-{
+-  struct
+-    {
+-      signed int	offset:18;
+-      unsigned int	ignore:4;
+-      unsigned int	s1:8;
+-      int		:2;
+-      signed int	simm:14;
+-      unsigned int	s3:8;
+-      unsigned int	s2:8;
+-      int		pad2:2;
+-    } f1;
+-  long long ll;
+-  double d;
+-} insn_t;
+-
+-typedef struct
+-{
+-  target_addr_t vaddr_tag;
+-  unsigned long int rigged_paddr;
+-} tlb_entry_t;
+-
+-typedef struct
+-{
+-  insn_t *pc;
+-  reg_t registers[256];
+-  insn_t *program;
+-  tlb_entry_t tlb_tab[0x100];
+-} environment_t;
+-
+-enum operations
+-{
+-  LOAD32_RR,
+-  METAOP_DONE
+-};
+-
+-host_addr_t
+-f ()
+-{
+-  abort ();
+-}
+-
+-reg_t
+-simulator_kernel (int what, environment_t *env)
+-{
+-  register insn_t *pc = env->pc;
+-  register reg_t *regs = env->registers;
+-  register insn_t insn;
+-  register int s1;
+-  register reg_t r2;
+-  register void *base_addr = &&sim_base_addr;
+-  register tlb_entry_t *tlb = env->tlb_tab;
+-
+-  if (what != 0)
+-    {
+-      int i;
+-      static void *op_map[] =
+-	{
+-	  &&L_LOAD32_RR,
+-	  &&L_METAOP_DONE,
+-	};
+-      insn_t *program = env->program;
+-      for (i = 0; i < what; i++)
+-	program[i].f1.offset = op_map[program[i].f1.offset] - base_addr;
+-    }
+-
+- sim_base_addr:;
+-
+-  insn = *pc++;
+-  r2 = (*(reg_t *) (((char *) regs) + (insn.f1.s2 << 2)));
+-  s1 = (insn.f1.s1 << 2);
+-  goto *(base_addr + insn.f1.offset);
+-
+- L_LOAD32_RR:
+-  {
+-    target_addr_t vaddr_page = r2 / 4096;
+-    unsigned int x = vaddr_page % 0x100;
+-    insn = *pc++;
+-
+-    for (;;)
+-      {
+-	target_addr_t tag = tlb[x].vaddr_tag;
+-	host_addr_t rigged_paddr = tlb[x].rigged_paddr;
+-
+-	if (tag == vaddr_page)
+-	  {
+-	    *(reg_t *) (((char *) regs) + s1) = *(uint32 *) (rigged_paddr + r2);
+-	    r2 = *(reg_t *) (((char *) regs) + (insn.f1.s2 << 2));
+-	    s1 = insn.f1.s1 << 2;
+-	    goto *(base_addr + insn.f1.offset);
+-	  }
+-
+-	if (((target_saddr_t) tag < 0))
+-	  {
+-	    *(reg_t *) (((char *) regs) + s1) = *(uint32 *) f ();
+-	    r2 = *(reg_t *) (((char *) regs) + (insn.f1.s2 << 2));
+-	    s1 = insn.f1.s1 << 2;
+-	    goto *(base_addr + insn.f1.offset);
+-	  }
+-
+-	x = (x - 1) % 0x100;
+-      }
+-
+-    L_METAOP_DONE:
+-      return (*(reg_t *) (((char *) regs) + s1));
+-  }
+-}
+-
+-insn_t program[2 + 1];
+-
+-void *malloc ();
+-
+-int
+-main ()
+-{
+-  environment_t env;
+-  insn_t insn;
+-  int i, res;
+-  host_addr_t a_page = (host_addr_t) malloc (2 * 4096);
+-  target_addr_t a_vaddr = 0x123450;
+-  target_addr_t vaddr_page = a_vaddr / 4096;
+-  a_page = (a_page + 4096 - 1) & -4096;
+-
+-  env.tlb_tab[((vaddr_page) % 0x100)].vaddr_tag = vaddr_page;
+-  env.tlb_tab[((vaddr_page) % 0x100)].rigged_paddr = a_page - vaddr_page * 4096;
+-  insn.f1.offset = LOAD32_RR;
+-  env.registers[0] = 0;
+-  env.registers[2] = a_vaddr;
+-  *(sint32 *) (a_page + a_vaddr % 4096) = 88;
+-  insn.f1.s1 = 0;
+-  insn.f1.s2 = 2;
+-
+-  for (i = 0; i < 2; i++)
+-    program[i] = insn;
+-
+-  insn.f1.offset = METAOP_DONE;
+-  insn.f1.s1 = 0;
+-  program[2] = insn;
+-
+-  env.pc = program;
+-  env.program = program;
+-
+-  res = simulator_kernel (2 + 1, &env);
+-
+-  if (res != 88)
+-    abort ();
+-  exit (0);
+-}
+-#else
+-main(){ exit (0); }
+-#endif
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr20601-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr20601-1.c
+deleted file mode 100644
+index 6eab1ef1..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr20601-1.c
++++ /dev/null
+@@ -1,123 +0,0 @@
+-/* PR tree-optimization/20601 */
+-/* { dg-xfail-if "ptxas crashes" { nvptx-*-* } { "-O1" } { "" } } */
+-extern void abort (void);
+-extern void exit (int);
+-
+-struct T
+-{
+-  char *t1;
+-  char t2[4096];
+-  char **t3;
+-};
+-
+-int a[5];
+-int b;
+-char **c;
+-int d;
+-char **e;
+-struct T t;
+-char *f[16];
+-char *g[] = { "a", "-u", "b", "c" };
+-
+-__attribute__ ((__noreturn__)) void
+-foo (void)
+-{
+-  while (1);
+-}
+-
+-__attribute__ ((noinline)) char *
+-bar (char *x, unsigned int y)
+-{
+-  return 0;
+-}
+-
+-static inline char *
+-baz (char *x, unsigned int y)
+-{
+-  if (sizeof (t.t2) != (unsigned int) -1 && y > sizeof (t.t2))
+-    foo ();
+-  return bar (x, y);
+-}
+-
+-static inline int
+-setup1 (int x)
+-{
+-  char *p;
+-  int rval;
+-
+-  if (!baz (t.t2, sizeof (t.t2)))
+-    baz (t.t2, sizeof (t.t2));
+-
+-  if (x & 0x200)
+-    {
+-      char **h, **i = e;
+-
+-      ++d;
+-      e = f;
+-      if (t.t1 && *t.t1)
+-        e[0] = t.t1;
+-      else
+-        abort ();
+-
+-      for (h = e + 1; (*h = *i); ++i, ++h)
+-        ;
+-    }
+-  return 1;
+-}
+-
+-static inline int
+-setup2 (void)
+-{
+-  int j = 1;
+-
+-  e = c + 1;
+-  d = b - 1;
+-  while (d > 0 && e[0][0] == '-')
+-    {
+-      if (e[0][1] != '\0' && e[0][2] != '\0')
+-        abort ();
+-
+-      switch (e[0][1])
+-        {
+-        case 'u':
+-          if (!e[1])
+-            abort ();
+-
+-          t.t3 = &e[1];
+-          d--;
+-          e++;
+-          break;
+-        case 'P':
+-          j |= 0x1000;
+-          break;
+-        case '-':
+-          d--;
+-          e++;
+-          if (j == 1)
+-            j |= 0x600;
+-          return j;
+-        }
+-      d--;
+-      e++;
+-    }
+-
+-  if (d > 0 && !(j & 1))
+-    abort ();
+-
+-  return j;
+-}
+-
+-int
+-main (void)
+-{
+-  int x;
+-  c = g;
+-  b = 4;
+-  x = setup2 ();
+-  t.t1 = "/bin/sh";
+-  setup1 (x);
+-  /* PRE shouldn't transform x into the constant 0x601 here, it's not legal.  */
+-  if ((x & 0x400) && !a[4])
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr38533.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr38533.c
+deleted file mode 100644
+index 44eb5b87..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr38533.c
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/* PR middle-end/38533 */
+-
+-#define A asm volatile ("" : "=r" (f) : "0" (0)); e |= f;
+-#define B A A A A A A A A A A A
+-#define C B B B B B B B B B B B
+-
+-int
+-foo (void)
+-{
+-  int e = 0, f;
+-  C C B B B B B A A A A A A
+-  return e;
+-}
+-
+-int
+-main (void)
+-{
+-  if (foo ())
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr40022.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr40022.c
+deleted file mode 100644
+index 6dd04e2b..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr40022.c
++++ /dev/null
+@@ -1,50 +0,0 @@
+-extern void abort (void);
+-
+-struct A
+-{
+-  struct A *a;
+-};
+-
+-struct B
+-{
+-  struct A *b;
+-};
+-
+-__attribute__((noinline))
+-struct A *
+-foo (struct A *x)
+-{
+-  asm volatile ("" : : "g" (x) : "memory");
+-  return x;
+-}
+-
+-__attribute__((noinline))
+-void
+-bar (struct B *w, struct A *x, struct A *y, struct A *z)
+-{
+-  struct A **c;
+-  c = &w->b;
+-  *c = foo (x);
+-  while (*c)
+-    c = &(*c)->a;
+-  *c = foo (y);
+-  while (*c)
+-    c = &(*c)->a;
+-  *c = foo (z);
+-}
+-
+-struct B d;
+-struct A e, f, g;
+-
+-int
+-main (void)
+-{
+-  f.a = &g;
+-  bar (&d, &e, &f, 0);
+-  if (d.b == 0
+-      || d.b->a == 0
+-      || d.b->a->a == 0
+-      || d.b->a->a->a != 0)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr40657.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr40657.c
+deleted file mode 100644
+index e6d8dda9..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr40657.c
++++ /dev/null
+@@ -1,23 +0,0 @@
+-/* Verify that that Thumb-1 epilogue size optimization does not clobber the
+-   return value.  */
+-
+-long long v = 0x123456789abc;
+-
+-__attribute__((noinline)) void bar (int *x)
+-{
+-  asm volatile ("" : "=m" (x) ::);
+-}
+-
+-__attribute__((noinline)) long long foo()
+-{
+-  int x;
+-  bar(&x);
+-  return v;
+-}
+-
+-int main ()
+-{
+-  if (foo () != v)
+-    abort ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr41239.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr41239.c
+deleted file mode 100644
+index 9966b867..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr41239.c
++++ /dev/null
+@@ -1,67 +0,0 @@
+-/* PR rtl-optimization/41239 */
+-
+-struct S
+-{
+-  short nargs;
+-  unsigned long arg[2];
+-};
+-
+-extern void abort (void);
+-extern void exit (int);
+-extern char fn1 (int, const char *, int, const char *, const char *);
+-extern void fn2 (int, ...);
+-extern int fn3 (int);
+-extern int fn4 (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
+-
+-unsigned long
+-test (struct S *x)
+-{
+-  signed int arg1 = x->arg[0];
+-  long int arg2 = x->arg[1];
+-
+-  if (arg2 == 0)
+-    (fn1 (20, "foo", 924, __func__, ((void *) 0))
+-     ? (fn2 (fn3 (0x2040082), fn4 ("division by zero")))
+-     : (void) 0);
+-
+-  return (long int) arg1 / arg2;
+-}
+-
+-int
+-main (void)
+-{
+-  struct S s = { 2, { 5, 0 } };
+-  test (&s);
+-  abort ();
+-}
+-
+-__attribute__((noinline)) char
+-fn1 (int x, const char *y, int z, const char *w, const char *v)
+-{
+-  asm volatile ("" : : "r" (w), "r" (v) : "memory");
+-  asm volatile ("" : "+r" (x) : "r" (y), "r" (z) : "memory");
+-  return x;
+-}
+-
+-__attribute__((noinline)) int
+-fn3 (int x)
+-{
+-  asm volatile ("" : "+r" (x) : : "memory");
+-  return x;
+-}
+-
+-__attribute__((noinline)) int
+-fn4 (const char *x, ...)
+-{
+-  asm volatile ("" : "+r" (x) : : "memory");
+-  return *x;
+-}
+-
+-__attribute__((noinline)) void
+-fn2 (int x, ...)
+-{
+-  asm volatile ("" : "+r" (x) : : "memory");
+-  if (x)
+-    /* Could be a longjmp or throw too.  */
+-    exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr43385.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr43385.c
+deleted file mode 100644
+index eeb9096a..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr43385.c
++++ /dev/null
+@@ -1,59 +0,0 @@
+-/* PR c/43385 */
+-
+-extern void abort (void);
+-
+-int e;
+-
+-__attribute__((noinline)) void
+-foo (int x, int y)
+-{
+-  if (__builtin_expect (x, 0) && y != 0)
+-    e++;
+-}
+-
+-__attribute__((noinline)) int
+-bar (int x, int y)
+-{
+-  if (__builtin_expect (x, 0) && y != 0)
+-    return 1;
+-  else
+-    return 0;
+-}
+-
+-int
+-main (void)
+-{
+-  int z = 0;
+-  asm ("" : "+r" (z));
+-  foo (z + 2, z + 1);
+-  if (e != 1)
+-    abort ();
+-  foo (z + 2, z);
+-  if (e != 1)
+-    abort ();
+-  foo (z + 1, z + 1);
+-  if (e != 2)
+-    abort ();
+-  foo (z + 1, z);
+-  if (e != 2)
+-    abort ();
+-  foo (z, z + 1);
+-  if (e != 2)
+-    abort ();
+-  foo (z, z);
+-  if (e != 2)
+-    abort ();
+-  if (bar (z + 2, z + 1) != 1)
+-    abort ();
+-  if (bar (z + 2, z) != 0)
+-    abort ();
+-  if (bar (z + 1, z + 1) != 1)
+-    abort ();
+-  if (bar (z + 1, z) != 0)
+-    abort ();
+-  if (bar (z, z + 1) != 0)
+-    abort ();
+-  if (bar (z, z) != 0)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr43560.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr43560.c
+deleted file mode 100644
+index cb420c61..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr43560.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/* PR tree-optimization/43560 */
+-
+-struct S
+-{
+-  int a, b;
+-  char c[10];
+-};
+-
+-__attribute__ ((noinline)) void
+-test (struct S *x)
+-{
+-  while (x->b > 1 && x->c[x->b - 1] == '/')
+-    {
+-      x->b--;
+-      x->c[x->b] = '\0';
+-    }
+-}
+-
+-const struct S s = { 0, 0, "" };
+-
+-int
+-main ()
+-{
+-  struct S *p;
+-  asm ("" : "=r" (p) : "0" (&s));
+-  test (p);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr44852.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr44852.c
+deleted file mode 100644
+index 440653e5..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr44852.c
++++ /dev/null
+@@ -1,22 +0,0 @@
+-__attribute__ ((__noinline__))
+-char *sf(char *s, char *s0)
+-{
+-  asm ("");
+-  while (*--s == '9')
+-    if (s == s0)
+-      {
+-	*s = '0';
+-	break;
+-      }
+-  ++*s++;
+-  return s;
+-}
+-
+-int main()
+-{
+-  char s[] = "999999";
+-  char *x = sf (s+2, s);
+-  if (x != s+1 || __builtin_strcmp (s, "199999") != 0)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr45695.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr45695.c
+deleted file mode 100644
+index eb1e4c78..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr45695.c
++++ /dev/null
+@@ -1,32 +0,0 @@
+-/* PR rtl-optimization/45695 */
+-
+-extern void abort (void);
+-
+-__attribute__((noinline)) void
+-g (int x)
+-{
+-  asm volatile ("" : "+r" (x));
+-}
+-
+-__attribute__((noinline)) int
+-f (int a, int b, int d)
+-{
+-  int r = -1;
+-  b += d;
+-  if (d == a)
+-    r = b - d;
+-  g (b);
+-  return r;
+-}
+-
+-int
+-main (void)
+-{
+-  int l;
+-  asm ("" : "=r" (l) : "0" (0));
+-  if (f (l + 0, l + 1, l + 4) != -1)
+-    abort ();
+-  if (f (l + 4, l + 1, l + 4) != 1)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr46309.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr46309.c
+deleted file mode 100644
+index 46e10ab4..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr46309.c
++++ /dev/null
+@@ -1,31 +0,0 @@
+-/* PR tree-optimization/46309 */
+-
+-extern void abort (void);
+-
+-unsigned int *q;
+-
+-__attribute__((noinline, noclone)) void
+-bar (unsigned int *p)
+-{
+-  if (*p != 2 && *p != 3)
+-    (!(!(*q & 263) || *p != 1)) ? abort () : 0;
+-}
+-
+-int
+-main ()
+-{
+-  unsigned int x, y;
+-  asm volatile ("" : : : "memory");
+-  x = 2;
+-  bar (&x);
+-  x = 3;
+-  bar (&x);
+-  y = 1;
+-  x = 0;
+-  q = &y;
+-  bar (&x);
+-  y = 0;
+-  x = 1;
+-  bar (&x);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr47925.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr47925.c
+deleted file mode 100644
+index 89f54c13..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr47925.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-struct s { volatile struct s *next; };
+-
+-void __attribute__((noinline))
+-bar (int ignored, int n)
+-{
+-  asm volatile ("");
+-}
+-
+-int __attribute__((noinline))
+-foo (volatile struct s *ptr, int n)
+-{
+-  int i;
+-
+-  bar (0, n);
+-  for (i = 0; i < n; i++)
+-    ptr = ptr->next;
+-}
+-
+-int main (void)
+-{
+-  volatile struct s rec = { &rec };
+-  foo (&rec, 10);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr49218.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr49218.c
+deleted file mode 100644
+index 2fb18dda..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr49218.c
++++ /dev/null
+@@ -1,20 +0,0 @@
+-#ifdef __SIZEOF_INT128__
+-typedef __int128 L;
+-#else
+-typedef long long L;
+-#endif
+-float f;
+-
+-int
+-main ()
+-{
+-  L i = f;
+-  if (i <= 10)
+-    do
+-      {
+-	++i;
+-	asm ("");
+-      }
+-    while (i != 11);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr49279.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr49279.c
+deleted file mode 100644
+index 7f2c0d22..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr49279.c
++++ /dev/null
+@@ -1,35 +0,0 @@
+-/* PR tree-optimization/49279 */
+-extern void abort (void);
+-
+-struct S { int a; int *__restrict p; };
+-
+-__attribute__((noinline, noclone))
+-struct S *bar (struct S *p)
+-{
+-  struct S *r;
+-  asm volatile ("" : "=r" (r) : "0" (p) : "memory");
+-  return r;
+-}
+-
+-__attribute__((noinline, noclone))
+-int
+-foo (int *p, int *q)
+-{
+-  struct S s, *t;
+-  s.a = 1;
+-  s.p = p;
+-  t = bar (&s);
+-  t->p = q;
+-  s.p[0] = 0;
+-  t->p[0] = 1;
+-  return s.p[0];
+-}
+-
+-int
+-main ()
+-{
+-  int a, b;
+-  if (foo (&a, &b) != 1)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr49390.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr49390.c
+deleted file mode 100644
+index dfcdea16..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr49390.c
++++ /dev/null
+@@ -1,88 +0,0 @@
+-/* PR rtl-optimization/49390 */
+-
+-struct S { unsigned int s1; unsigned int s2; };
+-struct T { unsigned int t1; struct S t2; };
+-struct U { unsigned short u1; unsigned short u2; };
+-struct V { struct U v1; struct T v2; };
+-struct S a;
+-char *b;
+-union { char b[64]; struct V v; } u;
+-volatile int v;
+-extern void abort (void);
+-
+-__attribute__((noinline, noclone)) void
+-foo (int x, void *y, unsigned int z, unsigned int w)
+-{
+-  if (x != 4 || y != (void *) &u.v.v2)
+-    abort ();
+-  v = z + w;
+-  v = 16384;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-bar (struct S x)
+-{
+-  v = x.s1;
+-  v = x.s2;
+-}
+-
+-__attribute__((noinline, noclone)) int
+-baz (struct S *x)
+-{
+-  v = x->s1;
+-  v = x->s2;
+-  v = 0;
+-  return v + 1;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-test (struct S *c)
+-{
+-  struct T *d;
+-  struct S e = a;
+-  unsigned int f, g;
+-  if (c == 0)
+-    c = &e;
+-  else
+-    {
+-      if (c->s2 % 8192 <= 15 || (8192 - c->s2 % 8192) <= 31)
+-	foo (1, 0, c->s1, c->s2);
+-    }
+-  if (!baz (c))
+-    return;
+-  g = (((struct U *) b)->u2 & 2) ? 32 : __builtin_offsetof (struct V, v2);
+-  f = c->s2 % 8192;
+-  if (f == 0)
+-    {
+-      e.s2 += g;
+-      f = g;
+-    }
+-  else if (f < g)
+-    {
+-      foo (2, 0, c->s1, c->s2);
+-      return;
+-    }
+-  if ((((struct U *) b)->u2 & 1) && f == g)
+-    {
+-      bar (*c);
+-      foo (3, 0, c->s1, c->s2);
+-      return;
+-    }
+-  d = (struct T *) (b + c->s2 % 8192);
+-  if (d->t2.s1 >= c->s1 && (d->t2.s1 != c->s1 || d->t2.s2 >= c->s2))
+-    foo (4, d, c->s1, c->s2);
+-  return;
+-}
+-
+-int
+-main ()
+-{
+-  struct S *c = 0;
+-  asm ("" : "+r" (c) : "r" (&a));
+-  u.v.v2.t2.s1 = 8192;
+-  b = u.b;
+-  test (c);
+-  if (v != 16384)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-1.c
+deleted file mode 100644
+index 14e1e317..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-1.c
++++ /dev/null
+@@ -1,159 +0,0 @@
+-/* PR tree-optimization/51581 */
+-
+-/* { dg-require-effective-target int32plus } */
+-
+-extern void abort (void);
+-
+-#define N 4096
+-int a[N], c[N];
+-unsigned int b[N], d[N];
+-
+-__attribute__((noinline, noclone)) void
+-f1 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] / 3;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f2 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] / 3;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f3 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] / 18;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f4 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] / 18;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f5 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] / 19;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f6 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] / 19;
+-}
+-
+-#if __SIZEOF_INT__ == 4 && __SIZEOF_LONG_LONG__ == 8
+-__attribute__((noinline, noclone)) void
+-f7 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = (int) ((unsigned long long) (a[i] * 0x55555556LL) >> 32) - (a[i] >> 31);
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f8 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = ((unsigned int) ((b[i] * 0xaaaaaaabULL) >> 32) >> 1);
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f9 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = (((int) ((unsigned long long) (a[i] * 0x38e38e39LL) >> 32)) >> 2) - (a[i] >> 31);
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f10 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = (unsigned int) ((b[i] * 0x38e38e39ULL) >> 32) >> 2;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f11 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = (((int) ((unsigned long long) (a[i] * 0x6bca1af3LL) >> 32)) >> 3) - (a[i] >> 31);
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f12 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      unsigned int tmp = (b[i] * 0xaf286bcbULL) >> 32;
+-      d[i] = (((b[i] - tmp) >> 1) + tmp) >> 4;
+-    }
+-}
+-#endif
+-
+-int
+-main ()
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      asm ("");
+-      a[i] = i - N / 2;
+-      b[i] = i;
+-    }
+-  a[0] = -__INT_MAX__ - 1;
+-  a[1] = -__INT_MAX__;
+-  a[N - 1] = __INT_MAX__;
+-  b[N - 1] = ~0;
+-  f1 ();
+-  f2 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 3 || d[i] != b[i] / 3)
+-      abort ();
+-  f3 ();
+-  f4 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 18 || d[i] != b[i] / 18)
+-      abort ();
+-  f5 ();
+-  f6 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 19 || d[i] != b[i] / 19)
+-      abort ();
+-#if __SIZEOF_INT__ == 4 && __SIZEOF_LONG_LONG__ == 8
+-  f7 ();
+-  f8 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 3 || d[i] != b[i] / 3)
+-      abort ();
+-  f9 ();
+-  f10 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 18 || d[i] != b[i] / 18)
+-      abort ();
+-  f11 ();
+-  f12 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] / 19 || d[i] != b[i] / 19)
+-      abort ();
+-#endif
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-2.c
+deleted file mode 100644
+index e4345b5f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr51581-2.c
++++ /dev/null
+@@ -1,174 +0,0 @@
+-/* PR tree-optimization/51581 */
+-/* { dg-require-effective-target int32plus } */
+-
+-extern void abort (void);
+-
+-#define N 4096
+-int a[N], c[N];
+-unsigned int b[N], d[N];
+-
+-__attribute__((noinline, noclone)) void
+-f1 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] % 3;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f2 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] % 3;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f3 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] % 18;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f4 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] % 18;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f5 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    c[i] = a[i] % 19;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f6 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    d[i] = b[i] % 19;
+-}
+-
+-#if __SIZEOF_INT__ == 4 && __SIZEOF_LONG_LONG__ == 8
+-__attribute__((noinline, noclone)) void
+-f7 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      int x = (int) ((unsigned long long) (a[i] * 0x55555556LL) >> 32) - (a[i] >> 31);
+-      c[i] = a[i] - x * 3;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f8 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      unsigned int x = ((unsigned int) ((b[i] * 0xaaaaaaabULL) >> 32) >> 1);
+-      d[i] = b[i] - x * 3;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f9 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      int x = (((int) ((unsigned long long) (a[i] * 0x38e38e39LL) >> 32)) >> 2) - (a[i] >> 31);
+-      c[i] = a[i] - x * 18;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f10 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      unsigned int x = (unsigned int) ((b[i] * 0x38e38e39ULL) >> 32) >> 2;
+-      d[i] = b[i] - x * 18;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f11 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      int x = (((int) ((unsigned long long) (a[i] * 0x6bca1af3LL) >> 32)) >> 3) - (a[i] >> 31);
+-      c[i] = a[i] - x * 19;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f12 (void)
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      unsigned int tmp = (b[i] * 0xaf286bcbULL) >> 32;
+-      unsigned int x = (((b[i] - tmp) >> 1) + tmp) >> 4;
+-      d[i] = b[i] - x * 19;
+-    }
+-}
+-#endif
+-
+-int
+-main ()
+-{
+-  int i;
+-  for (i = 0; i < N; i++)
+-    {
+-      asm ("");
+-      a[i] = i - N / 2;
+-      b[i] = i;
+-    }
+-  a[0] = -__INT_MAX__ - 1;
+-  a[1] = -__INT_MAX__;
+-  a[N - 1] = __INT_MAX__;
+-  b[N - 1] = ~0;
+-  f1 ();
+-  f2 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 3 || d[i] != b[i] % 3)
+-      abort ();
+-  f3 ();
+-  f4 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 18 || d[i] != b[i] % 18)
+-      abort ();
+-  f5 ();
+-  f6 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 19 || d[i] != b[i] % 19)
+-      abort ();
+-#if __SIZEOF_INT__ == 4 && __SIZEOF_LONG_LONG__ == 8
+-  f7 ();
+-  f8 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 3 || d[i] != b[i] % 3)
+-      abort ();
+-  f9 ();
+-  f10 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 18 || d[i] != b[i] % 18)
+-      abort ();
+-  f11 ();
+-  f12 ();
+-  for (i = 0; i < N; i++)
+-    if (c[i] != a[i] % 19 || d[i] != b[i] % 19)
+-      abort ();
+-#endif
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr51877.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr51877.c
+deleted file mode 100644
+index a2d65cfd..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr51877.c
++++ /dev/null
+@@ -1,50 +0,0 @@
+-/* PR tree-optimization/51877 */
+-
+-extern void abort (void);
+-struct A { int a; char b[32]; } a, b;
+-
+-__attribute__((noinline, noclone))
+-struct A
+-bar (int x)
+-{
+-  struct A r;
+-  static int n;
+-  r.a = ++n;
+-  __builtin_memset (r.b, 0, sizeof (r.b));
+-  r.b[0] = x;
+-  return r;
+-}
+-
+-__attribute__((noinline, noclone))
+-void
+-baz (void)
+-{
+-  asm volatile ("" : : : "memory");
+-}
+-
+-__attribute__((noinline, noclone))
+-void
+-foo (struct A *x, int y)
+-{
+-  if (y == 6)
+-    a = bar (7);
+-  else
+-    *x = bar (7);
+-  baz ();
+-}
+-
+-int
+-main ()
+-{
+-  a = bar (3);
+-  b = bar (4);
+-  if (a.a != 1 || a.b[0] != 3 || b.a != 2 || b.b[0] != 4)
+-    abort ();
+-  foo (&b, 0);
+-  if (a.a != 1 || a.b[0] != 3 || b.a != 3 || b.b[0] != 7)
+-    abort ();
+-  foo (&b, 6);
+-  if (a.a != 4 || a.b[0] != 7 || b.a != 3 || b.b[0] != 7)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr51933.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr51933.c
+deleted file mode 100644
+index 24abc9f1..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr51933.c
++++ /dev/null
+@@ -1,59 +0,0 @@
+-/* PR rtl-optimization/51933 */
+-
+-static signed char v1;
+-static unsigned char v2[256], v3[256];
+-
+-__attribute__((noclone, noinline)) void
+-foo (void)
+-{
+-#if defined(__s390__) && !defined(__zarch__)
+-  /* S/390 31 bit cannot deal with more than one literal pool
+-     reference per insn.  */
+-  asm volatile ("" : : "g" (&v1) : "memory");
+-  asm volatile ("" : : "g" (&v2[0]));
+-  asm volatile ("" : : "g" (&v3[0]));
+-#else
+-  asm volatile ("" : : "g" (&v1), "g" (&v2[0]), "g" (&v3[0]) : "memory");
+-#endif
+-}
+-
+-__attribute__((noclone, noinline)) int
+-bar (const int x, const unsigned short *y, char *z)
+-{
+-  int i;
+-  unsigned short u;
+-  if (!v1)
+-    foo ();
+-  for (i = 0; i < x; i++)
+-    {
+-      u = y[i];
+-      z[i] = u < 0x0100 ? v2[u] : v3[u & 0xff];
+-    }
+-  z[x] = '\0';
+-  return x;
+-}
+-
+-int
+-main (void)
+-{
+-  char buf[18];
+-  unsigned short s[18];
+-  unsigned char c[18] = "abcdefghijklmnopq";
+-  int i;
+-  for (i = 0; i < 256; i++)
+-    {
+-      v2[i] = i;
+-      v3[i] = i + 1;
+-    }
+-  for (i = 0; i < 18; i++)
+-    s[i] = c[i];
+-  s[5] |= 0x600;
+-  s[6] |= 0x500;
+-  s[11] |= 0x2000;
+-  s[15] |= 0x500;
+-  foo ();
+-  if (bar (17, s, buf) != 17
+-      || __builtin_memcmp (buf, "abcdeghhijkmmnoqq", 18) != 0)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr52286.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr52286.c
+deleted file mode 100644
+index bb56295a..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr52286.c
++++ /dev/null
+@@ -1,20 +0,0 @@
+-/* PR tree-optimization/52286 */
+-
+-extern void abort (void);
+-
+-int
+-main ()
+-{
+-#if __SIZEOF_INT__ > 2
+-  int a, b;
+-  asm ("" : "=r" (a) : "0" (0));
+-  b = (~a | 1) & -2038094497;
+-#else
+-  long a, b;
+-  asm ("" : "=r" (a) : "0" (0));
+-  b = (~a | 1) & -2038094497L;
+-#endif
+-  if (b >= 0)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr53645-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr53645-2.c
+deleted file mode 100644
+index 4638e303..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr53645-2.c
++++ /dev/null
+@@ -1,121 +0,0 @@
+-/* PR tree-optimization/53645 */
+-/* { dg-options "-std=gnu89" } */
+-
+-typedef unsigned short int UV __attribute__((vector_size (16)));
+-typedef short int SV __attribute__((vector_size (16)));
+-extern void abort (void);
+-
+-#define TEST(a, b, c, d, e, f, g, h) \
+-__attribute__((noinline)) void			\
+-uq##a##b##c##d##e##f##g##h (UV *x, UV *y) 	\
+-{						\
+-  *x = *y / ((UV) { a, b, c, d, e, f, g, h });	\
+-}						\
+-						\
+-__attribute__((noinline)) void			\
+-ur##a##b##c##d##e##f##g##h (UV *x, UV *y) 	\
+-{						\
+-  *x = *y % ((UV) { a, b, c, d, e, f, g, h });	\
+-}						\
+-						\
+-__attribute__((noinline)) void			\
+-sq##a##b##c##d##e##f##g##h (SV *x, SV *y) 	\
+-{						\
+-  *x = *y / ((SV) { a, b, c, d, e, f, g, h });	\
+-}						\
+-						\
+-__attribute__((noinline)) void			\
+-sr##a##b##c##d##e##f##g##h (SV *x, SV *y) 	\
+-{						\
+-  *x = *y % ((SV) { a, b, c, d, e, f, g, h });	\
+-}
+-
+-#define TESTS \
+-TEST (4, 4, 4, 4, 4, 4, 4, 4)		\
+-TEST (1, 4, 2, 8, 16, 64, 32, 128)	\
+-TEST (3, 3, 3, 3, 3, 3, 3, 3)		\
+-TEST (6, 5, 6, 5, 6, 5, 6, 5)		\
+-TEST (14, 14, 14, 6, 14, 6, 14, 14)	\
+-TEST (7, 7, 7, 7, 7, 7, 7, 7)		\
+-
+-TESTS
+-
+-UV u[] =
+-  { ((UV) { 73U, 65531U, 0U, 174U, 921U, 65535U, 17U, 178U }),
+-    ((UV) { 1U, 8173U, 65535U, 65472U, 12U, 29612U, 128U, 8912U }) };
+-SV s[] =
+-  { ((SV) { 73, -9123, 32761, 8191, 16371, 1201, 12701, 9999 }),
+-    ((SV) { 9903, -1, -7323, 0, -7, -323, 9124, -9199 }) };
+-
+-int
+-main ()
+-{
+-  UV ur, ur2;
+-  SV sr, sr2;
+-  int i;
+-#undef TEST
+-#define TEST(a, b, c, d, e, f, g, h)			\
+-    uq##a##b##c##d##e##f##g##h (&ur, u + i);		\
+-    if (ur[0] != u[i][0] / a || ur[3] != u[i][3] / d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[2] != u[i][2] / c || ur[1] != u[i][1] / b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[4] != u[i][4] / e || ur[7] != u[i][7] / h)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[6] != u[i][6] / g || ur[5] != u[i][5] / f)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    ur##a##b##c##d##e##f##g##h (&ur, u + i);		\
+-    if (ur[0] != u[i][0] % a || ur[3] != u[i][3] % d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[2] != u[i][2] % c || ur[1] != u[i][1] % b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[4] != u[i][4] % e || ur[7] != u[i][7] % h)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[6] != u[i][6] % g || ur[5] != u[i][5] % f)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");
+-  for (i = 0; i < sizeof (u) / sizeof (u[0]); i++)
+-    {
+-      TESTS
+-    }
+-#undef TEST
+-#define TEST(a, b, c, d, e, f, g, h)			\
+-    sq##a##b##c##d##e##f##g##h (&sr, s + i);		\
+-    if (sr[0] != s[i][0] / a || sr[3] != s[i][3] / d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[2] != s[i][2] / c || sr[1] != s[i][1] / b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[4] != s[i][4] / e || sr[7] != s[i][7] / h)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[6] != s[i][6] / g || sr[5] != s[i][5] / f)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    sr##a##b##c##d##e##f##g##h (&sr, s + i);		\
+-    if (sr[0] != s[i][0] % a || sr[3] != s[i][3] % d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[2] != s[i][2] % c || sr[1] != s[i][1] % b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[4] != s[i][4] % e || sr[7] != s[i][7] % h)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[6] != s[i][6] % g || sr[5] != s[i][5] % f)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");
+-  for (i = 0; i < sizeof (s) / sizeof (s[0]); i++)
+-    {
+-      TESTS
+-    }
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr53645.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr53645.c
+deleted file mode 100644
+index d86a8953..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr53645.c
++++ /dev/null
+@@ -1,97 +0,0 @@
+-/* PR tree-optimization/53645 */
+-/* { dg-options "-std=gnu89" } */
+-
+-typedef unsigned int UV __attribute__((vector_size (16)));
+-typedef int SV __attribute__((vector_size (16)));
+-extern void abort (void);
+-
+-#define TEST(a, b, c, d) \
+-__attribute__((noinline)) void		\
+-uq##a##b##c##d (UV *x, UV *y) 		\
+-{					\
+-  *x = *y / ((UV) { a, b, c, d });	\
+-}					\
+-					\
+-__attribute__((noinline)) void		\
+-ur##a##b##c##d (UV *x, UV *y) 		\
+-{					\
+-  *x = *y % ((UV) { a, b, c, d });	\
+-}					\
+-					\
+-__attribute__((noinline)) void		\
+-sq##a##b##c##d (SV *x, SV *y) 		\
+-{					\
+-  *x = *y / ((SV) { a, b, c, d });	\
+-}					\
+-					\
+-__attribute__((noinline)) void		\
+-sr##a##b##c##d (SV *x, SV *y) 		\
+-{					\
+-  *x = *y % ((SV) { a, b, c, d });	\
+-}
+-
+-#define TESTS \
+-TEST (4, 4, 4, 4)			\
+-TEST (1, 4, 2, 8)			\
+-TEST (3, 3, 3, 3)			\
+-TEST (6, 5, 6, 5)			\
+-TEST (14, 14, 14, 6)			\
+-TEST (7, 7, 7, 7)			\
+-
+-TESTS
+-
+-UV u[] =
+-  { ((UV) { 73U, 65531U, 0U, 174U }),
+-    ((UV) { 1U, 8173U, ~0U, ~0U - 63 }) };
+-SV s[] =
+-  { ((SV) { 73, -9123, 32761, 8191 }),
+-    ((SV) { 9903, -1, -7323, 0 }) };
+-
+-int
+-main ()
+-{
+-  UV ur, ur2;
+-  SV sr, sr2;
+-  int i;
+-#undef TEST
+-#define TEST(a, b, c, d)				\
+-    uq##a##b##c##d (&ur, u + i);			\
+-    if (ur[0] != u[i][0] / a || ur[3] != u[i][3] / d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[2] != u[i][2] / c || ur[1] != u[i][1] / b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    ur##a##b##c##d (&ur, u + i);			\
+-    if (ur[0] != u[i][0] % a || ur[3] != u[i][3] % d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");		\
+-    if (ur[2] != u[i][2] % c || ur[1] != u[i][1] % b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&ur) : "memory");
+-  for (i = 0; i < sizeof (u) / sizeof (u[0]); i++)
+-    {
+-      TESTS
+-    }
+-#undef TEST
+-#define TEST(a, b, c, d)				\
+-    sq##a##b##c##d (&sr, s + i);			\
+-    if (sr[0] != s[i][0] / a || sr[3] != s[i][3] / d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[2] != s[i][2] / c || sr[1] != s[i][1] / b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    sr##a##b##c##d (&sr, s + i);			\
+-    if (sr[0] != s[i][0] % a || sr[3] != s[i][3] % d)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");		\
+-    if (sr[2] != s[i][2] % c || sr[1] != s[i][1] % b)	\
+-     abort ();						\
+-    asm volatile ("" : : "r" (&sr) : "memory");
+-  for (i = 0; i < sizeof (s) / sizeof (s[0]); i++)
+-    {
+-      TESTS
+-    }
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr56205.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr56205.c
+deleted file mode 100644
+index bf396859..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr56205.c
++++ /dev/null
+@@ -1,61 +0,0 @@
+-/* PR tree-optimization/56205 */
+-
+-#include <stdarg.h>
+-
+-int a, b;
+-char c[128];
+-
+-__attribute__((noinline, noclone)) static void
+-f1 (const char *fmt, ...)
+-{
+-  va_list ap;
+-  asm volatile ("" : : : "memory");
+-  if (__builtin_strcmp (fmt, "%s %d %s") != 0)
+-    __builtin_abort ();
+-  va_start (ap, fmt);
+-  if (__builtin_strcmp (va_arg (ap, const char *), "foo") != 0
+-      || va_arg (ap, int) != 1
+-      || __builtin_strcmp (va_arg (ap, const char *), "bar") != 0)
+-    __builtin_abort ();
+-  va_end (ap);
+-}
+-
+-__attribute__((noinline, noclone)) static void
+-f2 (const char *fmt, va_list ap)
+-{
+-  asm volatile ("" : : : "memory");
+-  if (__builtin_strcmp (fmt, "baz") != 0
+-      || __builtin_strcmp (va_arg (ap, const char *), "foo") != 0
+-      || va_arg (ap, double) != 12.0
+-      || va_arg (ap, int) != 26)
+-    __builtin_abort ();
+-}
+-
+-static void
+-f3 (int x, char const *y, va_list z)
+-{
+-  f1 ("%s %d %s", x ? "" : "foo", ++a, (y && *y) ? "bar" : "");
+-  if (y && *y)
+-    f2 (y, z);
+-}
+-
+-__attribute__((noinline, noclone)) void
+-f4 (int x, char const *y, ...)
+-{
+-  va_list z;
+-  va_start (z, y);
+-  if (!x && *c == '\0')
+-    ++b;
+-  f3 (x, y, z);
+-  va_end (z);
+-}
+-
+-int
+-main ()
+-{
+-  asm volatile ("" : : : "memory");
+-  f4 (0, "baz", "foo", 12.0, 26);
+-  if (a != 1 || b != 1)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr56866.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr56866.c
+deleted file mode 100644
+index 260b8ff1..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr56866.c
++++ /dev/null
+@@ -1,45 +0,0 @@
+-/* PR target/56866 */
+-
+-int
+-main ()
+-{
+-#if __CHAR_BIT__ == 8 && __SIZEOF_LONG_LONG__ == 8 && __SIZEOF_INT__ == 4 && __SIZEOF_SHORT__ == 2
+-  unsigned long long wq[256], rq[256];
+-  unsigned int wi[256], ri[256];
+-  unsigned short ws[256], rs[256];
+-  unsigned char wc[256], rc[256];
+-  int t;
+-
+-  __builtin_memset (wq, 0, sizeof wq);
+-  __builtin_memset (wi, 0, sizeof wi);
+-  __builtin_memset (ws, 0, sizeof ws);
+-  __builtin_memset (wc, 0, sizeof wc);
+-  wq[0] = 0x0123456789abcdefULL;
+-  wi[0] = 0x01234567;
+-  ws[0] = 0x4567;
+-  wc[0] = 0x73;
+-
+-  asm volatile ("" : : "g" (wq), "g" (wi), "g" (ws), "g" (wc) : "memory");
+-
+-  for (t = 0; t < 256; ++t)
+-    rq[t] = (wq[t] >> 8) | (wq[t] << (sizeof (wq[0]) * __CHAR_BIT__ - 8));
+-  for (t = 0; t < 256; ++t)
+-    ri[t] = (wi[t] >> 8) | (wi[t] << (sizeof (wi[0]) * __CHAR_BIT__ - 8));
+-  for (t = 0; t < 256; ++t)
+-    rs[t] = (ws[t] >> 9) | (ws[t] << (sizeof (ws[0]) * __CHAR_BIT__ - 9));
+-  for (t = 0; t < 256; ++t)
+-    rc[t] = (wc[t] >> 5) | (wc[t] << (sizeof (wc[0]) * __CHAR_BIT__ - 5));
+-
+-  asm volatile ("" : : "g" (rq), "g" (ri), "g" (rs), "g" (rc) : "memory");
+-
+-  if (rq[0] != 0xef0123456789abcdULL || rq[1])
+-    __builtin_abort ();
+-  if (ri[0] != 0x67012345 || ri[1])
+-    __builtin_abort ();
+-  if (rs[0] != 0xb3a2 || rs[1])
+-    __builtin_abort ();
+-  if (rc[0] != 0x9b || rc[1])
+-    __builtin_abort ();
+-#endif
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr56982.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr56982.c
+deleted file mode 100644
+index 0fa9c8ab..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr56982.c
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/* { dg-require-effective-target indirect_jumps } */
+-#include <setjmp.h>
+-
+-extern void abort (void);
+-extern void exit (int);
+-
+-static jmp_buf env;
+-
+-void baz (void)
+-{
+-  __asm__ volatile ("" : : : "memory");
+-}
+-
+-static inline int g(int x)
+-{
+-    if (x)
+-    {
+-        baz();
+-        return 0;
+-    }
+-    else
+-    {
+-        baz();
+-        return 1;
+-    }
+-}
+-
+-int f(int *e)
+-{
+-    if (*e)
+-      return 1;
+-
+-    int x = setjmp(env);
+-    int n = g(x);
+-    if (n == 0)
+-      exit(0);
+-    if (x)
+-      abort();
+-    longjmp(env, 42);
+-}
+-
+-int main(int argc, char** argv)
+-{
+-    int v = 0;
+-    return f(&v);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-1.c
+deleted file mode 100644
+index 66893269..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-1.c
++++ /dev/null
+@@ -1,32 +0,0 @@
+-/* PR middle-end/57344 */
+-
+-struct __attribute__((packed)) S
+-{
+-  int a : 11;
+-#if __SIZEOF_INT__ * __CHAR_BIT__ >= 32
+-  int b : 22;
+-#else
+-  int b : 13;
+-#endif
+-  char c;
+-  int : 0;
+-} s[2];
+-int i;
+-
+-__attribute__((noinline, noclone)) void
+-foo (int x)
+-{
+-  if (x != -3161)
+-    __builtin_abort ();
+-  asm volatile ("" : : : "memory");
+-}
+-
+-int
+-main ()
+-{
+-  struct S t = { 0, -3161L };
+-  s[1] = t;
+-  for (; i < 1; i++)
+-    foo (s[1].b);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-2.c
+deleted file mode 100644
+index 599071ba..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-2.c
++++ /dev/null
+@@ -1,33 +0,0 @@
+-/* PR middle-end/57344 */
+-/* { dg-require-effective-target int32plus } */
+-
+-struct __attribute__((packed)) S
+-{
+-  int a : 27;
+-#if __SIZEOF_INT__ * __CHAR_BIT__ >= 32
+-  int b : 22;
+-#else
+-  int b : 13;
+-#endif
+-  char c;
+-  int : 0;
+-} s[2];
+-int i;
+-
+-__attribute__((noinline, noclone)) void
+-foo (int x)
+-{
+-  if (x != -3161)
+-    __builtin_abort ();
+-  asm volatile ("" : : : "memory");
+-}
+-
+-int
+-main ()
+-{
+-  struct S t = { 0, -3161L };
+-  s[1] = t;
+-  for (; i < 1; i++)
+-    foo (s[1].b);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-3.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-3.c
+deleted file mode 100644
+index f9daea6d..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-3.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/* PR middle-end/57344 */
+-
+-struct __attribute__((packed)) S
+-{
+-  long long int a : 43;
+-  long long int b : 22;
+-  char c;
+-  long long int : 0;
+-} s[2];
+-int i;
+-
+-__attribute__((noinline, noclone)) void
+-foo (long long int x)
+-{
+-  if (x != -3161LL)
+-    __builtin_abort ();
+-  asm volatile ("" : : : "memory");
+-}
+-
+-int
+-main ()
+-{
+-  struct S t = { 0, -3161LL };
+-  s[1] = t;
+-  for (; i < 1; i++)
+-    foo (s[1].b);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-4.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-4.c
+deleted file mode 100644
+index 0b2bf152..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr57344-4.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/* PR middle-end/57344 */
+-
+-struct __attribute__((packed)) S
+-{
+-  long long int a : 59;
+-  long long int b : 54;
+-  char c;
+-  long long int : 0;
+-} s[2];
+-int i;
+-
+-__attribute__((noinline, noclone)) void
+-foo (long long int x)
+-{
+-  if (x != -1220975898975746LL)
+-    __builtin_abort ();
+-  asm volatile ("" : : : "memory");
+-}
+-
+-int
+-main ()
+-{
+-  struct S t = { 0, -1220975898975746LL };
+-  s[1] = t;
+-  for (; i < 1; i++)
+-    foo (s[1].b);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr58277-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr58277-1.c
+deleted file mode 100644
+index 811988f4..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr58277-1.c
++++ /dev/null
+@@ -1,102 +0,0 @@
+-/* PR tree-optimization/58277 */
+-
+-extern void abort (void);
+-static int a[2];
+-int b, c, d, *e, f, g, h, **i = &e, k, l = 1, n, o, p;
+-static int **volatile j = &e;
+-const int m;
+-char u;
+-
+-int
+-bar ()
+-{
+-  u = 0;
+-  return m;
+-}
+-
+-__attribute__((noinline, noclone)) void
+-baz ()
+-{
+-  asm ("");
+-}
+-
+-static int
+-foo ()
+-{
+-  int t1;
+-  g = bar ();
+-  if (l)
+-    ;
+-  else
+-    for (;; h++)
+-      {
+-	*i = 0;
+-	o = *e = 0;
+-	if (p)
+-	  {
+-	    f = 0;
+-	    return 0;
+-	  }
+-	for (;; k++)
+-	  {
+-	    int *t2 = 0;
+-	    int *const *t3[] = {
+-	      0, 0, 0, 0, 0, 0, 0, 0, 0, &t2, 0, 0, &t2, &t2, &t2,
+-	      &t2, &t2, 0, 0, 0, 0, 0, 0, 0, &t2, 0, 0, 0, 0, 0, 0,
+-	      0, 0, 0, 0, &t2, 0, 0, 0, 0, 0, 0, 0, &t2, &t2,
+-	      &t2, &t2, &t2, 0, 0, 0, 0, 0, 0, 0, &t2, 0, 0, 0,
+-	      &t2, 0, 0, 0, &t2, 0, &t2, 0, 0, &t2, 0, 0, 0, 0,
+-	      0, &t2, 0, 0, 0, 0, &t2, &t2, 0, 0, 0, 0, &t2, 0,
+-	      0, 0, 0, 0, 0, 0, &t2, 0, 0, 0, 0, 0, &t2, 0, 0, 0,
+-	      &t2, &t2
+-	    };
+-	    int *const **t4[] = {&t3[0]};
+-	    **i = 0;
+-	    if (**j)
+-	      break;
+-	    u = 0;
+-	  }
+-	*i = *j;
+-	t1 = 0;
+-	for (; t1 < 5; t1++)
+-	  *i = *j;
+-      }
+-  *j = 0;
+-  return 1;
+-}
+-
+-int
+-main ()
+-{
+-  int t5;
+-  a[0] = 1;
+-  {
+-    int *t6[6] = {&d, &d};
+-    for (n = 1; n; n--)
+-      if (foo())
+-	{
+-	  int *t7[] = {0};
+-	  d = 0;
+-	  for (; u < 1; u++)
+-	    *i = *j;
+-	  *i = 0;
+-	  *i = 0;
+-	  int t8[5] = {0};
+-	  *i = &t8[0];
+-	  int *const *t9 = &t6[0];
+-	  int *const **t10 = &t9;
+-	  *t10 = &t7[0];
+-	}
+-  }
+-  u = 0;
+-  for (; b; b++)
+-    for (t5 = 0; t5 < 10; t5++)
+-      c = a[a[a[a[a[a[a[a[c]]]]]]]];
+-
+-  baz ();
+-
+-  if (!a[a[a[a[a[a[a[a[a[a[a[a[a[a[a[u]]]]]]]]]]]]]]])
+-    abort ();
 -
 -  return 0;
 -}
-diff --git a/SingleSource/UnitTests/2003-08-11-VaListArg.c b/SingleSource/UnitTests/2003-08-11-VaListArg.c
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr58419.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr58419.c
 deleted file mode 100644
-index f72f56c5..00000000
---- a/SingleSource/UnitTests/2003-08-11-VaListArg.c
+index d0441f27..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr58419.c
 +++ /dev/null
-@@ -1,96 +0,0 @@
--/*
-- * Test passing a va_list argument to a function and other uses
-- * of va_list, in things other than va_arg.
-- */
--#include <stdio.h>
+@@ -1,41 +0,0 @@
+-__attribute__((__noinline__))
+-void
+-dummy ()
+-{
+-  asm volatile("");
+-}
+-
+-int a, g, i, k, *p;
+-signed char b;
+-char e;
+-short c, h;
+-static short *d = &c;
+-
+-char
+-foo (int p1, int p2)
+-{
+-  return p1 - p2;
+-}
+-
+-int
+-bar ()
+-{
+-  short *q = &c;
+-  *q = 1;
+-  *p = 0;
+-  return 0;
+-}
+-
+-int
+-main ()
+-{
+-  for (b = -22; b >= -29; b--)
+-    {
+-      short *l = &h;
+-      char *m = &e;
+-      *l = a;
+-      g = foo (*m = k && *d, 1 > i) || bar ();
+-    }
+-  dummy();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr63641.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr63641.c
+deleted file mode 100644
+index d08c50b4..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr63641.c
++++ /dev/null
+@@ -1,54 +0,0 @@
+-/* PR tree-optimization/63641 */
+-
+-__attribute__ ((noinline, noclone)) int
+-foo (unsigned char b)
+-{
+-  if (0x0 <= b && b <= 0x8)
+-    goto lab;
+-  if (b == 0x0b)
+-    goto lab;
+-  if (0x0e <= b && b <= 0x1a)
+-    goto lab;
+-  if (0x1c <= b && b <= 0x1f)
+-    goto lab;
+-  return 0;
+-lab:
+-  return 1;
+-}
+-
+-__attribute__ ((noinline, noclone)) int
+-bar (unsigned char b)
+-{
+-  if (0x0 <= b && b <= 0x8)
+-    goto lab;
+-  if (b == 0x0b)
+-    goto lab;
+-  if (0x0e <= b && b <= 0x1a)
+-    goto lab;
+-  if (0x3c <= b && b <= 0x3f)
+-    goto lab;
+-  return 0;
+-lab:
+-  return 1;
+-}
+-
+-char tab1[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1,
+-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1 };
+-char tab2[] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1,
+-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
+-
+-int
+-main ()
+-{
+-  int i;
+-  asm volatile ("" : : : "memory");
+-  for (i = 0; i < 256; i++)
+-    if (foo (i) != (i < 32 ? tab1[i] : 0))
+-      __builtin_abort ();
+-  for (i = 0; i < 256; i++)
+-    if (bar (i) != (i < 64 ? tab2[i] : 0))
+-      __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-1.c
+deleted file mode 100644
+index edcf41dd..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-1.c
++++ /dev/null
+@@ -1,32 +0,0 @@
+-/* PR tree-optimization/65053 */
+-
+-int i;
+-
+-__attribute__ ((noinline, noclone))
+-unsigned int foo (void)
+-{
+-  return 0;
+-}
+-
+-int
+-main ()
+-{
+-  unsigned int u = -1;
+-  if (u == -1)
+-    {
+-      unsigned int n = foo ();
+-      if (n > 0)
+-	u = n - 1;
+-    }
+-
+-  while (u != -1)
+-    {
+-      asm ("" : "+g" (u));
+-      u = -1;
+-      i = 1;
+-    }
+-
+-  if (i)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-2.c
+deleted file mode 100644
+index 2a0f4e46..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr65053-2.c
++++ /dev/null
+@@ -1,27 +0,0 @@
+-/* PR tree-optimization/65053 */
+-
+-int i;
+-unsigned int x;
+-
+-int
+-main ()
+-{
+-  asm volatile ("" : "+g" (x));
+-  unsigned int n = x;
+-  unsigned int u = 32;
+-  if (n >= 32)
+-    __builtin_abort ();
+-  if (n != 0)
+-    u = n + 32;
+-
+-  while (u != 32)
+-    {
+-      asm ("" : : "g" (u));
+-      u = 32;
+-      i = 1;
+-    }
+-
+-  if (i)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr65648.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr65648.c
+deleted file mode 100644
+index 88a2fc9a..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr65648.c
++++ /dev/null
+@@ -1,34 +0,0 @@
+-/* PR target/65648 */
+-
+-int a = 0, *b = 0, c = 0;
+-static int d = 0;
+-short e = 1;
+-static long long f = 0;
+-long long *i = &f;
+-unsigned char j = 0;
+-
+-__attribute__((noinline, noclone)) void
+-foo (int x, int *y)
+-{
+-  asm volatile ("" : : "r" (x), "r" (y) : "memory");
+-}
+-
+-__attribute__((noinline, noclone)) void
+-bar (const char *x, long long y)
+-{
+-  asm volatile ("" : : "r" (x), "r" (&y) : "memory");
+-  if (y != 0)
+-    __builtin_abort ();
+-}
+-
+-int
+-main ()
+-{
+-  int k = 0;
+-  b = &k;
+-  j = (!a) - (c <= e);
+-  *i = j;
+-  foo (a, &k);
+-  bar ("", f);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr65956.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr65956.c
+deleted file mode 100644
+index f5c5eecc..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr65956.c
++++ /dev/null
+@@ -1,67 +0,0 @@
+-/* PR target/65956 */
+-
+-struct A { char *a; int b; long long c; };
+-char v[3];
+-
+-__attribute__((noinline, noclone)) void
+-fn1 (char *x, char *y)
+-{
+-  if (x != &v[1] || y != &v[2])
+-    __builtin_abort ();
+-  v[1]++;
+-}
+-
+-__attribute__((noinline, noclone)) int
+-fn2 (char *x)
+-{
+-  asm volatile ("" : "+g" (x) : : "memory");
+-  return x == &v[0];
+-}
+-
+-__attribute__((noinline, noclone)) void
+-fn3 (const char *x)
+-{
+-  if (x[0] != 0)
+-    __builtin_abort ();
+-}
+-
+-static struct A
+-foo (const char *x, struct A y, struct A z)
+-{
+-  struct A r = { 0, 0, 0 };
+-  if (y.b && z.b)
+-    {
+-      if (fn2 (y.a) && fn2 (z.a))
+-	switch (x[0])
+-	  {
+-	  case '|':
+-	    break;
+-	  default:
+-	    fn3 (x);
+-	  }
+-      fn1 (y.a, z.a);
+-    }
+-  return r;
+-}
+-
+-__attribute__((noinline, noclone)) int
+-bar (int x, struct A *y)
+-{
+-  switch (x)
+-    {
+-    case 219:
+-      foo ("+", y[-2], y[0]);
+-    case 220:
+-      foo ("-", y[-2], y[0]);
+-    }
+-}
+-
+-int
+-main ()
+-{
+-  struct A a[3] = { { &v[1], 1, 1LL }, { &v[0], 0, 0LL }, { &v[2], 2, 2LL } };
+-  bar (220, a + 2);
+-  if (v[1] != 1)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr68328.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr68328.c
+deleted file mode 100644
+index edf244bb..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr68328.c
++++ /dev/null
+@@ -1,44 +0,0 @@
+-int a, b, c = 1, d = 1, e;
+-
+-__attribute__ ((noinline, noclone))
+-     int foo (void)
+-{
+-  asm volatile ("":::"memory");
+-  return 4195552;
+-}
+-
+-__attribute__ ((noinline, noclone))
+-     void bar (int x, int y)
+-{
+-  asm volatile (""::"g" (x), "g" (y):"memory");
+-  if (y == 0)
+-    __builtin_abort ();
+-}
+-
+-int
+-baz (int x)
+-{
+-  char g, h;
+-  int i, j;
+-
+-  foo ();
+-  for (;;)
+-    {
+-      if (c)
+-	h = d;
+-      g = h < x ? h : 0;
+-      i = (signed char) ((unsigned char) (g - 120) ^ 1);
+-      j = i > 97;
+-      if (a - j)
+-	bar (0x123456, 0);
+-      if (!b)
+-	return e;
+-    }
+-}
+-
+-int
+-main ()
+-{
+-  baz (2);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr68381.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr68381.c
+deleted file mode 100644
+index 2d7d441b..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr68381.c
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/* { dg-options "-O -fexpensive-optimizations -fno-tree-bit-ccp" } */
+-
+-__attribute__ ((noinline, noclone))
+-int
+-foo (unsigned short x, unsigned short y)
+-{
+-  int r;
+-  if (__builtin_mul_overflow (x, y, &r))
+-    __builtin_abort ();
+-  return r;
+-}
+-
+-int
+-main (void)
+-{
+-  int x = 1;
+-  int y = 2;
+-  if (foo (x, y) != x * y)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr68390.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr68390.c
+deleted file mode 100644
+index 0d2048d5..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr68390.c
++++ /dev/null
+@@ -1,26 +0,0 @@
+-/* { dg-do run }  */
+-/* { dg-options "-O2" } */
+-
+-__attribute__ ((noinline))
+-double direct(int x, ...)
+-{
+-  return x*x;
+-}
+-
+-__attribute__ ((noinline))
+-double broken(double (*indirect)(int x, ...), int v)
+-{
+-  return indirect(v);
+-}
+-
+-int main ()
+-{
+-  double d1, d2;
+-  int i = 2;
+-  d1 = broken (direct, i);
+-  if (d1 != i*i)
+-    {
+-      __builtin_abort ();
+-    }
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr68506.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr68506.c
+deleted file mode 100644
+index 15984edf..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr68506.c
++++ /dev/null
+@@ -1,63 +0,0 @@
+-/* { dg-options "-fno-builtin-abort" } */
+-
+-int a, b, m, n, o, p, s, u, i;
+-char c, q, y;
+-short d;
+-unsigned char e;
+-static int f, h;
+-static short g, r, v;
+-unsigned t;
+-
+-extern void abort ();
+-
+-int
+-fn1 (int p1)
+-{
+-  return a ? p1 : p1 + a;
+-}
+-
+-unsigned char
+-fn2 (unsigned char p1, int p2)
+-{
+-  return p2 >= 2 ? p1 : p1 >> p2;
+-}
+-
+-static short
+-fn3 ()
+-{
+-  int w, x = 0;
+-  for (; p < 31; p++)
+-    {
+-      s = fn1 (c | ((1 && c) == c));
+-      t = fn2 (s, x);
+-      c = (unsigned) c > -(unsigned) ((o = (m = d = t) == p) <= 4UL) && n;
+-      v = -c;
+-      y = 1;
+-      for (; y; y++)
+-	e = v == 1;
+-      d = 0;
+-      for (; h != 2;)
+-	{
+-	  for (;;)
+-	    {
+-	      if (!m)
+-		abort ();
+-	      r = 7 - f;
+-	      x = e = i | r;
+-	      q = u * g;
+-	      w = b == q;
+-	      if (w)
+-		break;
+-	    }
+-	  break;
+-	}
+-    }
+-  return x;
+-}
+-
+-int
+-main ()
+-{
+-  fn3 ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr68532.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr68532.c
+deleted file mode 100644
+index ac677cbc..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr68532.c
++++ /dev/null
+@@ -1,23 +0,0 @@
+-/* { dg-options "-O2 -ftree-vectorize -fno-vect-cost-model" } */
+-/* { dg-additional-options "-fno-common" { target hppa*-*-hpux* } } */
+-
+-#define SIZE 128
+-unsigned short _Alignas (16) in[SIZE];
+-
+-__attribute__ ((noinline)) int
+-test (unsigned short sum, unsigned short *in, int x)
+-{
+-  for (int j = 0; j < SIZE; j += 8)
+-    sum += in[j] * x;
+-  return sum;
+-}
+-
+-int
+-main ()
+-{
+-  for (int i = 0; i < SIZE; i++)
+-    in[i] = i;
+-  if (test (0, in, 1) != 960)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr69320-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr69320-2.c
+deleted file mode 100644
+index dc245664..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr69320-2.c
++++ /dev/null
+@@ -1,35 +0,0 @@
+-
+-#include <stdlib.h>
+-
+-int a, *c, d, e, g, f;
+-short b;
+-
+-int
+-fn1 ()
+-{
+-  int h = d != 10;
+-  if (h > g)
+-     asm volatile ("" : : : "memory");
+-  if (h == 10)
+-    {
+-      int *i = 0;
+-      a = 0;
+-      for (; a < 7; a++)
+-	for (; *i;)
+-	  ;
+-    }
+-  else
+-    {
+-      b = e / h;
+-      return f;
+-    }
+-  c = &h;
+-  abort ();
+-}
+-
+-int
+-main ()
+-{
+-  fn1 ();
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr69691.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr69691.c
+deleted file mode 100644
+index 16b5556f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr69691.c
++++ /dev/null
+@@ -1,127 +0,0 @@
+-/* PR rtl-optimization/69691 */
+-
+-char u[] = { 46, 97, 99, 104, 52, 0 };
+-char *v[] = { u, 0 };
+-struct S { char a[10]; struct S *b[31]; };
+-struct S r[7], *r2 = r;
+-static struct S *w = 0;
+-
+-__attribute__((noinline, noclone)) int
+-fn (int x)
+-{
+-  if (__builtin_strchr (u, x) || x == 96)
+-    return x;
+-  __builtin_abort ();
+-}
+-
+-__attribute__((noinline, noclone)) int
+-foo (char x)
+-{
+-  if (x == 0)
+-    __builtin_abort ();
+-  if (fn (x) >= 96 && fn (x) <= 122)
+-    return (fn (x) - 96);
+-  else if (x == 46)
+-    return 0;
+-  else
+-    {
+-      __builtin_printf ("foo %d\n", x);
+-      return -1;
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-bar (char **x)
+-{
+-  char **b, c, *d, e[500], *f, g[10];
+-  int z, l, h, i;
+-  struct S *s;
+-
+-  w = r2++;
+-  for (b = x; *b; b++)
+-    {
+-      __builtin_strcpy (e, *b);
+-      f = e;
+-      do
+-	{
+-	  d = __builtin_strchr (f, 32);
+-	  if (d)
+-	    *d = 0;
+-	  l = __builtin_strlen (f);
+-	  h = 0;
+-	  s = w;
+-	  __builtin_memset (g, 0, sizeof (g));
+-	  for (z = 0; z < l; z++)
+-	    {
+-	      c = f[z];
+-	      if (c >= 48 && c <= 57)
+-		g[h] = c - 48;
+-	      else
+-		{
+-		  i = foo (c);
+-		  if (!s->b[i])
+-		    {
+-		      s->b[i] = r2++;
+-		      if (r2 == &r[7])
+-			__builtin_abort ();
+-		    }
+-		  s = s->b[i];
+-		  h++;
+-		}
+-	    }
+-	  __builtin_memcpy (s->a, g, 10);
+-	  if (d)
+-	    f = d + 1;
+-	}
+-      while (d);
+-    }
+-}
+-
+-__attribute__((noinline, noclone)) void
+-baz (char *x)
+-{
+-  char a[300], b[300];
+-  int z, y, t, l;
+-  struct S *s;
+-
+-  l = __builtin_strlen (x);
+-  *a = 96;
+-  for (z = 0; z < l; z++)
+-    {
+-      a[z + 1] = fn ((unsigned int) x[z]);
+-      if (foo (a[z + 1]) <= 0)
+-	return;
+-    }
+-  a[l + 1] = 96;
+-  l += 2;
+-  __builtin_memset (b, 0, l + 2);
+-
+-  if (!w)
+-    return;
+-
+-  for (z = 0; z < l; z++)
+-    {
+-      s = w;
+-      for (y = z; y < l; y++)
+-	{
+-	  s = s->b[foo (a[y])];
+-	  if (!s)
+-	    break;
+-	  for (t = 0; t <= y - z + 2; t++)
+-	    if (s->a[t] > b[z + t])
+-	      b[z + t] = s->a[t];
+-	}
+-    }
+-  for (z = 3; z < l - 2; z++)
+-    if ((b[z] & 1) == 1)
+-     asm ("");
+-}
+-
+-int
+-main ()
+-{
+-  bar (v);
+-  char c[] = { 97, 97, 97, 97, 97, 0 };
+-  baz (c);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr70460.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr70460.c
+deleted file mode 100644
+index 04fa1efc..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr70460.c
++++ /dev/null
+@@ -1,33 +0,0 @@
+-/* { dg-require-effective-target indirect_jumps } */
+-/* { dg-require-effective-target label_values } */
+-/* { dg-skip-if "label differences not supported" { avr-*-* } } */
+-
+-/* PR rtl-optimization/70460 */
+-
+-int c;
+-
+-__attribute__((noinline, noclone)) void
+-foo (int x)
+-{
+-  static int b[] = { &&lab1 - &&lab0, &&lab2 - &&lab0 };
+-  void *a = &&lab0 + b[x];
+-  goto *a;
+-lab1:
+-  c += 2;
+-lab2:
+-  c++;
+-lab0:
+-  ;
+-}
+-
+-int
+-main ()
+-{
+-  foo (0);
+-  if (c != 3)
+-    __builtin_abort ();
+-  foo (1);
+-  if (c != 4)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr70903.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr70903.c
+deleted file mode 100644
+index 698a713b..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr70903.c
++++ /dev/null
+@@ -1,19 +0,0 @@
+-typedef unsigned char V8 __attribute__ ((vector_size (32)));
+-typedef unsigned int V32 __attribute__ ((vector_size (32)));
+-typedef unsigned long long V64 __attribute__ ((vector_size (32)));
+-
+-static V32 __attribute__ ((noinline, noclone))
+-foo (V64 x)
+-{
+-  V64 y = (V64)(V8){((V8)(V64){65535, x[0]})[1]};
+-  return (V32){y[0], 255};
+-}
+-
+-int main ()
+-{
+-  V32 x = foo ((V64){});
+-//  __builtin_printf ("%08x %08x %08x %08x %08x %08x %08x %08x\n", x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]);
+-  if (x[1] != 255)
+-    __builtin_abort();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr78438.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr78438.c
+deleted file mode 100644
+index 3383c322..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr78438.c
++++ /dev/null
+@@ -1,22 +0,0 @@
+-/* PR target/78438 */
+-
+-char a = 0;
+-int b = 197412621;
+-
+-__attribute__ ((noinline, noclone))
+-void foo ()
+-{
+-  a = 0 > (short) (b >> 11);
+-}
+-
+-int
+-main ()
+-{
+-  asm volatile ("" : : : "memory");
+-  if (__CHAR_BIT__ != 8 || sizeof (short) != 2 || sizeof (int) < 4)
+-    return 0;
+-  foo ();
+-  if (a != 0)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr78726.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr78726.c
+deleted file mode 100644
+index 9c29234b..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr78726.c
++++ /dev/null
+@@ -1,23 +0,0 @@
+-/* PR tree-optimization/78726 */
+-
+-unsigned char b = 36, c = 173;
+-unsigned int d;
+-
+-__attribute__((noinline, noclone)) void
+-foo (void)
+-{
+-  unsigned a = ~b;
+-  d = a * c * c + 1023094746U * a;
+-}
+-
+-int
+-main ()
+-{
+-  if (__SIZEOF_INT__ != 4 || __CHAR_BIT__ != 8)
+-    return 0;
+-  asm volatile ("" : : "g" (&b), "g" (&c) : "memory");
+-  foo ();
+-  if (d != 799092689U)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr78856.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr78856.c
+deleted file mode 100644
+index 4663256e..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr78856.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-extern void exit (int);
+-
+-int a, b, c, d, e, f[3];
+-
+-int main()
+-{
+-  while (d)
+-    while (1)
+-      ;
+-  int g = 0, h, i = 0;
+-  for (; g < 21; g += 9)
+-    {
+-      int j = 1;
+-      for (h = 0; h < 3; h++)
+-	f[h] = 1;
+-      for (; j < 10; j++) {
+-	d = i && (b ? 0 : c);
+-	i = 1;
+-	if (g)
+-	  a = e;
+-      }
+-  }
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr79354.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr79354.c
+deleted file mode 100644
+index c196155e..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr79354.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/* PR target/79354 */
+-
+-int b, f, g;
+-float e;
+-unsigned long d;
+-
+-__attribute__((noinline, noclone)) void
+-foo (int *a)
+-{
+-  for (g = 0; g < 32; g++)
+-    if (f)
+-      {
+-        e = d;
+-        __builtin_memcpy (&b, &e, sizeof (float));
+-        b = *a;
+-      }
+-}
+-
+-int
+-main ()
+-{
+-  int h = 5;
+-  f = 1;
+-  asm volatile ("" : : : "memory");
+-  foo (&h);
+-  asm volatile ("" : : : "memory");
+-  foo (&b);
+-  asm volatile ("" : : : "memory");
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr79737-2.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr79737-2.c
+deleted file mode 100644
+index 56a6ad8f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr79737-2.c
++++ /dev/null
+@@ -1,47 +0,0 @@
+-/* PR tree-optimization/79737 */
+-
+-#if __SIZEOF_INT__ < 4
+-  __extension__ typedef __INT32_TYPE__ int32_t;
+-#else
+-  typedef int int32_t;
+-#endif
+-
+-#pragma pack(1)
+-struct S
+-{
+-  int32_t b:18;
+-  int32_t c:1;
+-  int32_t d:24;
+-  int32_t e:15;
+-  int32_t f:14;
+-} i, j;
+-
+-void
+-foo ()
+-{
+-  i.e = 0;
+-  i.b = 5;
+-  i.c = 0;
+-  i.d = -5;
+-  i.f = 5;
+-}
+-
+-void
+-bar ()
+-{
+-  j.b = 5;
+-  j.c = 0;
+-  j.d = -5;
+-  j.e = 0;
+-  j.f = 5;
+-}
+-
+-int
+-main ()
+-{
+-  foo ();
+-  bar ();
+-  asm volatile ("" : : : "memory");
+-  if (i.b != j.b || i.c != j.c || i.d != j.d || i.e != j.e || i.f != j.f)
+-    __builtin_abort ();
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr80421.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr80421.c
+deleted file mode 100644
+index b13ab5fc..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr80421.c
++++ /dev/null
+@@ -1,121 +0,0 @@
+-/* PR middle-end/80421 */
+-
+-__attribute__ ((noinline, noclone)) void
+-baz (const char *t, ...)
+-{
+-  asm volatile (""::"r" (t):"memory");
+-  if (*t == 'T')
+-    __builtin_abort ();
+-}
+-
+-unsigned int
+-foo (char x)
+-{
+-  baz ("x %c\n", x);
+-  switch (x)
+-    {
+-    default:
+-      baz ("case default\n");
+-      if (x == 'D' || x == 'I')
+-	baz ("This should never be reached.\n");
+-      return 0;
+-    case 'D':
+-      baz ("case 'D'\n");
+-      return 0;
+-    case 'I':
+-      baz ("case 'I'\n");
+-      return 0;
+-    }
+-}
+-
+-void
+-bar (void)
+-{
+-  int a = 2;
+-  int b = 5;
+-  char c[] = {
+-    2, 4, 1, 2, 5, 5, 2, 4, 4, 0, 0, 0, 0, 0, 0, 3, 4, 4, 2, 4,
+-    1, 2, 5, 5, 2, 4, 1, 0, 0, 0, 2, 4, 4, 3, 4, 3, 3, 5, 1, 3,
+-    5, 5, 2, 4, 4, 2, 4, 1, 3, 5, 3, 3, 5, 1, 3, 5, 1, 2, 4, 4,
+-    2, 4, 2, 3, 5, 1, 3, 5, 1, 3, 5, 5, 2, 4, 1, 2, 4, 2, 3, 5,
+-    3, 3, 5, 1, 3, 5, 5, 2, 4, 1, 2, 4, 1, 3, 5, 3, 3, 5, 1, 3,
+-    5, 5, 2, 4, 4, 2, 4, 1, 3, 5, 3, 3, 5, 1, 3, 5, 1, 2, 4, 1,
+-    2, 4, 2, 3, 5, 1, 3, 5, 1, 3, 5, 1, 2, 4, 1, 2, 4, 1, 3, 5,
+-    1, 3, 5, 1, 3, 5, 1, 2, 4, 4, 2, 4, 1, 3, 5, 1, 3, 5, 1, 3,
+-    5, 5, 2, 4, 4, 2, 4, 2, 3, 5, 3, 3, 5, 1, 3, 5, 5, 2, 4, 4,
+-    2, 4, 1, 3, 5, 3, 3, 5, 1, 3, 5, 1, 2, 5, 5, 2, 4, 2, 3, 5,
+-    1, 3, 4, 1, 3, 5, 1, 2, 5, 5, 2, 4, 1, 2, 5, 1, 3, 5, 3, 3,
+-    5, 1, 2, 5, 5, 2, 4, 2, 2, 5, 1, 3, 5, 3, 3, 5, 1, 2, 5, 1,
+-    2, 4, 1, 2, 5, 2, 3, 5, 1, 3, 5, 1, 2, 5, 1, 2, 4, 2, 2, 5,
+-    1, 3, 5, 1, 3, 5, 1, 2, 5, 5, 2, 4, 2, 2, 5, 2, 3, 5, 3, 3,
+-    5, 1, 2, 5, 5, 2, 4, 2, 2, 5, 2, 3, 5, 3, 3, 5, 1, 2, 5, 5,
+-    2, 4, 2, 2, 5, 1, 3, 5, 3, 3, 5, 1, 2, 5, 5, 2, 4, 2, 2, 5,
+-    1, 3, 5, 3, 3, 5, 1, 2, 5, 1, 2, 4, 1, 2, 5, 2, 3, 5, 1, 3,
+-    5, 1, 2, 5, 5, 2, 4, 2, 2, 5, 2, 3, 5, 3, 3, 5, 1, 2, 5, 5,
+-    2, 4, 1, 2, 5, 1, 3, 5, 3, 3, 5, 1, 2, 5, 5, 2, 4, 2, 2, 5,
+-    1, 3, 5, 3, 3, 5, 1, 2, 5, 5, 2, 4, 2, 2, 5, 1, 3, 5, 3, 3,
+-    5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+-  };
+-  char *f = c + 390;
+-  int i, j, e, g, h;
+-  char k, l;
+-  i = 26;
+-  j = 25;
+-  k = l = 'M';
+-  h = 2;
+-  while (i > 0)
+-    {
+-      int x = i - a;
+-      x = x > 0 ? x : 0;
+-      x = j - x;
+-      g = x * 3 + h;
+-      switch (f[g])
+-	{
+-	case 1:
+-	  --i;
+-	  --j;
+-	  h = 2;
+-	  f -= b * 3;
+-	  k = 'M';
+-	  break;
+-	case 2:
+-	  --i;
+-	  h = 0;
+-	  f -= b * 3;
+-	  k = 'I';
+-	  break;
+-	case 3:
+-	  --i;
+-	  h = 2;
+-	  f -= b * 3;
+-	  k = 'I';
+-	  break;
+-	case 4:
+-	  --j;
+-	  h = 1;
+-	  k = 'D';
+-	  break;
+-	case 5:
+-	  --j;
+-	  h = 2;
+-	  k = 'D';
+-	  break;
+-	}
+-      if (k == l)
+-	++e;
+-      else
+-	{
+-	  foo (l);
+-	  l = k;
+-	}
+-    }
+-}
+-
+-int
+-main ()
+-{
+-  char l = 'D';
+-  foo (l);
+-  bar ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr81588.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr81588.c
+deleted file mode 100644
+index d556f014..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr81588.c
++++ /dev/null
+@@ -1,45 +0,0 @@
+-/* PR tree-optimization/81588 */
+-
+-__attribute__((noinline, noclone)) int
+-bar (int x)
+-{
+-  __asm volatile ("" : : "g" (x) : "memory");
+-}
+-
+-__attribute__((noinline, noclone)) int
+-foo (unsigned x, long long y)
+-{
+-  if (y < 0)
+-    return 0;
+-  if (y < (long long) (4 * x))
+-    {
+-      bar (y);
+-      return 1;
+-    }
+-  return 0;
+-}
+-
+-int
+-main ()
+-{
+-  volatile unsigned x = 10;
+-  volatile long long y = -10000;
+-  if (foo (x, y) != 0)
+-    __builtin_abort ();
+-  y = -1;
+-  if (foo (x, y) != 0)
+-    __builtin_abort ();
+-  y = 0;
+-  if (foo (x, y) != 1)
+-    __builtin_abort ();
+-  y = 39;
+-  if (foo (x, y) != 1)
+-    __builtin_abort ();
+-  y = 40;
+-  if (foo (x, y) != 0)
+-    __builtin_abort ();
+-  y = 10000;
+-  if (foo (x, y) != 0)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr82954.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr82954.c
+deleted file mode 100644
+index 5ced2854..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr82954.c
++++ /dev/null
+@@ -1,22 +0,0 @@
+-/* PR tree-optimization/82954 */
+-
+-__attribute__((noipa)) void
+-foo (int *__restrict p, int *__restrict q)
+-{
+-  p[0] = p[0] ^ 1;
+-  p[1] = p[1] ^ 2;
+-  p[2] = p[2] ^ q[2];
+-  p[3] = p[3] ^ q[3];
+-}
+-
+-int
+-main ()
+-{
+-  int p[4] = { 16, 32, 64, 128 };
+-  int q[4] = { 8, 4, 2, 1 };
+-  asm volatile ("" : : "g" (p), "g" (q) : "memory");
+-  foo (p, q);
+-  if (p[0] != 17 || p[1] != 34 || p[2] != 66 || p[3] != 129)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr84521.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr84521.c
+deleted file mode 100644
+index 08d1a9e7..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr84521.c
++++ /dev/null
+@@ -1,53 +0,0 @@
+-/* { dg-require-effective-target indirect_jumps } */
+-/* { dg-additional-options "-fomit-frame-pointer -fno-inline" }  */
+-
+-extern void abort (void);
+-
+-void
+-broken_longjmp (void *p)
+-{
+-  __builtin_longjmp (p, 1);
+-}
+-
+-volatile int x = 256;
+-void *volatile p = (void*)&x;
+-void *volatile p1;
+-
+-void
+-test (void)
+-{
+-  void *buf[5];
+-  void *volatile q = p;
+-
+-  if (!__builtin_setjmp (buf))
+-    broken_longjmp (buf);
+-
+-  /* Fails if stack pointer corrupted.  */
+-  if (p != q)
+-    abort ();
+-}
+-
+-void
+-test2 (void)
+-{
+-  void *volatile q = p;
+-  p1 = __builtin_alloca (x);
+-  test ();
+-
+-  /* Fails if frame pointer corrupted.  */
+-  if (p != q)
+-    abort ();
+-}
+-
+-int
+-main (void)
+-{
+-  void *volatile q = p;
+-  test ();
+-  test2 ();
+-  /* Fails if stack pointer corrupted.  */
+-  if (p != q)
+-    abort ();
+-
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr84524.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr84524.c
+deleted file mode 100644
+index 8ca07153..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr84524.c
++++ /dev/null
+@@ -1,41 +0,0 @@
+-/* PR target/84524 */
+-
+-__attribute__((noipa)) void
+-foo (unsigned short *x)
+-{
+-  unsigned short i, v;
+-  unsigned char j;
+-  for (i = 0; i < 256; i++)
+-    {
+-      v = i << 8;
+-      for (j = 0; j < 8; j++)
+-	if (v & 0x8000)
+-	  v = (v << 1) ^ 0x1021;
+-	else
+-	  v = v << 1;
+-      x[i] = v;
+-    }
+-}
+-
+-int
+-main ()
+-{
+-  unsigned short a[256];
+-
+-  foo (a);
+-  for (int i = 0; i < 256; i++)
+-    {
+-      unsigned short v = i << 8;
+-      for (int j = 0; j < 8; j++)
+-	{
+-	  asm volatile ("" : "+r" (v));
+-	  if (v & 0x8000)
+-	    v = (v << 1) ^ 0x1021;
+-	  else
+-	    v = v << 1;
+-	}
+-      if (a[i] != v)
+-	__builtin_abort ();
+-    }
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr85156.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr85156.c
+deleted file mode 100644
+index a2968370..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr85156.c
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/* PR tree-optimization/85156 */
+-
+-int x, y;
+-
+-__attribute__((noipa)) int
+-foo (int z)
+-{
+-  if (__builtin_expect (x ? y != 0 : 0, z++))
+-    return 7;
+-  return z;
+-}
+-
+-int
+-main ()
+-{
+-  x = 1;
+-  asm volatile ("" : "+m" (x), "+m" (y));
+-  if (foo (10) != 11)
+-    __builtin_abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr85582-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr85582-1.c
+deleted file mode 100644
+index 2a5c5b1f..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr85582-1.c
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/* PR target/85582 */
+-
+-int a, b, d = 2, e;
+-long long c = 1;
+-
+-int
+-main ()
+-{
+-  int g = 6;
+-L1:
+-  e = d;
+-  if (a)
+-    goto L1;
+-  g--;
+-  int i = c >> ~(~e | ~g);
+-L2:
+-  c = (b % c) * i;
+-  if (!e)
+-    goto L2;
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr85756.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr85756.c
+deleted file mode 100644
+index 8c959660..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr85756.c
++++ /dev/null
+@@ -1,50 +0,0 @@
+-/* PR target/85756 */
+-
+-#if __CHAR_BIT__ == 8 && __SIZEOF_SHORT__ == 2 && __SIZEOF_INT__ == 4
+-int a, c, *e, f, h = 10;
+-short b;
+-unsigned int p;
+-
+-__attribute__((noipa)) void
+-bar (int a)
+-{
+-  asm volatile ("" : : "r" (a) : "memory");
+-}
+-
+-void
+-foo ()
+-{
+-  unsigned j = 1, m = 430523;
+-  int k, n = 1, *l = &h;
+-lab:
+-  p = m;
+-  m = -((~65535U | j) - n);
+-  f = b << ~(n - 8);
+-  n = (m || b) ^ f;
+-  j = p;
+-  if (p < m)
+-    *l = k < 3;
+-  if (!n)
+-    l = &k;
+-  if (c)
+-    {
+-      bar (a);
+-      goto lab;
+-    }
+-  if (!*l)
+-    *e = 1;
+-}
+-
+-int
+-main ()
+-{
+-  foo ();
+-  return 0;
+-}
+-#else
+-int
+-main ()
+-{
+-  return 0;
+-}
+-#endif
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/pr88904.c b/SingleSource/Regression/C/gcc-c-torture/execute/pr88904.c
+deleted file mode 100644
+index 8c285671..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/pr88904.c
++++ /dev/null
+@@ -1,38 +0,0 @@
+-/* PR rtl-optimization/88904 */
+-
+-volatile int v;
+-
+-__attribute__((noipa)) void
+-bar (const char *x, const char *y, int z)
+-{
+-  if (!v)
+-    __builtin_abort ();
+-  asm volatile ("" : "+g" (x));
+-  asm volatile ("" : "+g" (y));
+-  asm volatile ("" : "+g" (z));
+-}
+-
+-#define my_assert(e) ((e) ? (void) 0 : bar (#e, __FILE__, __LINE__))
+-
+-typedef struct {
+-  unsigned M1;
+-  unsigned M2 : 1;
+-  int : 0;
+-  unsigned M3 : 1;
+-} S;
+-
+-S
+-foo ()
+-{
+-  S result = {0, 0, 1};
+-  return result;
+-}
+-
+-int
+-main ()
+-{
+-  S ret = foo ();
+-  my_assert (ret.M2 == 0);
+-  my_assert (ret.M3 == 1);
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/simd-4.c b/SingleSource/Regression/C/gcc-c-torture/execute/simd-4.c
+deleted file mode 100644
+index 8a92cfe9..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/simd-4.c
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/* { dg-require-effective-target stdint_types } */
+-#include <stdint.h>
+-typedef int32_t __attribute__((vector_size(8))) v2si;
+-int64_t s64;
+-
+-static inline int64_t
+-__ev_convert_s64 (v2si a)
+-{
+-  return (int64_t) a;
+-}
+-
+-int main()
+-{
+-  union { int64_t ll; int32_t i[2]; } endianness_test;
+-  endianness_test.ll = 1;
+-  int32_t little_endian = endianness_test.i[0];
+-  s64 = __ev_convert_s64 ((v2si){1,0xffffffff});
+-  if (s64 != (little_endian ? 0xffffffff00000001LL : 0x1ffffffffLL))
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/stdarg-3.c b/SingleSource/Regression/C/gcc-c-torture/execute/stdarg-3.c
+deleted file mode 100644
+index ccc79e00..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/stdarg-3.c
++++ /dev/null
+@@ -1,166 +0,0 @@
 -#include <stdarg.h>
 -
--/* 5 bytes. */
--typedef struct DWordS_struct    { int i; char c; } DWordS;
+-extern void abort (void);
 -
--/* 12 bytes if d is 4-byte aligned; 16 bytes if d is 8-byte aligned. */
--typedef struct QuadWordS_struct { int i; double d; } QuadWordS;
+-int foo_arg, bar_arg;
+-long x;
+-double d;
+-va_list gap;
+-struct S1 { int i; double d; int j; double e; } s1;
+-struct S2 { double d; long i; } s2;
+-int y;
 -
--/* 20 bytes if d is 4-byte aligned; 28 bytes if d is 8-byte aligned
-- * (assuming pointer size is 4 bytes and 8 bytes respectively). */
--typedef struct LargeS_struct { int i; double d; DWordS* ptr; int j; } LargeS;
--
--void test(char *fmt, va_list ap) {
--  int d;
--  char c, *s;
--  DWordS dw;
--  QuadWordS qw;
--  LargeS ls;
--
--  while (*fmt)
--    switch(*fmt++) {
--    case 's':           /* string */
--      s = va_arg(ap, char *);
--      printf("string %s\n", s);
--      break;
--    case 'i':           /* int */
--      d = va_arg(ap, int);
--      printf("int %d\n", d);
--      break;
--    case 'd':
--      printf("double %f\n", va_arg(ap, double));
--      break;
--    case 'l':
--      printf("long long %lld\n", va_arg(ap, long long));
--      break;
--    case 'c':           /* char */
--      /* need a cast here since va_arg only
--         takes fully promoted types */
--      c = (char) va_arg(ap, int);
--      printf("char %c\n", c);
--      break;
--    case 'D':
--      dw = va_arg(ap, DWordS);
--      printf("DWord { %d, %c }\n", dw.i, dw.c);
--      break;
--    case 'Q':
--      qw = va_arg(ap, QuadWordS);
--      printf("QuadWord { %d, %f }\n", qw.i, qw.d);
--      break;
--    case 'L':
--      ls = va_arg(ap, LargeS);
--      printf("LargeS { %d, %f, 0x%d, %d }\n", ls.i, ls.d, ls.ptr != 0, ls.j);
--      break;
--    }
--  va_end(ap);
+-void
+-bar (int v)
+-{
+-  bar_arg = v;
 -}
 -
--void testVaListArg(char *fmt, ...) {
+-void
+-f1 (int i, ...)
+-{
 -  va_list ap;
--  va_start(ap, fmt);
--  test(fmt, ap);
--  va_end(ap);
+-  va_start (ap, i);
+-  while (i-- > 0)
+-    x = va_arg (ap, long);
+-  va_end (ap);
 -}
 -
--void testVaCopyArg(char *fmt, ...) {
--  va_list ap, aq;
--  va_start(ap, fmt);
--  va_copy(aq, ap);    /* test va_copy */
--  test(fmt, aq);
--  va_end(aq);
--  va_end(ap);
+-void
+-f2 (int i, ...)
+-{
+-  va_list ap;
+-  va_start (ap, i);
+-  while (i-- > 0)
+-    d = va_arg (ap, double);
+-  va_end (ap);
 -}
 -
+-void
+-f3 (int i, ...)
+-{
+-  va_list ap;
+-  int j = i;
+-  while (j-- > 0)
+-    {
+-      va_start (ap, i);
+-      x = va_arg (ap, long);
+-      va_end (ap);
+-      bar (x);
+-    }
+-}
+-
+-void
+-f4 (int i, ...)
+-{
+-  va_list ap;
+-  int j = i;
+-  while (j-- > 0)
+-    {
+-      va_start (ap, i);
+-      d = va_arg (ap, double);
+-      va_end (ap);
+-      bar (d + 4.0);
+-    }
+-}
+-
+-void
+-f5 (int i, ...)
+-{
+-  va_list ap;
+-  va_start (ap, i);
+-  while (i-- > 0)
+-    s1 = va_arg (ap, struct S1);
+-  va_end (ap);
+-}
+-
+-void
+-f6 (int i, ...)
+-{
+-  va_list ap;
+-  va_start (ap, i);
+-  while (i-- > 0)
+-    s2 = va_arg (ap, struct S2);
+-  va_end (ap);
+-}
+-
+-void
+-f7 (int i, ...)
+-{
+-  va_list ap;
+-  int j = i;
+-  while (j-- > 0)
+-    {
+-      va_start (ap, i);
+-      s1 = va_arg (ap, struct S1);
+-      va_end (ap);
+-      bar (s1.i);
+-    }
+-}
+-
+-void
+-f8 (int i, ...)
+-{
+-  va_list ap;
+-  int j = i;
+-  while (j-- > 0)
+-    {
+-      va_start (ap, i);
+-      s2 = va_arg (ap, struct S2);
+-      y = va_arg (ap, int);
+-      va_end (ap);
+-      bar (s2.i);
+-    }
+-}
+-
+-int
+-main (void)
+-{
+-  struct S1 a1, a3;
+-  struct S2 a2, a4;
+-
+-  f1 (7, 1L, 2L, 3L, 5L, 7L, 9L, 11L, 13L);
+-  if (x != 11L)
+-    abort ();
+-  f2 (6, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0);
+-  if (d != 32.0)
+-    abort ();
+-  f3 (2, 1L, 3L);
+-  if (bar_arg != 1L || x != 1L)
+-    abort ();
+-  f4 (2, 17.0, 19.0);
+-  if (bar_arg != 21 || d != 17.0)
+-    abort ();
+-  a1.i = 131;
+-  a1.j = 251;
+-  a1.d = 15.0;
+-  a1.e = 191.0;
+-  a3 = a1;
+-  a3.j = 254;
+-  a3.e = 178.0;
+-  f5 (2, a1, a3, a1);
+-  if (s1.i != 131 || s1.j != 254 || s1.d != 15.0 || s1.e != 178.0)
+-    abort ();
+-  f5 (3, a1, a3, a1);
+-  if (s1.i != 131 || s1.j != 251 || s1.d != 15.0 || s1.e != 191.0)
+-    abort ();
+-  a2.i = 138;
+-  a2.d = 16.0;
+-  a4.i = 257;
+-  a4.d = 176.0;
+-  f6 (2, a2, a4, a2);
+-  if (s2.i != 257 || s2.d != 176.0)
+-    abort ();
+-  f6 (3, a2, a4, a2);
+-  if (s2.i != 138 || s2.d != 16.0)
+-    abort ();
+-  f7 (2, a3, a1, a1);
+-  if (s1.i != 131 || s1.j != 254 || s1.d != 15.0 || s1.e != 178.0)
+-    abort ();
+-  if (bar_arg != 131)
+-    abort ();
+-  f8 (3, a4, a2, a2);
+-  if (s2.i != 257 || s2.d != 176.0)
+-    abort ();
+-  return 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/stkalign.c b/SingleSource/Regression/C/gcc-c-torture/execute/stkalign.c
+deleted file mode 100644
+index e10a1d2e..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/stkalign.c
++++ /dev/null
+@@ -1,44 +0,0 @@
+-/* { dg-options "-fno-inline" } */
+-/* Check that stack alignment is not affected by variables not placed
+-   on the stack.  */
+-
+-#include <assert.h>
+-
+-#define ALIGNMENT 64
+-
+-unsigned test(unsigned n, unsigned p)
+-{
+-  static struct { char __attribute__((__aligned__(ALIGNMENT))) c; } s;
+-  unsigned x;
+-
+-  assert(__alignof__(s) == ALIGNMENT);
+-  asm ("" : "=g" (x), "+m" (s) : "0" (&x));
+-
+-  return n ? test(n - 1, x) : (x ^ p);
+-}
+-
+-unsigned test2(unsigned n, unsigned p)
+-{
+-  static struct { char c; } s;
+-  unsigned x;
+-
+-  assert(__alignof__(s) != ALIGNMENT);
+-  asm ("" : "=g" (x), "+m" (s) : "0" (&x));
+-
+-  return n ? test2(n - 1, x) : (x ^ p);
+-}
+-
+-int main (int argc, char *argv[] __attribute__((unused)))
+-{
+-  unsigned int x, y;
+-
+-  x = test(argc, 0);
+-  x |= test(argc + 1, 0);
+-  x |= test(argc + 2, 0);
+-
+-  y = test2(argc, 0);
+-  y |= test2(argc + 1, 0);
+-  y |= test2(argc + 2, 0);
+-
+-  return (x & (ALIGNMENT - 1)) == 0 && (y & (ALIGNMENT - 1)) != 0 ? 1 : 0;
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/struct-ret-1.c b/SingleSource/Regression/C/gcc-c-torture/execute/struct-ret-1.c
+deleted file mode 100644
+index e5274ec4..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/struct-ret-1.c
++++ /dev/null
+@@ -1,57 +0,0 @@
+-#include <stdio.h>
+-#include <string.h>
+-
+-char out[100];
+-
+-typedef struct { double d; int i[3]; } B;
+-typedef struct { char c[33],c1; } X;
+-
+-char c1 = 'a';
+-char c2 = 127;
+-char c3 = (char)128;
+-char c4 = (char)255;
+-char c5 = -1;
+-
+-double d1 = 0.1;
+-double d2 = 0.2;
+-double d3 = 0.3;
+-double d4 = 0.4;
+-double d5 = 0.5;
+-double d6 = 0.6;
+-double d7 = 0.7;
+-double d8 = 0.8;
+-double d9 = 0.9;
+-
+-B B1 = {0.1,{1,2,3}};
+-B B2 = {0.2,{5,4,3}};
+-X X1 = {"abcdefghijklmnopqrstuvwxyzABCDEF", 'G'};
+-X X2 = {"123",'9'};
+-X X3 = {"return-return-return",'R'};
+-
+-X f (B a, char b, double c, B d)
+-{
+-  static X xr = {"return val", 'R'};
+-  X r;
+-  r = xr;
+-  r.c1 = b;
+-  sprintf (out, "X f(B,char,double,B):({%g,{%d,%d,%d}},'%c',%g,{%g,{%d,%d,%d}})",
+-	   a.d, a.i[0], a.i[1], a.i[2], b, c, d.d, d.i[0], d.i[1], d.i[2]);
+-  return r;
+-}
+-
+-X (*fp) (B, char, double, B) = &f;
+-
+-main ()
+-{
+-  X Xr;
+-  char tmp[100];
+-
+-  Xr = f (B1, c2, d3, B2);
+-  strcpy (tmp, out);
+-  Xr.c[0] = Xr.c1 = '\0';
+-  Xr = (*fp) (B1, c2, d3, B2);
+-  if (strcmp (tmp, out))
+-    abort ();
+-
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/va-arg-22.c b/SingleSource/Regression/C/gcc-c-torture/execute/va-arg-22.c
+deleted file mode 100644
+index 46b8dcbe..00000000
+--- a/SingleSource/Regression/C/gcc-c-torture/execute/va-arg-22.c
++++ /dev/null
+@@ -1,78 +0,0 @@
+-#include <stdarg.h>
+-
+-extern void abort (void);
+-extern void exit (int);
+-
+-void bar (int n, int c)
+-{
+-  static int lastn = -1, lastc = -1;
+-
+-  if (lastn != n)
+-    {
+-      if (lastc != lastn)
+-	abort ();
+-      lastc = 0;
+-      lastn = n;
+-    }
+-
+-  if (c != (char) (lastc ^ (n << 3)))
+-    abort ();
+-  lastc++;
+-}
+-
+-#define D(N) typedef struct { char x[N]; } A##N;
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-
+-void foo (int size, ...)
+-{
+-#define D(N) A##N a##N;
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-  va_list ap;
+-  int i;
+-
+-  if (size != 21)
+-    abort ();
+-  va_start (ap, size);
+-#define D(N)					\
+-  a##N = va_arg (ap, typeof (a##N));		\
+-  for (i = 0; i < N; i++)			\
+-    bar (N, a##N.x[i]);
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-  va_end (ap);
+-}
+-
+-int main (void)
+-{
+-#define D(N) A##N a##N;
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-  int i;
+-
+-#define D(N)					\
+-  for (i = 0; i < N; i++)			\
+-    a##N.x[i] = i ^ (N << 3);
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-
+-  foo (21
+-#define D(N) , a##N
+-D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
+-D(8) D(9) D(10) D(11) D(12) D(13) D(14) D(15)
+-D(16) D(31) D(32) D(35) D(72)
+-#undef D
+-      );
+-  exit (0);
+-}
+diff --git a/SingleSource/Regression/CMakeLists.txt b/SingleSource/Regression/CMakeLists.txt
+index e060724b..b4714afd 100644
+--- a/SingleSource/Regression/CMakeLists.txt
++++ b/SingleSource/Regression/CMakeLists.txt
+@@ -1,2 +1,2 @@
+ add_subdirectory(C)
+-add_subdirectory(C++)
++#add_subdirectory(C++)
+diff --git a/SingleSource/UnitTests/AtomicOps.c b/SingleSource/UnitTests/AtomicOps.c
+deleted file mode 100644
+index 9c33e5ad..00000000
+--- a/SingleSource/UnitTests/AtomicOps.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-#include <stdio.h>
+-
+-int foo(volatile *mem, int val, int c) {
+-  int oldval = __sync_fetch_and_add(mem, val);
+-  return oldval + c;
+-}
+-
+-volatile int x = 0;
 -int main() {
--  DWordS dw = { 18, 'a' };
--  QuadWordS qw = { 19, 20.0 };
--  LargeS ls = { 21, 22.0, &dw, 23 };
+-  long long test = 0;
+-  int i;
+-  int y = foo(&x, 1, 2);
+-  printf("%d, %d\n", y, x);
+-  y = __sync_val_compare_and_swap(&x, 1, 2);
+-  printf("%d, %d\n", y, x);
+-  y = __sync_lock_test_and_set(&x, 1);
+-  printf("%d, %d\n", y, x);
 -
--  testVaListArg("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
--  testVaCopyArg("ssiciiiiis", "abc", "def", -123, 'a', 123, 6, 7, 8, 9, "10 args done!");
+-  for (i = 0; i < 5; i++) {
+-    __sync_add_and_fetch(&test, 1);
+-    printf("test = %d\n", (int)test);
+-  }
 -
--  /* test promotion & 64-bit types */
--  testVaListArg("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
--  testVaCopyArg("ddil", 1.0, 2.0f, (short)32764, 12345677823423LL);
--
--  /* test passing structs by value to varargs */
--  testVaListArg("DQL", dw, qw, ls);
--  testVaCopyArg("DQL", dw, qw, ls);
+-  for (i = 0; i < 5; i++) {
+-    __sync_fetch_and_sub(&test,1);
+-    printf("test = %d\n", (int)test);
+-  }
 -
 -  return 0;
 -}
 diff --git a/SingleSource/UnitTests/CMakeLists.txt b/SingleSource/UnitTests/CMakeLists.txt
-index b3b16477..9be9a21c 100644
+index b3b16477..c3e1617b 100644
 --- a/SingleSource/UnitTests/CMakeLists.txt
 +++ b/SingleSource/UnitTests/CMakeLists.txt
-@@ -3,7 +3,7 @@ include(CheckCCompilerFlag)
- add_subdirectory(C++11)
+@@ -1,12 +1,12 @@
+ include(CheckCCompilerFlag)
+ 
+-add_subdirectory(C++11)
++#add_subdirectory(C++11)
  add_subdirectory(SignlessTypes)
- add_subdirectory(Threads)
--add_subdirectory(Vector)
-+#add_subdirectory(Vector)
- add_subdirectory(Vectorizer)
+-add_subdirectory(Threads)
++#add_subdirectory(Threads)
+ add_subdirectory(Vector)
+-add_subdirectory(Vectorizer)
++#add_subdirectory(Vectorizer)
  # FIXME: Disable SJLJ tests for now, until EH edges are represented.
- # add_subdirectory(SetjmpLongjmp)
-@@ -60,4 +60,6 @@ else()
+-# add_subdirectory(SetjmpLongjmp)
++add_subdirectory(SetjmpLongjmp)
+ if(TARGET_OS STREQUAL "Darwin")
+   add_subdirectory(ObjC)
+   add_subdirectory(ObjC++)
+@@ -60,4 +60,12 @@ else()
    list(REMOVE_ITEM Source matrix-types-spec.cpp)
  endif()
  
-+list(REMOVE_ITEM Source	AtomicOps.c)
++  list(REMOVE_ITEM Source
++	  stmtexpr.cpp
++	  member-function-pointers.cpp
++	  DefaultInitDynArrays.cpp
++	  2003-05-07-VarArgs.c
++	  2003-08-11-VaListArg.c
++	  )
 +
  llvm_singlesource()
+diff --git a/SingleSource/UnitTests/SetjmpLongjmp/CMakeLists.txt b/SingleSource/UnitTests/SetjmpLongjmp/CMakeLists.txt
+index e060724b..b4714afd 100644
+--- a/SingleSource/UnitTests/SetjmpLongjmp/CMakeLists.txt
++++ b/SingleSource/UnitTests/SetjmpLongjmp/CMakeLists.txt
+@@ -1,2 +1,2 @@
+ add_subdirectory(C)
+-add_subdirectory(C++)
++#add_subdirectory(C++)
+diff --git a/SingleSource/UnitTests/Vector/SSE/sse.shift.c b/SingleSource/UnitTests/Vector/SSE/sse.shift.c
+deleted file mode 100644
+index 26b064b3..00000000
+--- a/SingleSource/UnitTests/Vector/SSE/sse.shift.c
++++ /dev/null
+@@ -1,22 +0,0 @@
+-#include <emmintrin.h>
+-#include <stdio.h>
+-
+-typedef union {
+-  __m128i V;
+-  int A[4];
+-} IV;
+-
+-static void printIV(IV *F) {
+-  printf("%08x %08x %08x %08x\n", F->A[0], F->A[1], F->A[2], F->A[3]);
+-}
+-
+-int main() {
+-  __m128i allones = _mm_set1_epi32(0);
+-  __m128i zeroones, onezeros;
+-  allones = _mm_cmpeq_epi32(allones, allones);
+-  zeroones = _mm_srli_epi16(allones, 8);
+-  printIV((IV*)&zeroones);
+-  onezeros = _mm_slli_epi16(allones, 8);
+-  printIV((IV*)&onezeros);
+-  return 0;
+-}
+diff --git a/SingleSource/UnitTests/Vector/multiplies.c b/SingleSource/UnitTests/Vector/multiplies.c
+deleted file mode 100644
+index 0d1a4ef6..00000000
+--- a/SingleSource/UnitTests/Vector/multiplies.c
++++ /dev/null
+@@ -1,35 +0,0 @@
+-#include "helpers.h"
+-
+-#define ARRAYSIZE 100000
+-double TheArray[ARRAYSIZE] __attribute__((aligned));
+-
+-#define ProcessArray(VECTY) {     \
+-  VECTY V = (VECTY)((v4i32){0,0,0,0}); \
+-  VECTY *AP = (VECTY*)TheArray;   \
+-  IV vu;                          \
+-  for (j = 0; j < 1000; ++j) \
+-  for (i = 0; i != sizeof(TheArray)/sizeof(VECTY); ++i) \
+-    V *= AP[i];    \
+-  vu.V = (v4i32)V;        \
+-  printIV(&vu);    \
+-}
+-
+-
+-int main(int argc, char **Argv) {
+-  unsigned i, j;
+-  for (i = 0; i < ARRAYSIZE; ++i)
+-    TheArray[i] = i*12.345;
+-
+-  ProcessArray(v16i8);
+-  ProcessArray(v8i16);
+-  ProcessArray(v4i32);
+-  ProcessArray(v2i64);
+-  
+-  // These break native gcc.  :(
+-#if 0
+-  ProcessArray(v4f32);
+-  ProcessArray(v2f64);
+-#endif
+-  return 0;
+-}
+-

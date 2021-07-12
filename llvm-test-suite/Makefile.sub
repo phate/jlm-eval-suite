@@ -1,0 +1,236 @@
+define HELP_TEXT_LLVM_TEST
+echo ""
+echo "llvm-test-suite Make Targets"
+echo "--------------------------------------------------------------------------------"
+echo "setup-llvm-test        Runs install-lit apply-llvm-git-pathch"
+echo "install-lit            Installs the lit tool"
+echo "apply-llvm-git-patch   Applies patch that excludes tests that cause jlc to abort"
+echo "llvm-build             Builds all the enabled tests"
+echo "llvm-run               Calls llvm-build and then runs built tests"
+echo "llvm-clean             Deletes the build directory"
+endef
+
+LLVM_TEST_BUILD=$(LLVM_TEST_ROOT)/build
+LLVM_TEST_GIT=$(LLVM_TEST_ROOT)/llvm-test-suite.git
+
+.PHONY: setup-llvm-test
+setup-llvm-test: install-lit apply-llvm-git-patch
+
+.PHONY: install-lit
+install-lit:
+	sudo python /usr/lib/llvm-10/build/utils/lit/setup.py install
+
+.PHONY: apply-llvm-git-patch
+apply-llvm-git-patch:
+	cd $(LLVM_TEST_GIT) && git apply $(LLVM_TEST_ROOT)/jlc.patch
+
+.PHONY: llvm-build
+llvm-build:
+	mkdir -p $(LLVM_TEST_BUILD)
+	cd $(LLVM_TEST_BUILD) && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/O0.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD) && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-cne
+llvm-build-cne:
+	mkdir -p $(LLVM_TEST_BUILD)-cne
+	cd $(LLVM_TEST_BUILD)-cne && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/cne.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-cne && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-dne
+llvm-build-dne:
+	mkdir -p $(LLVM_TEST_BUILD)-dne
+	cd $(LLVM_TEST_BUILD)-dne && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/dne.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-dne && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-iln
+llvm-build-iln:
+	mkdir -p $(LLVM_TEST_BUILD)-iln
+	cd $(LLVM_TEST_BUILD)-iln && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/iln.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-iln && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-inv
+llvm-build-inv:
+	mkdir -p $(LLVM_TEST_BUILD)-inv
+	cd $(LLVM_TEST_BUILD)-inv && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/inv.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-inv && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-psh
+llvm-build-psh:
+	mkdir -p $(LLVM_TEST_BUILD)-psh
+	cd $(LLVM_TEST_BUILD)-psh && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/psh.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-psh && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-pll
+llvm-build-pll:
+	mkdir -p $(LLVM_TEST_BUILD)-pll
+	cd $(LLVM_TEST_BUILD)-pll && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/pll.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-pll && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-red
+llvm-build-red:
+	mkdir -p $(LLVM_TEST_BUILD)-red
+	cd $(LLVM_TEST_BUILD)-red && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/red.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-red && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-ivt
+llvm-build-ivt:
+	mkdir -p $(LLVM_TEST_BUILD)-ivt
+	cd $(LLVM_TEST_BUILD)-ivt && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/ivt.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-ivt && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-url
+llvm-build-url:
+	mkdir -p $(LLVM_TEST_BUILD)-url
+	cd $(LLVM_TEST_BUILD)-url && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/url.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-url && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-opt
+llvm-build-opt:
+	mkdir -p $(LLVM_TEST_BUILD)-opt
+	cd $(LLVM_TEST_BUILD)-opt && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/opt.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-opt && make VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-run
+llvm-run: llvm-build
+	cd $(LLVM_TEST_BUILD) && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-cne
+llvm-run-cne: llvm-build-cne
+	cd $(LLVM_TEST_BUILD)-cne && lit -v -j4 -o results.json .
+
+# Failing Tests (1):
+#    test-suite :: SingleSource/UnitTests/2004-02-02-NegativeZero.test
+
+.PHONY: llvm-run-dne
+llvm-run-dne: llvm-build-dne
+	cd $(LLVM_TEST_BUILD)-dne && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-iln
+llvm-run-iln: llvm-build-iln
+	cd $(LLVM_TEST_BUILD)-iln && lit -v -j4 -o results.json .
+
+#Failing Tests (30):
+#    test-suite :: MultiSource/Applications/SIBsim4/SIBsim4.test
+#    test-suite :: MultiSource/Applications/aha/aha.test
+#    test-suite :: MultiSource/Applications/d/make_dparser.test
+#    test-suite :: MultiSource/Applications/lua/lua.test
+#    test-suite :: MultiSource/Benchmarks/FreeBench/pcompress2/pcompress2.test
+#    test-suite :: MultiSource/Benchmarks/TSVC/GlobalDataFlow-dbl/GlobalDataFlow-dbl.test
+#    test-suite :: MultiSource/Benchmarks/TSVC/GlobalDataFlow-flt/GlobalDataFlow-flt.test
+#    test-suite :: MultiSource/Benchmarks/nbench/nbench.test
+#    test-suite :: SingleSource/Benchmarks/BenchmarkGame/Large/fasta.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/datamining/correlation/correlation.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/datamining/covariance/covariance.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/2mm/2mm.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/3mm/3mm.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/cholesky/cholesky.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/doitgen/doitgen.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/gemm/gemm.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/symm/symm.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/syr2k/syr2k.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/syrk/syrk.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/linear-algebra/kernels/trmm/trmm.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/medley/floyd-warshall/floyd-warshall.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/stencils/adi/adi.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/stencils/jacobi-2d-imper/jacobi-2d-imper.test
+#    test-suite :: SingleSource/Benchmarks/Polybench/stencils/seidel-2d/seidel-2d.test
+#    test-suite :: SingleSource/Benchmarks/Shootout/Shootout-hash.test
+#    test-suite :: SingleSource/Regression/C/Regression-C-2004-08-12-InlinerAndAllocas.test
+#    test-suite :: SingleSource/Regression/C/Regression-C-PR640.test
+#    test-suite :: SingleSource/Regression/C/gcc-c-torture/execute/GCC-C-execute-920625-1.test
+#    test-suite :: SingleSource/Regression/C/gcc-c-torture/execute/GCC-C-execute-pr28289.test
+#    test-suite :: SingleSource/Regression/C/gcc-c-torture/execute/GCC-C-execute-va-arg-24.test
+
+.PHONY: llvm-run-inv
+llvm-run-inv: llvm-build-inv
+	cd $(LLVM_TEST_BUILD)-inv && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-psh
+llvm-run-psh: llvm-build-psh
+	cd $(LLVM_TEST_BUILD)-psh && lit -v -j4 -o results.json .
+
+# Failing Tests (72):
+
+.PHONY: llvm-run-pll
+llvm-run-pll: llvm-build-pll
+	cd $(LLVM_TEST_BUILD)-pll && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-red
+llvm-run-red: llvm-build-red
+	cd $(LLVM_TEST_BUILD)-red && lit -v -j4 -o results.json .
+
+# Aborts during compilation
+
+.PHONY: llvm-run-ivt
+llvm-run-ivt: llvm-build-ivt
+	cd $(LLVM_TEST_BUILD)-ivt && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-ulr
+llvm-run-url: llvm-build-url
+	cd $(LLVM_TEST_BUILD)-url && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-run-opt
+llvm-run-opt: llvm-build-opt
+	cd $(LLVM_TEST_BUILD)-opt && lit -v -j4 -o results.json .
+
+# No failed tests
+
+.PHONY: llvm-clean
+llvm-clean:
+	rm -rf $(LLBM_TEST_BUILD)*
