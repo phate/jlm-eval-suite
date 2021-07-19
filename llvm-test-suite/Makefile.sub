@@ -24,13 +24,16 @@ install-lit:
 apply-llvm-git-patch:
 	cd $(LLVM_TEST_GIT) && git apply $(LLVM_TEST_ROOT)/jlc.patch
 
+CMAKE_CONFIG= \
+	-DCMAKE_C_COMPILER=$(JLC) \
+	-DCMAKE_CXX_COMPILER=$(JLC) \
+	-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF
+
 .PHONY: llvm-build
 llvm-build:
 	mkdir -p $(LLVM_TEST_BUILD)
 	cd $(LLVM_TEST_BUILD) && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/O0.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD) && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -38,9 +41,7 @@ llvm-build:
 llvm-build-cne:
 	mkdir -p $(LLVM_TEST_BUILD)-cne
 	cd $(LLVM_TEST_BUILD)-cne && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/cne.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-cne && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -48,9 +49,7 @@ llvm-build-cne:
 llvm-build-dne:
 	mkdir -p $(LLVM_TEST_BUILD)-dne
 	cd $(LLVM_TEST_BUILD)-dne && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/dne.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-dne && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -58,9 +57,7 @@ llvm-build-dne:
 llvm-build-iln:
 	mkdir -p $(LLVM_TEST_BUILD)-iln
 	cd $(LLVM_TEST_BUILD)-iln && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/iln.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-iln && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -68,9 +65,7 @@ llvm-build-iln:
 llvm-build-inv:
 	mkdir -p $(LLVM_TEST_BUILD)-inv
 	cd $(LLVM_TEST_BUILD)-inv && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/inv.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-inv && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -78,9 +73,7 @@ llvm-build-inv:
 llvm-build-psh:
 	mkdir -p $(LLVM_TEST_BUILD)-psh
 	cd $(LLVM_TEST_BUILD)-psh && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/psh.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-psh && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -88,9 +81,7 @@ llvm-build-psh:
 llvm-build-pll:
 	mkdir -p $(LLVM_TEST_BUILD)-pll
 	cd $(LLVM_TEST_BUILD)-pll && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/pll.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-pll && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -98,9 +89,7 @@ llvm-build-pll:
 llvm-build-red:
 	mkdir -p $(LLVM_TEST_BUILD)-red
 	cd $(LLVM_TEST_BUILD)-red && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/red.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-red && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -108,9 +97,7 @@ llvm-build-red:
 llvm-build-ivt:
 	mkdir -p $(LLVM_TEST_BUILD)-ivt
 	cd $(LLVM_TEST_BUILD)-ivt && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/ivt.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-ivt && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -118,9 +105,7 @@ llvm-build-ivt:
 llvm-build-url:
 	mkdir -p $(LLVM_TEST_BUILD)-url
 	cd $(LLVM_TEST_BUILD)-url && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/url.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-url && make VERBOSE=1 SHELL="/bin/bash -x"
 
@@ -128,9 +113,7 @@ llvm-build-url:
 llvm-build-opt:
 	mkdir -p $(LLVM_TEST_BUILD)-opt
 	cd $(LLVM_TEST_BUILD)-opt && cmake \
-		-DCMAKE_C_COMPILER=$(JLC) \
-		-DCMAKE_CXX_COMPILER=$(JLC) \
-		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/opt.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-opt && make VERBOSE=1 SHELL="/bin/bash -x"
 
