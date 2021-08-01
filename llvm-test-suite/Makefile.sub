@@ -124,6 +124,16 @@ llvm-build-url:
 		-C$(LLVM_TEST_ROOT)/cmake/url.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-url && make VERBOSE=1 SHELL="/bin/bash -x"
 
+.PHONY: llvm-build-aa-steensgaard
+llvm-build-aa-steensgaard:
+	mkdir -p $(LLVM_TEST_BUILD)-aa-steensgaard
+	cd $(LLVM_TEST_BUILD)-aa-steensgaard && cmake \
+		-DCMAKE_C_COMPILER=$(JLC) \
+		-DCMAKE_CXX_COMPILER=$(JLC) \
+		-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+		-C$(LLVM_TEST_ROOT)/cmake/aa-steensgaard.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-aa-steensgaard && make VERBOSE=1 SHELL="/bin/bash -x"
+
 .PHONY: llvm-build-opt
 llvm-build-opt:
 	mkdir -p $(LLVM_TEST_BUILD)-opt
@@ -224,6 +234,10 @@ llvm-run-url: llvm-build-url
 	cd $(LLVM_TEST_BUILD)-url && lit -v -j4 -o results.json .
 
 # No failed tests
+
+.PHONY: llvm-run-aa-steensgaard
+llvm-run-aa-steensgaard: llvm-build-aa-steensgaard
+	cd $(LLVM_TEST_BUILD)-aa-steensgaard && lit -v -j4 -o results.json .
 
 .PHONY: llvm-run-opt
 llvm-run-opt: llvm-build-opt
