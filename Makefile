@@ -93,7 +93,7 @@ submodule-2017:
 
 %.a:
 	rm -f $@
-	ar clqv $@ $^
+	ar cqv $@ $^
 	ranlib $@
 
 ### CLEAN
