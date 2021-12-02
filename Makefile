@@ -26,7 +26,7 @@ help:
 SHELL=/bin/bash
 
 # LLVM related variables
-LLVMCONFIG ?= llvm-config-10
+LLVMCONFIG ?= llvm-config-11
 CLANG_BIN=$(shell $(LLVMCONFIG) --bindir)
 CLANG=$(CLANG_BIN)/clang
 CC=$(CLANG)
@@ -93,7 +93,7 @@ submodule-2017:
 
 %.a:
 	rm -f $@
-	ar clqv $@ $^
+	ar cqv $@ $^
 	ranlib $@
 
 ### CLEAN
