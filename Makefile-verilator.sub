@@ -1,0 +1,26 @@
+
+# If Verilator has been compiled then we use this version
+ifneq ("$(wildcard $(VERILATOR_BIN))","")
+VERILATOR_PATH = $(VERILATOR_ROOT)
+VERILATOR_BIN = $(VERILATOR_ROOT)/bin/verilator
+else
+VERILATOR_BIN=verilator
+endif
+
+export PATH := $(VERILATOR_ROOT)/bin/:$(PATH)
+
+# Since directories doesn't work well as dependencies
+# we use a file that's expected to be found instead
+$(VERILATOR_ROOT)/Makefile.in:
+	git clone https://github.com/verilator/verilator $(VERILATOR_ROOT)
+	# Checkout a specific version that we know works
+	cd $(VERILATOR_ROOT) && git checkout v4.216
+
+$(VERILATOR_BIN): $(VERILATOR_ROOT)/Makefile.in
+	cd $(VERILATOR_ROOT) && autoconf
+	cd $(VERILATOR_ROOT) && VERILATOR_ROOT=$(VERILATOR_ROOT) ./configure
+	make -C $(VERILATOR_ROOT) -j `nproc`
+	make -C $(VERILATOR_ROOT) test
+
+.PHONY: verilator-build
+verilator-build: $(VERILATOR_BIN)

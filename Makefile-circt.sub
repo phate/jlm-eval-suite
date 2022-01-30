@@ -1,0 +1,166 @@
+define HELP_TEXT_CIRCT
+echo ""
+echo "CIRCT Make Targets"
+echo "--------------------------------------------------------------------------------"
+echo "circt-build            Builds and installs LLVM, MLIR, and CIRCT"
+echo "                       (installation directory is circt/local)"
+echo "circt-clean            Deletes build directories (to save disk space)"
+echo "circt-purge            Deletes build and install directories"
+echo "circt-help             Prints this help text"
+endef
+
+.PHONY: circt-help
+circt-help:
+	@$(HELP_TEXT_CIRCT)
+
+CIRCT_BUILD        = $(CIRCT_ROOT)/build
+CIRCT_INSTALL      = $(CIRCT_ROOT)/local
+CIRCT_BIN          = $(CIRCT_INSTALL)/bin
+CIRCT_INC          = $(CIRCT_INSTALL)/include
+CIRCT_LIB          = $(CIRCT_INSTALL)/lib
+CIRCT_LLVM         = $(CIRCT_ROOT)/llvm
+CIRCT_LLVM_BUILD   = $(CIRCT_LLVM)/build
+
+# If we find a compiled llvm-config in circt then we assume that
+# the user wants to use the compiled circt llvm version
+ifneq (, $(shell command -v $(CIRCT_BIN)/llvm-config 2> /dev/null))
+  $(info Found llvm-config built for CIRCT)
+  CIRCT = 1
+  LLVMCONFIG = $(CIRCT_BIN)/llvm-config
+
+  FIRTOOL = $(CIRCT_BIN)/firtool
+
+  LD_LIBRARY_PATH = $(CIRCT_LIB)
+  export LD_LIBRARY_PATH=$(CIRCT_LIB)
+
+  CPPFLAGS += \
+	-DCIRCT=1 \
+	-I$(CIRCT_INC) \
+
+  LDFLAGS += \
+	-I$(CIRCT_LIB) \
+	-lMLIR \
+	-lCIRCTAnalysisTestPasses \
+	-lCIRCTDependenceAnalysis \
+	-lCIRCTExportFIRRTL \
+	-lCIRCTFIRRTL \
+	-lCIRCTFIRRTLTransforms \
+	-lCIRCTScheduling \
+	-lCIRCTSchedulingAnalysis \
+	-lCIRCTSchedulingTestPasses \
+	-lCIRCTSupport \
+	-lCIRCTTransforms \
+	-lCIRCTHW \
+#	-lLLVMSupport \
+#	-lMLIRAnalysis \
+#	-lMLIRIR \
+#	-lMLIRParser \
+#	-lMLIRSideEffectInterfaces \
+#	-lMLIRTransforms \
+#	-lMLIRSupport \
+#	-lMLIRStandard \
+#	-lCIRCTExportVerilog \
+#	-lCIRCTImportFIRFile \
+#	-lCIRCTMSFT \
+#	-lCIRCTESI \
+#	-lCIRCTComb \
+#	-lCIRCTSeq \
+#	-lCIRCTFSM \
+#	-lCIRCTMoore \
+#	-lCIRCTMooreToCore \
+#	-lCIRCTSV \
+#	-lCIRCTSVTransforms \
+#	-lCIRCTStaticLogicOps \
+#	-lCIRCTStandardToStaticLogic \
+#	-lCIRCTAffineToStaticLogic \
+#	-lCIRCTFIRRTLToHW \
+#	-lCIRCTHWToLLHD \
+#	-lCIRCTHandshake \
+#	-lCIRCTHandshakeToFIRRTL \
+#	-lCIRCTHandshakeTransforms \
+#	-lCIRCTStandardToHandshake \
+#	-lCIRCTCAPIComb \
+#	-lCIRCTCAPIESI \
+#	-lCIRCTCAPIExportVerilog \
+#	-lCIRCTCAPIHW \
+#	-lCIRCTCAPILLHD \
+#	-lCIRCTCAPIMSFT \
+#	-lCIRCTCAPISV \
+#	-lCIRCTCAPISeq \
+#	-lCIRCTLLHD \
+#	-lCIRCTLLHDSimEngine \
+#	-lCIRCTLLHDSimState \
+#	-lCIRCTLLHDSimTrace \
+#	-lCIRCTLLHDToLLVM \
+#	-lCIRCTLLHDTransforms \
+#	-lCIRCTCalyx \
+#	-lCIRCTCalyxToHW \
+#	-lCIRCTCalyxTransforms \
+#	-lCIRCTExportCalyx \
+#	-lCIRCTSCFToCalyx
+endif
+
+$(CIRCT_LLVM_BUILD)/build.ninja:
+	# Unshallow is only needed if the full LLVM history is wanted
+	#cd $(CIRCT_LLVM) && git fetch --unshallow
+	mkdir -p $(CIRCT_LLVM_BUILD)
+	cd $(CIRCT_LLVM_BUILD) && cmake -G Ninja $(CIRCT_LLVM)/llvm \
+		-DLLVM_ENABLE_PROJECTS="mlir;clang;lld" \
+		-DLLVM_TARGETS_TO_BUILD="X86" \
+		-DLLVM_PARALLEL_LINK_JOBS=1 \
+		-DBUILD_SHARED_LIBS=OFF \
+		-DLLVM_LINK_LLVM_DYLIB=ON \
+		-DLLVM_ENABLE_RTTI=ON \
+		-DLLVM_ENABLE_ASSERTIONS=ON \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=$(CIRCT_INSTALL)
+
+$(CIRCT_BUILD)/build.ninja:
+	mkdir -p $(CIRCT_BUILD)
+	cd $(CIRCT_BUILD) && cmake -G Ninja .. \
+		-DMLIR_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/mlir \
+		-DLLVM_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/llvm \
+		-DLLVM_ENABLE_ASSERTIONS=ON \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=$(CIRCT_INSTALL)
+
+NC=\033[0m # No Color
+RED=\033[0;31m
+GREEN=\033[0;32m
+
+.PHONY: circt-build
+circt-build: $(CIRCT_LLVM_BUILD)/build.ninja
+circt-build: $(CIRCT_BUILD)/build.ninja
+circt-build:
+	@echo -e "# $(GREEN)Build LLVM and MLIR$(NC)"
+	@echo -e "# $(RED)16 GiB $(GREEN)of RAM is required$(NC)"
+	cd $(CIRCT_LLVM_BUILD) && ninja
+	cd $(CIRCT_LLVM_BUILD) && ninja check-mlir
+	cd $(CIRCT_LLVM_BUILD) && ninja install
+	@echo -e "# $(GREEN)Installing psutil with pip$(NC)"
+	pip install psutil
+	@echo -e "# $(GREEN)Build CIRCT$(NC)"
+	cd $(CIRCT_BUILD) && ninja
+	cd $(CIRCT_BUILD) && ninja check-circt
+	# Check integration requires verilator
+	#cd $(CIRCT_BUILD) && ninja check-circt-integration
+	cd $(CIRCT_BUILD) && ninja install
+	@echo -e "# $(GREEN)Replacing symlinks with the actual files$(NC)"
+	@echo -e "# $(GREEN)Makes it possible to run 'make circt-clean' to save disk space$(NC)"
+	rm $(CIRCT_INSTALL)/include/llvm/Config/abi-breaking.h
+	rm $(CIRCT_INSTALL)/include/llvm/Config/llvm-config.h
+	rm $(CIRCT_INSTALL)/include/llvm/IR/Attributes.inc
+	rm $(CIRCT_INSTALL)/include/llvm/IR/IntrinsicEnums.inc
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/Config/abi-breaking.h $(CIRCT_INSTALL)/include/llvm/Config/
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/Config/llvm-config.h $(CIRCT_INSTALL)/include/llvm/Config/
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/Attributes.inc $(CIRCT_INSTALL)/include/llvm/IR/
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/IntrinsicEnums.inc $(CIRCT_INSTALL)/include/llvm/IR/
+
+.PHONY: circt-clean
+circt-clean:
+	rm -rf $(CIRCT_BUILD)
+	rm -rf $(CIRCT_LLVM_BUILD)
+
+.PHONY: circt-purge
+circt-purge: circt-clean
+	rm -rf $(CIRCT_INSTALL)

@@ -22,11 +22,13 @@ help:
 	@$(HELP_TEXT_JLM)
 	@$(HELP_TEXT_JIVE)
 	@$(HELP_TEXT_CSMITH)
+	@$(HELP_TEXT_HLS_TEST)
+	@$(HELP_TEXT_CIRCT)
 
 SHELL=/bin/bash
 
 # LLVM related variables
-LLVMCONFIG ?= llvm-config-11
+LLVMCONFIG ?= llvm-config-13
 CLANG_BIN=$(shell $(LLVMCONFIG) --bindir)
 CLANG=$(CLANG_BIN)/clang
 CC=$(CLANG)
@@ -37,17 +39,24 @@ DIR            := $(PWD)
 JLM_ROOT       := $(DIR)/jlm
 JLM_BIN        := $(JLM_ROOT)/bin
 JLC            := $(JLM_BIN)/jlc
+HLS            := $(JLM_BIN)/jhls
 JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
 CSMITH_ROOT    := $(DIR)/csmith
 LLVM_TEST_ROOT := $(DIR)/llvm-test-suite
+CIRCT_ROOT     := $(DIR)/circt
+VERILATOR_ROOT := $(DIR)/verilator
+HLS_TEST_ROOT  := $(DIR)/hls-test-suite
 
 # Set necessary paths
 export PATH := $(JLM_BIN):$(PATH)
 export JLMROOT := $(JLM_ROOT)
 
 # Include Makefiles for the tools, libraries, and benchmarks to be built
+ifneq ("$(wildcard Makefile-circt.sub)","")
+include Makefile-circt.sub
+endif
 ifneq ("$(wildcard $(JIVE_ROOT)/Makefile.sub)","")
 include $(JIVE_ROOT)/Makefile.sub
 endif
@@ -66,6 +75,12 @@ endif
 ifneq ("$(wildcard $(LLVM_TEST_ROOT)/Makefile.sub)","")
 include $(LLVM_TEST_ROOT)/Makefile.sub
 endif
+ifneq ("$(wildcard Makefile-verilator.sub)","")
+include Makefile-verilator.sub
+endif
+ifneq ("$(wildcard $(HLS_TEST_ROOT)/Makefile.sub)","")
+include $(HLS_TEST_ROOT)/Makefile.sub
+endif
 
 # Silent locale warnings from perl
 export LC_CTYPE=en_US.UTF-8
@@ -77,11 +92,20 @@ all: jive-release jlm-release
 
 .PHONY: submodule
 submodule:
-	git -c submodule.cpu2017.update=none submodule update --init --recursive
+	git -c submodule.cpu2017.update=none \
+		-c submodule.circt.update=none \
+		submodule update --init --recursive
 
 .PHONY: submodule-cpu2017
-submodule-2017:
-	git -c submodule update --init --recursive
+submodule-cpu2017:
+	git -c submodule update --init --recursive $(CPU2017_ROOT)
+
+.PHONY: submodule-circt
+submodule-circt:
+	git submodule update --init --recursive $(CIRCT_ROOT)
+
+.PHONY: submodule-all
+submodule-all: submodule submodule-cpu2017 submodule-circt
 
 ### GENERIC
 
