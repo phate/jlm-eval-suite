@@ -1,0 +1,131 @@
+CIRCT_BUILD        = $(CIRCT_ROOT)/build
+CIRCT_BIN          = $(CIRCT_BUILD)/bin
+CIRCT_LLVM         = $(CIRCT_ROOT)/llvm
+CIRCT_LLVM_BUILD   = $(CIRCT_LLVM)/build
+CIRCT_LLVM_INCLUDE = $(CIRCT_LLVM)/llvm/include
+CIRCT_LLVM_BIN     = $(CIRCT_LLVM_BUILD)/bin
+CIRCT_LLVM_LIB     = $(CIRCT_LLVM_BUILD)/lib
+
+FIRTOOL = $(CIRCT_BIN)/firtool
+
+LD_LIBRARY_PATH = $(CIRCT_LLVM_LIB)
+export LD_LIBRARY_PATH=$(CIRCT_LLVM_LIB)
+
+CPPFLAGS_CIRCT = \
+	-I$(CIRCT_ROOT)/include \
+	-I$(CIRCT_BUILD)/include \
+	-I$(CIRCT_LLVM)/mlir/include \
+	-I$(CIRCT_LLVM_BUILD)/tools/mlir/include
+
+LDFLAGS_CIRCT = \
+	-L$(CIRCT_BUILD)/lib \
+	-L$(CIRCT_LLVM_BUILD)/lib \
+	-lMLIRAnalysis \
+	-lMLIR \
+	-lMLIRIR \
+	-lMLIRParser \
+	-lMLIRSideEffectInterfaces \
+	-lMLIRTransforms \
+	-lMLIRSupport \
+	-lMLIRStandard \
+	-lCIRCTSupport \
+	-lCIRCTTransforms \
+	-lCIRCTFIRRTL \
+	-lCIRCTFIRRTLToHW \
+	-lCIRCTFIRRTLTransforms \
+	-lCIRCTHW \
+	-lCIRCTAffineToStaticLogic \
+	-lCIRCTAnalysisTestPasses \
+	-lCIRCTCAPIComb \
+	-lCIRCTCAPIESI \
+	-lCIRCTCAPIExportVerilog \
+	-lCIRCTCAPIHW \
+	-lCIRCTCAPILLHD \
+	-lCIRCTCAPIMSFT \
+	-lCIRCTCAPISV \
+	-lCIRCTCAPISeq \
+	-lCIRCTCalyx \
+	-lCIRCTCalyxToHW \
+	-lCIRCTCalyxTransforms \
+	-lCIRCTComb \
+	-lCIRCTDependenceAnalysis \
+	-lCIRCTESI \
+	-lCIRCTExportCalyx \
+	-lCIRCTExportFIRRTL \
+	-lCIRCTExportLLHD \
+	-lCIRCTExportVerilog \
+	-lCIRCTFIRRTL \
+	-lCIRCTFIRRTLToHW \
+	-lCIRCTFIRRTLTransforms \
+	-lCIRCTFSM \
+	-lCIRCTHW \
+	-lCIRCTHWToLLHD \
+	-lCIRCTHandshake \
+	-lCIRCTHandshakeToFIRRTL \
+	-lCIRCTHandshakeTransforms \
+	-lCIRCTImportFIRFile \
+	-lCIRCTLLHD \
+	-lCIRCTLLHDSimEngine \
+	-lCIRCTLLHDSimState \
+	-lCIRCTLLHDSimTrace \
+	-lCIRCTLLHDToLLVM \
+	-lCIRCTLLHDTransforms \
+	-lCIRCTMSFT \
+	-lCIRCTMoore \
+	-lCIRCTMooreToCore \
+	-lCIRCTSCFToCalyx \
+	-lCIRCTSV \
+	-lCIRCTSVTransforms \
+	-lCIRCTScheduling \
+	-lCIRCTSchedulingAnalysis \
+	-lCIRCTSchedulingTestPasses \
+	-lCIRCTSeq \
+	-lCIRCTStandardToHandshake \
+	-lCIRCTStandardToStaticLogic \
+	-lCIRCTStaticLogicOps \
+	-lCIRCTSupport \
+	-lCIRCTTransforms \
+
+$(CIRCT_LLVM_BUILD)/build.ninja:
+	cd $(CIRCT_LLVM) && git fetch --unshallow
+	mkdir -p $(CIRCT_LLVM_BUILD)
+	cd $(CIRCT_LLVM_BUILD) && cmake -G Ninja $(CIRCT_LLVM)/llvm \
+		-DLLVM_ENABLE_PROJECTS="mlir;clang;lld" \
+		-DLLVM_TARGETS_TO_BUILD="X86;RISCV" \
+		-DLLVM_PARALLEL_LINK_JOBS=1 \
+		-DBUILD_SHARED_LIBS=OFF \
+		-DLLVM_LINK_LLVM_DYLIB=ON \
+		-DLLVM_ENABLE_RTTI=ON \
+		-DLLVM_ENABLE_ASSERTIONS=ON \
+		-DCMAKE_BUILD_TYPE=DEBUG \
+#		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+
+$(CIRCT_BUILD)/build.ninja:
+	mkdir -p $(CIRCT_BUILD)
+	cd $(CIRCT_BUILD) && cmake -G Ninja .. \
+		-DMLIR_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/mlir \
+		-DLLVM_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/llvm \
+		-DLLVM_ENABLE_ASSERTIONS=ON \
+		-DCMAKE_BUILD_TYPE=DEBUG
+
+NC=\033[0m # No Color
+RED=\033[0;31m
+GREEN=\033[0;32m
+
+.PHONY: circt-build
+circt-build: $(CIRCT_LLVM_BUILD)/build.ninja
+circt-build: $(CIRCT_BUILD)/build.ninja
+circt-build:
+	@echo -e "# $(GREEN)Build LLVM and MLIR$(NC)"
+	@echo -e "# $(RED)16 GiB $(GREEN)of RAM is required$(NC)"
+	cd $(CIRCT_LLVM_BUILD) && ninja
+	cd $(CIRCT_LLVM_BUILD) && ninja check-mlir
+	@echo -e "# $(GREEN)Build CIRCTi$(NC)"
+	cd $(CIRCT_BUILD) && ninja
+	cd $(CIRCT_BUILD) && ninja check-circt
+	cd $(CIRCT_BUILD) &&ninja check-circt-integration
+
+.PHONY: circt-purge
+circt-purge:
+	rm -rf $(CIRCT_BUILD)
+	rm -rf $(CIRCT_LLVM_BUILD)

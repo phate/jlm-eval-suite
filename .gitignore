@@ -2,3 +2,6 @@ bin
 csmith/test*
 csmith/platform.info
 llvm-test-suite/build*
+verilator
+hls-test-suite/build/
+hls-test-suite/hls-test.log
