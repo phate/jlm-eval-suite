@@ -7,7 +7,7 @@ HLS_TEST_FILES = \
 	test-return.c \
 	test-add.c \
 	test-loop.c \
-#	test-nested-loops.c \
+	test-nested-loops.c \
 
 .PHONY: hls-test
 hls-test:
@@ -24,6 +24,58 @@ hls-test-run: hls-test
 	@for TEST in $(HLS_TEST_FILES) ; do \
 		$(TESTLOG) -n "$$TEST: " ; \
 		if $(HLS_TEST_BUILD)/$$TEST.out >> $(HLS_TEST_ROOT)/hls-test.log 2>&1 ; then \
+			$(TESTLOG) pass ; \
+		else \
+			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
+	done ; \
+	set -e ; \
+	if [ "x$$FAILED_TESTS" != x ] ; then \
+		printf '\033[0;31m%s\033[0m%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
+	else \
+		printf '\033[0;32m%s\n\033[0m' "All hls-tests passed" ; fi ;
+
+#
+# Polybench
+#
+
+HLS_POLYBENCH_SRC = $(HLS_TEST_ROOT)/src/polybench
+
+HLS_POLYBENCH_FILES = \
+	jacobi-1d.c \
+
+.PHONY: foo
+foo:
+	$(HLS) $(HLS_POLYBENCH_SRC)/jacobi-1d.c \
+		$(HLS_POLYBENCH_SRC)/polybench.c \
+		-I$(HLS_POLYBENCH_SRC) \
+		-D=DATA_TYPE_IS_INT \
+		--circt \
+		--hls-function=kernel \
+		-o $(HLS_TEST_BUILD)/correlation.out
+
+
+.PHONY: hls-test-polybench
+hls-test-polybench:
+	@mkdir -p $(HLS_TEST_BUILD)
+	cd $(HLS_TEST_BUILD) && \
+		set -e ; \
+		for TEST in $(HLS_POLYBENCY_FILES) ; do \
+			$(JLC) $(HLS_POLYBENCH_SRC)/$$TEST \
+				$(HLS_POLYBENCH_SRC)/polybench.c \
+				-I$(HLS_POLYBENCH_SRC) \
+				-D=DATA_TYPE_IS_INT \
+				--circt \
+				--hls-function=kernel \
+				-o $(HLS_TEST_BUILD)/$$TEST.out \
+				1> /dev/null ; \
+		done ;
+
+.PHONY: hls-test-polybench-run
+hls-test-polybench-run: hls-test-polybench
+	@rm -rf $(HLS_TEST_ROOT)/hls-test-polybench.log
+	for TEST in $(HLS_POLYBENCH_FILES) ; do \
+		$(TESTLOG) -n "$$TEST: " ; \
+		if $(HLS_TEST_BUILD)/$$TEST.out >> $(HLS_TEST_ROOT)/hls-test-polybench.log 2>&1 ; then \
 			$(TESTLOG) pass ; \
 		else \
 			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
