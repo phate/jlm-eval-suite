@@ -90,9 +90,8 @@ all: jive-release jlm-release
 
 .PHONY: submodule
 submodule:
-	git -c \
-		submodule.cpu2017.update=none \
-		submodule.circt.update=none \
+	git -c submodule.cpu2017.update=none \
+		-c submodule.circt.update=none \
 		submodule update --init --recursive
 
 .PHONY: submodule-cpu2017
@@ -101,7 +100,7 @@ submodule-cpu2017:
 
 .PHONY: submodule-circt
 submodule-circt:
-	git -c submodule update --init --recursive $(CIRCT_ROOT)
+	git submodule update --init --recursive $(CIRCT_ROOT)
 
 .PHONY: submodule-all
 submodule-all: submodule submodule-cpu2017 submodule-circt
