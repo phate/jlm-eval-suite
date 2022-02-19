@@ -15,6 +15,7 @@ CPPFLAGS_CIRCT = \
 	-I$(CIRCT_ROOT)/include \
 	-I$(CIRCT_BUILD)/include \
 	-I$(CIRCT_LLVM)/mlir/include \
+	-I$(CIRCT_LLVM_BUILD)/include \
 	-I$(CIRCT_LLVM_BUILD)/tools/mlir/include
 
 LDFLAGS_CIRCT = \
@@ -98,7 +99,7 @@ $(CIRCT_LLVM_BUILD)/build.ninja:
 		-DLLVM_ENABLE_RTTI=ON \
 		-DLLVM_ENABLE_ASSERTIONS=ON \
 		-DCMAKE_BUILD_TYPE=DEBUG \
-#		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF \
 
 $(CIRCT_BUILD)/build.ninja:
 	mkdir -p $(CIRCT_BUILD)
@@ -120,10 +121,15 @@ circt-build:
 	@echo -e "# $(RED)16 GiB $(GREEN)of RAM is required$(NC)"
 	cd $(CIRCT_LLVM_BUILD) && ninja
 	cd $(CIRCT_LLVM_BUILD) && ninja check-mlir
-	@echo -e "# $(GREEN)Build CIRCTi$(NC)"
+	@echo -e "# $(GREEN)Build CIRCT$(NC)"
 	cd $(CIRCT_BUILD) && ninja
 	cd $(CIRCT_BUILD) && ninja check-circt
 	cd $(CIRCT_BUILD) &&ninja check-circt-integration
+	# Instead of having to install CIRCT, MLIR, and LLVM
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/Attributes.inc \
+	   $(CIRCT_LLVM)/llvm/include/llvm/IR/
+	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/IntrinsicEnums.inc \
+	   $(CIRCT_LLVM)/llvm/include/llvm/IR/
 
 .PHONY: circt-purge
 circt-purge:
