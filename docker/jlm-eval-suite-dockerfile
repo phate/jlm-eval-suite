@@ -1,0 +1,24 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update 
+RUN apt-get install -y software-properties-common git vim binutils make build-essential
+RUN apt-get install -y clang-11 llvm-11-dev
+# Required to build CIRCT
+RUN apt-get install -y cmake ninja-build
+RUN apt-get install -y python3-pip
+RUN pip3 install psutil
+# Required to build Verilator
+RUN apt-get install -y autoconf flex bison
+
+# Reduce the size of the container
+RUN apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/jlm-eval-suite
+
+# None public repositories requires an SSH key for Github access
+RUN mkdir /root/.ssh
+COPY id_rsa /root/.ssh/
+
+CMD /bin/bash
