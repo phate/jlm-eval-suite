@@ -86,6 +86,7 @@ LDFLAGS_CIRCT = \
 	-lCIRCTStaticLogicOps \
 	-lCIRCTSupport \
 	-lCIRCTTransforms \
+	-lLLVMSupport \
 
 $(CIRCT_LLVM_BUILD)/build.ninja:
 	cd $(CIRCT_LLVM) && git fetch --unshallow
@@ -99,7 +100,6 @@ $(CIRCT_LLVM_BUILD)/build.ninja:
 		-DLLVM_ENABLE_RTTI=ON \
 		-DLLVM_ENABLE_ASSERTIONS=ON \
 		-DCMAKE_BUILD_TYPE=DEBUG \
-		-DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF \
 
 $(CIRCT_BUILD)/build.ninja:
 	mkdir -p $(CIRCT_BUILD)
