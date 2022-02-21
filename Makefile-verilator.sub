@@ -7,6 +7,8 @@ else
 VERILATOR_BIN=verilator
 endif
 
+export PATH := $(VERILATOR_ROOT)/bin/:$(PATH)
+
 # Since directories doesn't work well as dependencies
 # we use a file that's expected to be found instead
 $(VERILATOR_ROOT)/Makefile.in:
