@@ -9,6 +9,11 @@ HLS_TEST_FILES = \
 	test-loop.c \
 	test-nested-loops.c \
 	test-conditional.c \
+	test-load.c \
+	test-gep.c \
+	test-matrix.c \
+	test-global.c \
+	test-cpu.c \
 
 .PHONY: hls-test
 hls-test:
