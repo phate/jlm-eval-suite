@@ -5,9 +5,10 @@ TESTLOG = true
 
 HLS_TEST_FILES = \
 	test-return.c \
-	test-add.c \
+	test-arithmetic.c \
 	test-loop.c \
 	test-nested-loops.c \
+	test-conditional.c \
 
 .PHONY: hls-test
 hls-test:
@@ -45,6 +46,7 @@ HLS_POLYBENCH_FILES = \
 
 .PHONY: foo
 foo:
+	@mkdir -p $(HLS_TEST_BUILD)
 	$(HLS) $(HLS_POLYBENCH_SRC)/jacobi-1d.c \
 		$(HLS_POLYBENCH_SRC)/polybench.c \
 		-I$(HLS_POLYBENCH_SRC) \
