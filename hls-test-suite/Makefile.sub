@@ -10,10 +10,11 @@ HLS_TEST_FILES = \
 	test-nested-loops.c \
 	test-conditional.c \
 	test-load.c \
+	test-array.c \
 	test-gep.c \
-	test-matrix.c \
 	test-global.c \
-	test-cpu.c \
+	test-matrix.c \
+#	test-cpu.c \
 
 .PHONY: hls-test
 hls-test:
