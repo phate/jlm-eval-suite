@@ -19,21 +19,24 @@ HLS_TEST_FILES = \
 	test-gep.c \
 	test-global.c \
 	test-matrix.c \
-#	test-cpu.c \
+	test-cpu.c \
 
 .PHONY: hls-test
 hls-test:
 	@mkdir -p $(HLS_TEST_BUILD)
-	cd $(HLS_TEST_BUILD) && \
+	@cd $(HLS_TEST_BUILD) && \
 		set -e ; \
 		for TEST in $(HLS_TEST_FILES) ; do \
+			printf '$(BLUE)Building: $(NC)%s\n' $$TEST ; \
 			$(HLS) $(HLS_TEST_SRC)/$$TEST --circt --hls-function=run -o $(HLS_TEST_BUILD)/$$TEST.out 1> /dev/null ; \
 		done ;
 
 .PHONY: hls-test-run
 hls-test-run: hls-test
 	@rm -rf $(HLS_TEST_ROOT)/hls-test.log
-	@for TEST in $(HLS_TEST_FILES) ; do \
+	@cd $(HLS_TEST_BUILD) && \
+	for TEST in $(HLS_TEST_FILES) ; do \
+		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
 		$(TESTLOG) -n "$$TEST: " ; \
 		if $(HLS_TEST_BUILD)/$$TEST.out >> $(HLS_TEST_ROOT)/hls-test.log 2>&1 ; then \
 			$(TESTLOG) pass ; \
@@ -42,9 +45,9 @@ hls-test-run: hls-test
 	done ; \
 	set -e ; \
 	if [ "x$$FAILED_TESTS" != x ] ; then \
-		printf '\033[0;31m%s\033[0m%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
+		printf '$(RED)%s$(NC)%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
 	else \
-		printf '\033[0;32m%s\n\033[0m' "All hls-tests passed" ; fi ;
+		printf '$(GREEN)%s\n$(NC)' "All hls-tests passed" ; fi ;
 
 #
 # Polybench

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 
 int C[32];
@@ -15,18 +16,81 @@ int main(int argc, char** argv){
     t = &a;
     run();
 
-    assert(C[0] == 0+a);
+    /*
+    for (int i =0; i<32; i++)
+        printf("i=%i\ti*i+a=%i\t%i\n", i, i*i+a, C[i]);
+    */
 
-    assert(C[2] == 2*2+a);
+    int i=0;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
 
-    assert(C[31] == 31*31+a);
     a=10;
     run();
 
-    assert(C[0] == 0+a);
+    i=0;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
+    assert(C[i] == i*i+a); i++;
 
-    assert(C[2] == 2*2+a);
-
-    assert(C[31] == 31*31+a);
     return 0;
 }
