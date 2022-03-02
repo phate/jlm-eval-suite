@@ -1,6 +1,11 @@
 HLS_TEST_SRC = $(HLS_TEST_ROOT)/src
 HLS_TEST_BUILD = $(HLS_TEST_ROOT)/build
 
+NC=\033[0m
+RED=\033[0;31m
+GREEN=\033[0;32m
+BLUE=\033[1;34m
+
 TESTLOG = true
 
 HLS_TEST_FILES = \
@@ -50,25 +55,14 @@ HLS_POLYBENCH_SRC = $(HLS_TEST_ROOT)/src/polybench
 HLS_POLYBENCH_FILES = \
 	jacobi-1d.c \
 
-.PHONY: foo
-foo:
-	@mkdir -p $(HLS_TEST_BUILD)
-	$(HLS) $(HLS_POLYBENCH_SRC)/jacobi-1d.c \
-		$(HLS_POLYBENCH_SRC)/polybench.c \
-		-I$(HLS_POLYBENCH_SRC) \
-		-D=DATA_TYPE_IS_INT \
-		--circt \
-		--hls-function=kernel \
-		-o $(HLS_TEST_BUILD)/correlation.out
-
-
 .PHONY: hls-test-polybench
 hls-test-polybench:
 	@mkdir -p $(HLS_TEST_BUILD)
-	cd $(HLS_TEST_BUILD) && \
+	@cd $(HLS_TEST_BUILD) && \
 		set -e ; \
-		for TEST in $(HLS_POLYBENCY_FILES) ; do \
-			$(JLC) $(HLS_POLYBENCH_SRC)/$$TEST \
+		for TEST in $(HLS_POLYBENCH_FILES) ; do \
+			printf '$(BLUE)Building: $(NC)%s\n' $$TEST ; \
+			$(HLS) $(HLS_POLYBENCH_SRC)/$$TEST \
 				$(HLS_POLYBENCH_SRC)/polybench.c \
 				-I$(HLS_POLYBENCH_SRC) \
 				-D=DATA_TYPE_IS_INT \
@@ -81,7 +75,9 @@ hls-test-polybench:
 .PHONY: hls-test-polybench-run
 hls-test-polybench-run: hls-test-polybench
 	@rm -rf $(HLS_TEST_ROOT)/hls-test-polybench.log
+	@cd $(HLS_TEST_BUILD) && \
 	for TEST in $(HLS_POLYBENCH_FILES) ; do \
+		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
 		$(TESTLOG) -n "$$TEST: " ; \
 		if $(HLS_TEST_BUILD)/$$TEST.out >> $(HLS_TEST_ROOT)/hls-test-polybench.log 2>&1 ; then \
 			$(TESTLOG) pass ; \
@@ -90,9 +86,9 @@ hls-test-polybench-run: hls-test-polybench
 	done ; \
 	set -e ; \
 	if [ "x$$FAILED_TESTS" != x ] ; then \
-		printf '\033[0;31m%s\033[0m%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
+		printf '$(RED)%s$(NC)%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
 	else \
-		printf '\033[0;32m%s\n\033[0m' "All hls-tests passed" ; fi ;
+		printf '$(GREEN)%s\n\$(NC)' "All hls-tests passed" ; fi ;
 
 
 .PHONY: hls-test-clean
