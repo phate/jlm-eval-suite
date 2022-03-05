@@ -20,6 +20,24 @@
 /* Include benchmark-specific header. */
 #include "correlation.h"
 
+// Linear search makes this function very inefficent.
+// Should implement a binary search instead
+int floorSqrt(int x)
+{
+    // Base cases
+    if (x == 0 || x == 1)
+    return x;
+
+    // Starting from 1, try all numbers until
+    // i*i is greater than or equal to x.
+    int i = 1, result = 1;
+    while (result <= x)
+    {
+      i++;
+      result = i * i;
+    }
+    return i - 1;
+}
 
 /* Array initialization. */
 static
@@ -72,13 +90,13 @@ void kernel(int m, int n,
 {
   int i, j, k;
 
-  DATA_TYPE eps = SCALAR_VAL(0.1);
+  DATA_TYPE eps = 0; //SCALAR_VAL(0.1);
 
 
 #pragma scop
   for (j = 0; j < _PB_M; j++)
     {
-      mean[j] = SCALAR_VAL(0.0);
+      mean[j] = SCALAR_VAL(0);
       for (i = 0; i < _PB_N; i++)
 	mean[j] += data[i][j];
       mean[j] /= float_n;
@@ -87,7 +105,7 @@ void kernel(int m, int n,
 
    for (j = 0; j < _PB_M; j++)
     {
-      stddev[j] = SCALAR_VAL(0.0);
+      stddev[j] = SCALAR_VAL(0);
       for (i = 0; i < _PB_N; i++)
         stddev[j] += (data[i][j] - mean[j]) * (data[i][j] - mean[j]);
       stddev[j] /= float_n;
@@ -95,7 +113,7 @@ void kernel(int m, int n,
       /* The following in an inelegant but usual way to handle
          near-zero std. dev. values, which below would cause a zero-
          divide. */
-      stddev[j] = stddev[j] <= eps ? SCALAR_VAL(1.0) : stddev[j];
+      stddev[j] = stddev[j] <= eps ? SCALAR_VAL(1) : stddev[j];
     }
 
   /* Center and reduce the column vectors. */
@@ -109,16 +127,16 @@ void kernel(int m, int n,
   /* Calculate the m * m correlation matrix. */
   for (i = 0; i < _PB_M-1; i++)
     {
-      corr[i][i] = SCALAR_VAL(1.0);
+      corr[i][i] = SCALAR_VAL(1);
       for (j = i+1; j < _PB_M; j++)
         {
-          corr[i][j] = SCALAR_VAL(0.0);
+          corr[i][j] = SCALAR_VAL(0);
           for (k = 0; k < _PB_N; k++)
             corr[i][j] += (data[k][i] * data[k][j]);
           corr[j][i] = corr[i][j];
         }
     }
-  corr[_PB_M-1][_PB_M-1] = SCALAR_VAL(1.0);
+  corr[_PB_M-1][_PB_M-1] = SCALAR_VAL(1);
 #pragma endscop
 
 }

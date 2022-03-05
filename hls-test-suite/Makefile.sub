@@ -56,6 +56,7 @@ hls-test-run: hls-test
 HLS_POLYBENCH_SRC = $(HLS_TEST_ROOT)/src/polybench
 
 HLS_POLYBENCH_FILES = \
+	correlation.c \
 	jacobi-1d.c \
 
 .PHONY: hls-test-polybench
@@ -69,6 +70,8 @@ hls-test-polybench:
 				$(HLS_POLYBENCH_SRC)/polybench.c \
 				-I$(HLS_POLYBENCH_SRC) \
 				-D=DATA_TYPE_IS_INT \
+				-D=POLYBENCH_DUMP_ARRAYS \
+				-D=POLYBENCH_USE_C99_PROTO \
 				--circt \
 				--hls-function=kernel \
 				-o $(HLS_TEST_BUILD)/$$TEST.out \
