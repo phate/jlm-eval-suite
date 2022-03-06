@@ -94,9 +94,78 @@ hls-test-polybench-run: hls-test-polybench
 	if [ "x$$FAILED_TESTS" != x ] ; then \
 		printf '$(RED)%s$(NC)%s\n' "Failed hls-tests:" "$$FAILED_TESTS" ; exit 1 ; \
 	else \
-		printf '$(GREEN)%s\n\$(NC)' "All hls-tests passed" ; fi ;
+		printf '$(GREEN)%s\n$(NC)' "All hls-tests passed" ; fi ;
 
+
+
+HLS_DYNAMATIC_SRC = $(HLS_TEST_ROOT)/src/dynamatic
+
+HLS_DYNAMATIC_FILES = \
+	fir.c \
+	gaussian.c \
+	if_loop_1.c \
+	if_loop_2.c \
+	if_loop_3.c \
+	iir.c \
+	image_resize.c \
+	insertion_sort.c \
+	kernel_2mm.c \
+	kernel_3mm.c \
+	loop_array.c \
+	matrix.c \
+	memory_loop.c \
+	mul_example.c \
+	pivot.c \
+	simple_example_1.c \
+	simple_example_2.c \
+	stencil_2d.c \
+	sumi3_mem.c \
+	test_memory_1.c \
+	test_memory_2.c \
+	test_memory_3.c \
+	test_memory_4.c \
+	test_memory_5.c \
+	test_memory_6.c \
+	test_memory_7.c \
+	test_memory_8.c \
+	test_memory_9.c \
+	test_memory_10.c \
+	threshold.c \
+	vector_rescale.c \
+	video_filter.c \
+#	bicg.c \
+	gemver.c \
+	matrix_power.c \
+	matvec.c \
+	triangular.c \
+
+.PHONY: hls-test-dynamatic
+hls-test-dynamatic:
+	@mkdir -p $(HLS_TEST_BUILD)
+	@cd $(HLS_TEST_BUILD) && \
+		set -e ; \
+		for TEST in $(HLS_DYNAMATIC_FILES) ; do \
+			printf '$(BLUE)Building: $(NC)%s\n' $$TEST ; \
+			$(HLS) $(HLS_DYNAMATIC_SRC)/$$TEST \
+				--circt \
+				--hls-function=kernel \
+				-o $(HLS_TEST_BUILD)/$$TEST.out \
+				1> /dev/null ; \
+		done ;
+
+.PHONY: hls-test-dynamatic-run
+hls-test-dynamatic-run: hls-test-dynamatic
+	@rm -rf $(HLS_TEST_ROOT)/hls-test-dynamatic.log
+	@set -e ; \
+	$(foreach TEST, $(HLS_DYNAMATIC_FILES), \
+		$(eval DIFF = $(HLS_TEST_ROOT)/utilities/diff.sh) \
+		\
+		printf '$(BLUE)Running: $(NC)%s\n' $(TEST) ; \
+		$(HLS_TEST_BUILD)/$(TEST).out > $(HLS_TEST_BUILD)/$(TEST).log ; \
+		tail -n +2 $(HLS_TEST_BUILD)/$(TEST).log > $(HLS_TEST_BUILD)/$(TEST).log2 ; \
+		$(DIFF) $(HLS_TEST_BUILD)/$(TEST).log2 $(HLS_DYNAMATIC_SRC)/$(TEST).gcc-log ; \
+	)
 
 .PHONY: hls-test-clean
 hls-test-clean:
-	rm -rf $(HLS_TEST_BUILD)
+	@rm -rf $(HLS_TEST_BUILD)
