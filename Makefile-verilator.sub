@@ -12,7 +12,7 @@ export PATH := $(VERILATOR_ROOT)/bin/:$(PATH)
 # Since directories doesn't work well as dependencies
 # we use a file that's expected to be found instead
 $(VERILATOR_ROOT)/Makefile.in:
-	git clone git@github.com:verilator/verilator.git $(VERILATOR_ROOT)
+	git clone https://github.com/verilator/verilator $(VERILATOR_ROOT)
 	# Checkout a specific version that we know works
 	cd $(VERILATOR_ROOT) && git checkout v4.216
 
