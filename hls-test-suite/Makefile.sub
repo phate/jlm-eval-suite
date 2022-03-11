@@ -72,6 +72,7 @@ hls-test-polybench:
 				-D=DATA_TYPE_IS_INT \
 				-D=POLYBENCH_DUMP_ARRAYS \
 				-D=POLYBENCH_USE_C99_PROTO \
+				-D=MINI_DATASET \
 				--circt \
 				--hls-function=kernel \
 				-o $(HLS_TEST_BUILD)/$$TEST.out \
@@ -133,7 +134,7 @@ HLS_DYNAMATIC_FILES = \
 	threshold.c \
 	vector_rescale.c \
 	video_filter.c \
-#	bicg.c \
+	bicg.c \
 	gemver.c \
 	matrix_power.c \
 	matvec.c \
@@ -169,3 +170,7 @@ hls-test-dynamatic-run: hls-test-dynamatic
 .PHONY: hls-test-clean
 hls-test-clean:
 	@rm -rf $(HLS_TEST_BUILD)
+
+.PHONY: hls-test-all-run
+
+hls-test-all-run: hls-test-run hls-test-polybench-run hls-test-dynamatic-run
