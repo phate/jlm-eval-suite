@@ -9,8 +9,8 @@ echo "submodule              Initializes all the dependent git submodules except
 echo "                       cpu2017 since it requires private access"
 echo "submodule-2017         Initializes all the dependent git submodules including"
 echo "                       cpu2017"
-echo "all                    Compiles jive and jlm"
-echo "clean                  Calls clean for jive, jlm, polybench, cpu2017, csmith,"
+echo "all                    Compiles jlm"
+echo "clean                  Calls clean for jlm, polybench, cpu2017, csmith,"
 echo "                       and llvm-test."
 endef
 .PHONY: help
@@ -20,7 +20,6 @@ help:
 	@$(HELP_TEXT_CPU2017)
 	@$(HELP_TEXT_LLVM_TEST)
 	@$(HELP_TEXT_JLM)
-	@$(HELP_TEXT_JIVE)
 	@$(HELP_TEXT_CSMITH)
 	@$(HELP_TEXT_HLS_TEST)
 	@$(HELP_TEXT_CIRCT)
@@ -40,7 +39,6 @@ JLM_ROOT       := $(DIR)/jlm
 JLM_BIN        := $(JLM_ROOT)/bin
 JLC            := $(JLM_BIN)/jlc
 HLS            := $(JLM_BIN)/jhls
-JIVE_ROOT      := $(JLM_ROOT)/external/jive
 POLYBENCH_ROOT := $(DIR)/polybench
 CPU2017_ROOT   := $(DIR)/cpu2017
 CSMITH_ROOT    := $(DIR)/csmith
@@ -56,9 +54,6 @@ export JLMROOT := $(JLM_ROOT)
 # Include Makefiles for the tools, libraries, and benchmarks to be built
 ifneq ("$(wildcard Makefile-circt.sub)","")
 include Makefile-circt.sub
-endif
-ifneq ("$(wildcard $(JIVE_ROOT)/Makefile.sub)","")
-include $(JIVE_ROOT)/Makefile.sub
 endif
 ifneq ("$(wildcard $(JLM_ROOT)/Makefile.sub)","")
 include $(JLM_ROOT)/Makefile.sub
@@ -86,7 +81,7 @@ endif
 export LC_CTYPE=en_US.UTF-8
 
 .PHONY: all
-all: jive-release jlm-release
+all: jlm-release
 
 ### SUBMODULE
 
@@ -123,4 +118,4 @@ submodule-all: submodule submodule-cpu2017 submodule-circt
 ### CLEAN
 
 .PHONY: clean
-clean: jive-clean jlm-clean polybench-purge cpu2017-clean csmith-clean llvm-test
+clean: jlm-clean polybench-purge cpu2017-clean csmith-clean llvm-test
