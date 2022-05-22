@@ -27,7 +27,6 @@ help:
 SHELL=/bin/bash
 
 # LLVM related variables
-LLVMCONFIG ?= llvm-config-13
 CLANG_BIN=$(shell $(LLVMCONFIG) --bindir)
 CLANG=$(CLANG_BIN)/clang
 CC=$(CLANG)
