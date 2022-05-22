@@ -1,13 +1,9 @@
-
 # If Verilator has been compiled then we use this version
-ifneq ("$(wildcard $(VERILATOR_BIN))","")
+ifneq ("$(wildcard $(VERILATOR_ROOT)/bin/verilator)","")
 VERILATOR_PATH = $(VERILATOR_ROOT)
 VERILATOR_BIN = $(VERILATOR_ROOT)/bin/verilator
-else
-VERILATOR_BIN=verilator
-endif
-
 export PATH := $(VERILATOR_ROOT)/bin/:$(PATH)
+endif
 
 # Since directories doesn't work well as dependencies
 # we use a file that's expected to be found instead

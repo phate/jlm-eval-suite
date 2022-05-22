@@ -15,94 +15,21 @@ circt-help:
 
 CIRCT_BUILD        = $(CIRCT_ROOT)/build
 CIRCT_INSTALL      = $(CIRCT_ROOT)/local
-CIRCT_BIN          = $(CIRCT_INSTALL)/bin
-CIRCT_INC          = $(CIRCT_INSTALL)/include
-CIRCT_LIB          = $(CIRCT_INSTALL)/lib
 CIRCT_LLVM         = $(CIRCT_ROOT)/llvm
 CIRCT_LLVM_BUILD   = $(CIRCT_LLVM)/build
 
 # If we find a compiled llvm-config in circt then we assume that
 # the user wants to use the compiled circt llvm version
-ifneq (, $(shell command -v $(CIRCT_BIN)/llvm-config 2> /dev/null))
+ifneq (, $(shell command -v $(CIRCT_INSTALL)/bin/llvm-config 2> /dev/null))
   $(info Found llvm-config built for CIRCT)
-  CIRCT = 1
-  LLVMCONFIG = $(CIRCT_BIN)/llvm-config
-
-  FIRTOOL = $(CIRCT_BIN)/firtool
-
-  LD_LIBRARY_PATH = $(CIRCT_LIB)
-  export LD_LIBRARY_PATH=$(CIRCT_LIB)
-
-  CPPFLAGS += \
-	-DCIRCT=1 \
-	-I$(CIRCT_INC) \
-
-  LDFLAGS += \
-	-I$(CIRCT_LIB) \
-	-lMLIR \
-	-lCIRCTAnalysisTestPasses \
-	-lCIRCTDependenceAnalysis \
-	-lCIRCTExportFIRRTL \
-	-lCIRCTFIRRTL \
-	-lCIRCTFIRRTLTransforms \
-	-lCIRCTScheduling \
-	-lCIRCTSchedulingAnalysis \
-	-lCIRCTSchedulingTestPasses \
-	-lCIRCTSupport \
-	-lCIRCTTransforms \
-	-lCIRCTHW \
-#	-lLLVMSupport \
-#	-lMLIRAnalysis \
-#	-lMLIRIR \
-#	-lMLIRParser \
-#	-lMLIRSideEffectInterfaces \
-#	-lMLIRTransforms \
-#	-lMLIRSupport \
-#	-lMLIRStandard \
-#	-lCIRCTExportVerilog \
-#	-lCIRCTImportFIRFile \
-#	-lCIRCTMSFT \
-#	-lCIRCTESI \
-#	-lCIRCTComb \
-#	-lCIRCTSeq \
-#	-lCIRCTFSM \
-#	-lCIRCTMoore \
-#	-lCIRCTMooreToCore \
-#	-lCIRCTSV \
-#	-lCIRCTSVTransforms \
-#	-lCIRCTStaticLogicOps \
-#	-lCIRCTStandardToStaticLogic \
-#	-lCIRCTAffineToStaticLogic \
-#	-lCIRCTFIRRTLToHW \
-#	-lCIRCTHWToLLHD \
-#	-lCIRCTHandshake \
-#	-lCIRCTHandshakeToFIRRTL \
-#	-lCIRCTHandshakeTransforms \
-#	-lCIRCTStandardToHandshake \
-#	-lCIRCTCAPIComb \
-#	-lCIRCTCAPIESI \
-#	-lCIRCTCAPIExportVerilog \
-#	-lCIRCTCAPIHW \
-#	-lCIRCTCAPILLHD \
-#	-lCIRCTCAPIMSFT \
-#	-lCIRCTCAPISV \
-#	-lCIRCTCAPISeq \
-#	-lCIRCTLLHD \
-#	-lCIRCTLLHDSimEngine \
-#	-lCIRCTLLHDSimState \
-#	-lCIRCTLLHDSimTrace \
-#	-lCIRCTLLHDToLLVM \
-#	-lCIRCTLLHDTransforms \
-#	-lCIRCTCalyx \
-#	-lCIRCTCalyxToHW \
-#	-lCIRCTCalyxTransforms \
-#	-lCIRCTExportCalyx \
-#	-lCIRCTSCFToCalyx
+  CIRCT_PATH = $(CIRCT_INSTALL)
+  LLVMCONFIG=$(CIRCT_PATH)/bin/llvm-config
+  LD_LIBRARY_PATH = $(CIRCT_PATH)/lib
+  export LD_LIBRARY_PATH=$(CIRCT_PATH)/lib
 endif
 
 $(CIRCT_LLVM_BUILD)/build.ninja:
 	# Unshallow is only needed if the full LLVM history is wanted
-	#cd $(CIRCT_LLVM) && git fetch --unshallow
 	mkdir -p $(CIRCT_LLVM_BUILD)
 	cd $(CIRCT_LLVM_BUILD) && cmake -G Ninja $(CIRCT_LLVM)/llvm \
 		-DLLVM_ENABLE_PROJECTS="mlir;clang;lld" \
