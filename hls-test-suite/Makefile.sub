@@ -48,12 +48,12 @@ HLS_TEST_FILES = \
 .PHONY: hls-test-run-base
 hls-test-run-base: HLS_FUNCTION=run
 hls-test-run-base: $(patsubst %.c, $(HLS_TEST_BUILD)/%.c.hls, $(HLS_TEST_FILES))
-	@rm -rf $(HLS_TEST_ROOT)/hls-test.log
+	@rm -rf $(HLS_TEST_ROOT)/hls-test-base.log
 	@cd $(HLS_TEST_BUILD) && \
 	for TEST in $(HLS_TEST_FILES) ; do \
 		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
 		$(TESTLOG) -n "$$TEST: " ; \
-		if $(HLS_TEST_BUILD)/$$TEST.hls >> $(HLS_TEST_ROOT)/hls-test.log 2>&1 ; then \
+		if $(HLS_TEST_BUILD)/$$TEST.hls >> $(HLS_TEST_ROOT)/hls-test-base.log 2>&1 ; then \
 			$(TESTLOG) pass ; \
 		else \
 			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
@@ -157,7 +157,6 @@ HLS_DYNAMATIC_FILES = \
 .PHONY: hls-test-run-dynamatic
 hls-test-run-dynamatic: HLS_FUNCTION=kernel
 hls-test-run-dynamatic: $(patsubst %.c, $(HLS_TEST_BUILD)/dynamatic/%.c.hls, $(HLS_DYNAMATIC_FILES))
-	@rm -rf $(HLS_TEST_ROOT)/hls-test-dynamatic.log
 	@set -e ; \
 	$(foreach TEST, $(HLS_DYNAMATIC_FILES), \
 		$(eval DIFF = $(HLS_TEST_ROOT)/utilities/diff.sh) \
@@ -171,3 +170,5 @@ hls-test-run-dynamatic: $(patsubst %.c, $(HLS_TEST_BUILD)/dynamatic/%.c.hls, $(H
 .PHONY: hls-test-clean
 hls-test-clean:
 	@rm -rf $(HLS_TEST_BUILD)
+	@rm -f $(HLS_TEST_ROOT)/hls-test-base.log
+	@rm -f $(HLS_TEST_ROOT)/hls-test-polybench.log
