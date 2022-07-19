@@ -13,3 +13,6 @@ JLC = jlc
 CLANG = clang
 
 include $(LLVM_TEST_ROOT)/Makefile.sub
+
+.PHONY: clean
+clean: llvm-clean
