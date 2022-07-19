@@ -10,8 +10,8 @@ echo "llvm-run               Calls llvm-build and then runs built tests"
 echo "llvm-clean             Deletes the build directory"
 endef
 
-LLVM_TEST_BUILD=$(LLVM_TEST_ROOT)/build
 LLVM_TEST_GIT=$(LLVM_TEST_ROOT)/llvm-test-suite.git
+LLVM_TEST_BUILD=$(LLVM_TEST_ROOT)/build
 
 .PHONY: setup-llvm-test
 setup-llvm-test: install-lit apply-llvm-git-patch
@@ -24,10 +24,16 @@ install-lit:
 apply-llvm-git-patch:
 	cd $(LLVM_TEST_GIT) && git apply $(LLVM_TEST_ROOT)/jlc.patch
 
+# Use cmake with -LAH to see all configuration options
+# CXX=JLC to throw error for C++ benchmarks as these should be excluded
 CMAKE_CONFIG= \
 	-DCMAKE_C_COMPILER=$(JLC) \
 	-DCMAKE_CXX_COMPILER=$(JLC) \
-	-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF
+	-DTEST_SUITE_ENABLE_BITCODE_TESTS=OFF \
+	-DTEST_SUITE_COLLECT_CODE_SIZE=OFF \
+	-DTEST_SUITE_COLLECT_COMPILE_TIME=OFF \
+	# Type of benchmark inputs (may be test,train or ref)
+	# -DTEST_SUITE_RUN_TYPE=train
 
 .PHONY: llvm-build
 llvm-build:
