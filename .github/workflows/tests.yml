@@ -47,8 +47,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-    - name: Download CIRCT installation
-      run: wget -q -O- 'https://onedrive.live.com/download?cid=6371489683F2A355&resid=6371489683F2A355%21121&authkey=AOl_Mh2Qy44x2vQ' | tar -xJ -C circt/
+    - name: Download prebuilt CIRCT installation
+      run: make circt-prebuilt
     - name: Update jlm submodule
       run: git submodule update --init jlm/
     - name: Checkout master of jlm
