@@ -6,6 +6,7 @@ echo "circt-build            Builds and installs LLVM, MLIR, and CIRCT"
 echo "                       (installation directory is circt/local)"
 echo "circt-clean            Deletes build directories (to save disk space)"
 echo "circt-purge            Deletes build and install directories"
+echo "circt-prebuilt         Downloads a prebuilt version of CIRCT"
 echo "circt-help             Prints this help text"
 endef
 
@@ -82,6 +83,12 @@ circt-build:
 	cp $(CIRCT_LLVM_BUILD)/include/llvm/Config/llvm-config.h $(CIRCT_INSTALL)/include/llvm/Config/
 	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/Attributes.inc $(CIRCT_INSTALL)/include/llvm/IR/
 	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/IntrinsicEnums.inc $(CIRCT_INSTALL)/include/llvm/IR/
+
+$(CIRCT_INSTALL):
+	wget -q -O- 'https://onedrive.live.com/download?cid=6371489683F2A355&resid=6371489683F2A355%21121&authkey=AOl_Mh2Qy44x2vQ' | tar -xJ -C $(CIRCT_ROOT)/
+
+.PHONY: circt-prebuilt
+circt-prebuilt: $(CIRCT_INSTALL)
 
 .PHONY: circt-clean
 circt-clean:
