@@ -1,0 +1,61 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  polybench:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Update jlm submodule
+      run: git submodule update --init jlm/
+    - name: Checkout master of jlm
+      run: cd jlm && git checkout master
+    - name: Compile jlm
+      run: make jlm-release -j `nproc`
+    - name: Update polybench submodule
+      run: git submodule update --init polybench/
+    - name: Checkout master of polybench
+      run: cd polybench && git checkout master
+    - name: Check polybench
+      run: make polybench-check -j `nproc`
+
+  llvm-test-suite:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Update jlm submodule
+      run: git submodule update --init jlm/
+    - name: Checkout master of jlm
+      run: cd jlm && git checkout master
+    - name: Compile jlm
+      run: make jlm-release -j `nproc`
+    - name: Update llvm-test-suite submodule
+      run: git submodule update --init llvm-test-suite/llvm-test-suite.git
+    - name: Install lit
+      run: make install-lit
+    - name: Apply patch
+      run: make apply-llvm-git-patch
+    - name: Run llvm-test-suite
+      run: make llvm-run-opt
+
+  hls-test-suite:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download CIRCT installation
+      run: wget -q -O- 'https://onedrive.live.com/download?cid=6371489683F2A355&resid=6371489683F2A355%21121&authkey=AOl_Mh2Qy44x2vQ' | tar -xJ -C circt/
+    - name: Update jlm submodule
+      run: git submodule update --init jlm/
+    - name: Checkout master of jlm
+      run: cd jlm && git checkout master
+    - name: Compile jlm
+      run: make jlm-release -j `nproc`
+    - name: Install verilator
+      run: sudo apt-get install verilator
+    - name: Run hls-test-suite
+      run: make hls-test-run
