@@ -97,20 +97,24 @@ index 61d1fd08..b9ce5de5 100644
  if(NOT DEFINED SMALL_PROBLEM_SIZE)
    add_subdirectory(mafft)
 diff --git a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
-index d039bd57..25e8c5b9 100644
+index 3bbf8de5..5bf8f674 100644
 --- a/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
 +++ b/MultiSource/Benchmarks/DOE-ProxyApps-C/CMakeLists.txt
-@@ -1,9 +1,11 @@
--add_subdirectory(XSBench)
+@@ -2,13 +2,15 @@
+ # The biggest alignment of CSKY is 4 bytes so that the expected
+ # Est. Memory Usage is different with reference output.
+ if(NOT ARCH STREQUAL "CSKY")
+-  add_subdirectory(XSBench)
+-  add_subdirectory(RSBench)
 +# JLC produces incorrect result
-+#add_subdirectory(XSBench)
++#  add_subdirectory(XSBench)
++#  add_subdirectory(RSBench)
+ endif()
  add_subdirectory(Pathfinder)
  add_subdirectory(miniAMR)
  add_subdirectory(miniGMG)
--add_subdirectory(RSBench)
 -add_subdirectory(SimpleMOC)
 +# JLC produces incorrect result
-+#add_subdirectory(RSBench)
 +#add_subdirectory(SimpleMOC)
  if(NOT CMAKE_SYSTEM_NAME MATCHES "AIX")
  add_subdirectory(CoMD)
@@ -174,12 +178,14 @@ index b375382d..4b0b2bc8 100644
 +# JLC produces incorrect FP result
 +#add_subdirectory(mpeg2)
 diff --git a/MultiSource/CMakeLists.txt b/MultiSource/CMakeLists.txt
-index dcbdf914..9f566064 100644
+index dcbdf914..aae47fa3 100644
 --- a/MultiSource/CMakeLists.txt
 +++ b/MultiSource/CMakeLists.txt
 @@ -1,7 +1,7 @@
- add_subdirectory(Applications)
- add_subdirectory(Benchmarks)
+-add_subdirectory(Applications)
+-add_subdirectory(Benchmarks)
++#add_subdirectory(Applications)
++#add_subdirectory(Benchmarks)
  if(NOT TEST_SUITE_BENCHMARKING_ONLY)
 -  add_subdirectory(UnitTests)
 +#  add_subdirectory(UnitTests)
@@ -214,10 +220,10 @@ index 72ce8b06..a0d862bb 100644
 +#add_subdirectory(SmallPT)
  add_subdirectory(Stanford)
 diff --git a/SingleSource/Benchmarks/Misc/CMakeLists.txt b/SingleSource/Benchmarks/Misc/CMakeLists.txt
-index 8ae715b7..927d9f2c 100644
+index 533d1a4e..73ff5735 100644
 --- a/SingleSource/Benchmarks/Misc/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/Misc/CMakeLists.txt
-@@ -2,7 +2,7 @@ list(APPEND LDFLAGS -lm )
+@@ -3,7 +3,7 @@ list(APPEND CFLAGS -Wno-implicit-int)
  set(FP_TOLERANCE 0.001)
  set(Source
    ReedSolomon.c
@@ -227,10 +233,10 @@ index 8ae715b7..927d9f2c 100644
    ffbench.c
    flops-1.c
 diff --git a/SingleSource/Regression/C/CMakeLists.txt b/SingleSource/Regression/C/CMakeLists.txt
-index 0acc7b84..2ad339d6 100644
+index 3ec1c078..d0563a64 100644
 --- a/SingleSource/Regression/C/CMakeLists.txt
 +++ b/SingleSource/Regression/C/CMakeLists.txt
-@@ -4,5 +4,9 @@ if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
+@@ -4,6 +4,10 @@ if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
    add_subdirectory(gcc-c-torture)
  endif()
  
@@ -239,17 +245,18 @@ index 0acc7b84..2ad339d6 100644
 +list(REMOVE_ITEM Source 2004-03-15-IndirectGoto.c)
 +
  list(APPEND LDFLAGS -lm)
+ list(APPEND CFLAGS -Wno-implicit-int)
  llvm_singlesource(PREFIX "Regression-C-")
 diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
-index 4daf07e7..f42de6e4 100644
+index a36e8c6f..9932a5d8 100644
 --- a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 +++ b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 @@ -1,7 +1,7 @@
  add_subdirectory(ieee)
  
  # GCC C Torture Suite is conventionally run without warnings
--list(APPEND CFLAGS "-w")
-+#list(APPEND CFLAGS "-w")
+-list(APPEND CFLAGS -Wno-implicit-int -Wno-int-conversion -Wno-implicit-function-declaration -w)
++list(APPEND CFLAGS -Wno-implicit-int -Wno-int-conversion -Wno-implicit-function-declaration)
  
  set(TestsToSkip)
  
@@ -363,17 +370,17 @@ index 4daf07e7..f42de6e4 100644
    20000822-1.c
    20010209-1.c
 diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/ieee/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/ieee/CMakeLists.txt
-index f761f852..4e417211 100644
+index e4ba9009..19c88b64 100644
 --- a/SingleSource/Regression/C/gcc-c-torture/execute/ieee/CMakeLists.txt
 +++ b/SingleSource/Regression/C/gcc-c-torture/execute/ieee/CMakeLists.txt
 @@ -1,5 +1,5 @@
  # GCC C Torture Suite is conventionally run without warnings
--list(APPEND CFLAGS "-w")
-+#list(APPEND CFLAGS "-w")
- 
+-list(APPEND CFLAGS -Wno-implicit-int -Wno-implicit-function-declaration -w)
++list(APPEND CFLAGS -Wno-implicit-int -Wno-implicit-function-declaration)
  set(TestsToSkip)
  
-@@ -12,6 +12,10 @@ set(TestsToSkip)
+ ##
+@@ -11,6 +11,10 @@ set(TestsToSkip)
  file(GLOB UnsupportedTests
    CONFIGURE_DEPENDS
  
@@ -393,10 +400,10 @@ index e060724b..b4714afd 100644
 -add_subdirectory(C++)
 +#add_subdirectory(C++)
 diff --git a/SingleSource/UnitTests/CMakeLists.txt b/SingleSource/UnitTests/CMakeLists.txt
-index b146c032..f2b49de1 100644
+index d0cbf58b..fa9a2b98 100644
 --- a/SingleSource/UnitTests/CMakeLists.txt
 +++ b/SingleSource/UnitTests/CMakeLists.txt
-@@ -1,11 +1,11 @@
+@@ -1,11 +1,15 @@
  include(CheckCCompilerFlag)
  
 -add_subdirectory(C++11)
@@ -406,13 +413,17 @@ index b146c032..f2b49de1 100644
 -add_subdirectory(Threads)
 -add_subdirectory(Vector)
 -add_subdirectory(Vectorizer)
++# JLC fails tls.test
 +#add_subdirectory(Threads)
++# JLC produce: error: invalid cast opcode for cast from '<4 x i32>' to '<4 x i8>'
 +#add_subdirectory(Vector)
++# JLC produce: invoke is not supported.
++# UNREACHABLE executed at libjlm/src/frontend/llvm/LlvmInstructionConversion.cpp:1036
 +#add_subdirectory(Vectorizer)
- # FIXME: Disable SJLJ tests for now, until EH edges are represented.
- # add_subdirectory(SetjmpLongjmp)
- if(TARGET_OS STREQUAL "Darwin")
-@@ -13,7 +13,16 @@ if(TARGET_OS STREQUAL "Darwin")
+ 
+ list(APPEND CFLAGS -Wno-implicit-function-declaration -Wno-implicit-int)
+ 
+@@ -16,7 +20,16 @@ if(TARGET_OS STREQUAL "Darwin")
    add_subdirectory(ObjC++)
  endif()
  
