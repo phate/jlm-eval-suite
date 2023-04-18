@@ -30,7 +30,7 @@ hls-test-run: hls-test-run-base hls-test-run-polybench hls-test-run-dynamatic
 $(HLS_TEST_BUILD)/%.c.hls: $(HLS_TEST_SRC)/%.c
 	@mkdir -p $(HLS_TEST_BUILD)/dynamatic
 	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $@ 
-	@$(HLS) $^ --circt --hls-function=$(HLS_FUNCTION) -o $@ > /dev/null
+	$(HLS) $^ --circt --hls-function=$(HLS_FUNCTION) -o $@ > /dev/null
 
 HLS_TEST_FILES = \
 	test-return.c \
@@ -81,7 +81,7 @@ hls-test-polybench:
 		set -e ; \
 		for TEST in $(HLS_POLYBENCH_FILES) ; do \
 			printf '$(BLUE)Building: $(NC)%s\n' $$TEST ; \
-			$(HLS) $(HLS_POLYBENCH_SRC)/$$TEST \
+			LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) $(HLS) $(HLS_POLYBENCH_SRC)/$$TEST \
 				$(HLS_POLYBENCH_SRC)/polybench.c \
 				-I$(HLS_POLYBENCH_SRC) \
 				-D=DATA_TYPE_IS_INT \

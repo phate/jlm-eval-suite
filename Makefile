@@ -96,7 +96,7 @@ submodule-cpu2017:
 
 .PHONY: submodule-circt
 submodule-circt:
-	git submodule update --init --recursive $(CIRCT_ROOT)
+	git submodule update --init $(CIRCT_ROOT)
 
 .PHONY: submodule-all
 submodule-all: submodule submodule-cpu2017 submodule-circt
