@@ -28,6 +28,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
+    - name: Install dependencies (LLVM)
+      run: sudo apt-get update && sudo apt-get install llvm-15-dev clang-15
     - name: Update jlm submodule
       run: git submodule update --init jlm/
     - name: Checkout master of jlm
