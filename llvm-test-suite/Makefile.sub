@@ -18,7 +18,7 @@ setup-llvm-test: install-lit apply-llvm-git-patch
 
 .PHONY: install-lit
 install-lit:
-	sudo python3 /usr/lib/llvm-14/build/utils/lit/setup.py install
+	sudo python3 /usr/lib/llvm-15/build/utils/lit/setup.py install
 
 .PHONY: apply-llvm-git-patch
 apply-llvm-git-patch:
