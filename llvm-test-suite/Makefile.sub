@@ -223,4 +223,4 @@ llvm-run-opt: llvm-build-opt
 
 .PHONY: llvm-clean
 llvm-clean:
-	rm -rf $(LLVM_TEST_BUILD)
+	rm -rf $(LLVM_TEST_BUILD) $(LLVM_TEST_BUILD)-opt
