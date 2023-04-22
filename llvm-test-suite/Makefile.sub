@@ -7,6 +7,7 @@ echo "install-lit            Installs the lit tool"
 echo "apply-llvm-git-patch   Applies patch that excludes tests that cause jlc to abort"
 echo "llvm-build             Builds all the enabled tests"
 echo "llvm-run               Calls llvm-build and then runs built tests"
+echo "llvm-run-opt           Invokes llvm-build with optimization enabled and runs tests"
 echo "llvm-clean             Deletes the build directory"
 endef
 
@@ -18,7 +19,7 @@ setup-llvm-test: install-lit apply-llvm-git-patch
 
 .PHONY: install-lit
 install-lit:
-	sudo python3 /usr/lib/llvm-14/build/utils/lit/setup.py install
+	sudo python3 /usr/lib/llvm-15/build/utils/lit/setup.py install
 
 .PHONY: apply-llvm-git-patch
 apply-llvm-git-patch:
@@ -222,4 +223,4 @@ llvm-run-opt: llvm-build-opt
 
 .PHONY: llvm-clean
 llvm-clean:
-	rm -rf $(LLVM_TEST_BUILD)
+	rm -rf $(LLVM_TEST_BUILD) $(LLVM_TEST_BUILD)-opt
