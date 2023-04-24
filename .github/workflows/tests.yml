@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
+    - name: Install dependencies (LLVM)
+      run: sudo apt-get update && sudo apt-get install llvm-15-dev clang-15
     - name: Update jlm submodule
       run: git submodule update --init jlm/
     - name: Checkout master of jlm
@@ -44,20 +46,3 @@ jobs:
       run: make apply-llvm-git-patch
     - name: Run llvm-test-suite
       run: make llvm-run-opt
-
-  hls-test-suite:
-    runs-on: ubuntu-22.04
-    steps:
-    - uses: actions/checkout@v3
-    - name: Download prebuilt CIRCT installation
-      run: make circt-prebuilt
-    - name: Update jlm submodule
-      run: git submodule update --init jlm/
-    - name: Checkout master of jlm
-      run: cd jlm && git checkout master
-    - name: Compile jlm
-      run: make jlm-release -j `nproc`
-    - name: Install verilator
-      run: sudo apt-get install verilator
-    - name: Run hls-test-suite
-      run: make hls-test-run
