@@ -6,7 +6,6 @@ echo "circt-build            Builds and installs LLVM, MLIR, and CIRCT"
 echo "                       (installation directory is circt/local)"
 echo "circt-clean            Deletes build directories (to save disk space)"
 echo "circt-purge            Deletes build and install directories"
-echo "circt-prebuilt         Downloads a prebuilt version of CIRCT"
 echo "circt-help             Prints this help text"
 endef
 
@@ -14,86 +13,25 @@ endef
 circt-help:
 	@$(HELP_TEXT_CIRCT)
 
-CIRCT_BUILD        = $(CIRCT_ROOT)/build
-CIRCT_INSTALL      = $(CIRCT_ROOT)/local
-CIRCT_LLVM         = $(CIRCT_ROOT)/llvm
-CIRCT_LLVM_BUILD   = $(CIRCT_LLVM)/build
+CIRCT_BUILD   = $(CIRCT_ROOT)/build
+CIRCT_INSTALL = $(CIRCT_ROOT)/local
+CIRCT_BIN     = $(CIRCT_INSTALL)/bin
 
-# If we find a compiled llvm-config in circt then we assume that
-# the user wants to use the compiled circt llvm version
-ifneq (, $(shell command -v $(CIRCT_INSTALL)/bin/llvm-config 2> /dev/null))
-  $(info Found llvm-config built for CIRCT)
+# Check if CIRCT has been compiled by lookinf for firtool
+ifneq (, $(shell command -v $(CIRCT_BIN)/firtool 2> /dev/null))
+  $(info Found CIRCT firtool)
   CIRCT_PATH = $(CIRCT_INSTALL)
-  LLVMCONFIG=$(CIRCT_PATH)/bin/llvm-config
-  LD_LIBRARY_PATH = $(CIRCT_PATH)/lib
-  export LD_LIBRARY_PATH=$(CIRCT_PATH)/lib
 endif
 
-$(CIRCT_LLVM_BUILD)/build.ninja:
-	# Unshallow is only needed if the full LLVM history is wanted
-	mkdir -p $(CIRCT_LLVM_BUILD)
-	cd $(CIRCT_LLVM_BUILD) && cmake -G Ninja $(CIRCT_LLVM)/llvm \
-		-DLLVM_ENABLE_PROJECTS="mlir;clang;lld" \
-		-DLLVM_TARGETS_TO_BUILD="X86" \
-		-DLLVM_PARALLEL_LINK_JOBS=1 \
-		-DBUILD_SHARED_LIBS=OFF \
-		-DLLVM_LINK_LLVM_DYLIB=ON \
-		-DLLVM_ENABLE_RTTI=ON \
-		-DLLVM_ENABLE_ASSERTIONS=ON \
-		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-		-DCMAKE_INSTALL_PREFIX=$(CIRCT_INSTALL)
-
-$(CIRCT_BUILD)/build.ninja:
-	mkdir -p $(CIRCT_BUILD)
-	cd $(CIRCT_BUILD) && cmake -G Ninja .. \
-		-DMLIR_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/mlir \
-		-DLLVM_DIR=$(CIRCT_LLVM_BUILD)/lib/cmake/llvm \
-		-DLLVM_ENABLE_ASSERTIONS=ON \
-		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-		-DCMAKE_INSTALL_PREFIX=$(CIRCT_INSTALL)
-
-NC=\033[0m # No Color
-RED=\033[0;31m
-GREEN=\033[0;32m
 
 .PHONY: circt-build
-circt-build: $(CIRCT_LLVM_BUILD)/build.ninja
-circt-build: $(CIRCT_BUILD)/build.ninja
 circt-build:
-	@echo -e "# $(GREEN)Build LLVM and MLIR$(NC)"
-	@echo -e "# $(RED)16 GiB $(GREEN)of RAM is required$(NC)"
-	cd $(CIRCT_LLVM_BUILD) && ninja
-	cd $(CIRCT_LLVM_BUILD) && ninja check-mlir
-	cd $(CIRCT_LLVM_BUILD) && ninja install
-	@echo -e "# $(GREEN)Installing psutil with pip$(NC)"
-	pip install psutil
-	@echo -e "# $(GREEN)Build CIRCT$(NC)"
-	cd $(CIRCT_BUILD) && ninja
-	cd $(CIRCT_BUILD) && ninja check-circt
-	# Check integration requires verilator
-	#cd $(CIRCT_BUILD) && ninja check-circt-integration
+	cd $(CIRCT_ROOT) && ./build-ubuntu.sh
 	cd $(CIRCT_BUILD) && ninja install
-	@echo -e "# $(GREEN)Replacing symlinks with the actual files$(NC)"
-	@echo -e "# $(GREEN)Makes it possible to run 'make circt-clean' to save disk space$(NC)"
-	rm $(CIRCT_INSTALL)/include/llvm/Config/abi-breaking.h
-	rm $(CIRCT_INSTALL)/include/llvm/Config/llvm-config.h
-	rm $(CIRCT_INSTALL)/include/llvm/IR/Attributes.inc
-	rm $(CIRCT_INSTALL)/include/llvm/IR/IntrinsicEnums.inc
-	cp $(CIRCT_LLVM_BUILD)/include/llvm/Config/abi-breaking.h $(CIRCT_INSTALL)/include/llvm/Config/
-	cp $(CIRCT_LLVM_BUILD)/include/llvm/Config/llvm-config.h $(CIRCT_INSTALL)/include/llvm/Config/
-	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/Attributes.inc $(CIRCT_INSTALL)/include/llvm/IR/
-	cp $(CIRCT_LLVM_BUILD)/include/llvm/IR/IntrinsicEnums.inc $(CIRCT_INSTALL)/include/llvm/IR/
-
-$(CIRCT_INSTALL):
-	wget -q -O- 'https://onedrive.live.com/download?cid=6371489683F2A355&resid=6371489683F2A355%21121&authkey=AOl_Mh2Qy44x2vQ' | tar -xJ -C $(CIRCT_ROOT)/
-
-.PHONY: circt-prebuilt
-circt-prebuilt: $(CIRCT_INSTALL)
 
 .PHONY: circt-clean
 circt-clean:
 	rm -rf $(CIRCT_BUILD)
-	rm -rf $(CIRCT_LLVM_BUILD)
 
 .PHONY: circt-purge
 circt-purge: circt-clean
