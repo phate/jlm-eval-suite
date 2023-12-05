@@ -42,7 +42,15 @@ llvm-build:
 	cd $(LLVM_TEST_BUILD) && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/O0.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD) && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD) && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-aa
+llvm-build-aa:
+	mkdir -p $(LLVM_TEST_BUILD)-aa
+	cd $(LLVM_TEST_BUILD)-aa && cmake \
+		$(CMAKE_CONFIG) \
+		-C$(LLVM_TEST_ROOT)/cmake/aa.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-aa && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-cne
 llvm-build-cne:
@@ -50,7 +58,7 @@ llvm-build-cne:
 	cd $(LLVM_TEST_BUILD)-cne && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/cne.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-cne && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-cne && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-dne
 llvm-build-dne:
@@ -58,7 +66,7 @@ llvm-build-dne:
 	cd $(LLVM_TEST_BUILD)-dne && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/dne.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-dne && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-dne && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-iln
 llvm-build-iln:
@@ -66,7 +74,7 @@ llvm-build-iln:
 	cd $(LLVM_TEST_BUILD)-iln && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/iln.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-iln && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-iln && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-inv
 llvm-build-inv:
@@ -74,7 +82,7 @@ llvm-build-inv:
 	cd $(LLVM_TEST_BUILD)-inv && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/inv.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-inv && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-inv && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-psh
 llvm-build-psh:
@@ -82,7 +90,7 @@ llvm-build-psh:
 	cd $(LLVM_TEST_BUILD)-psh && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/psh.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-psh && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-psh && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-pll
 llvm-build-pll:
@@ -90,7 +98,7 @@ llvm-build-pll:
 	cd $(LLVM_TEST_BUILD)-pll && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/pll.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-pll && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-pll && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-red
 llvm-build-red:
@@ -98,7 +106,7 @@ llvm-build-red:
 	cd $(LLVM_TEST_BUILD)-red && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/red.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-red && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-red && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-ivt
 llvm-build-ivt:
@@ -106,7 +114,7 @@ llvm-build-ivt:
 	cd $(LLVM_TEST_BUILD)-ivt && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/ivt.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-ivt && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-ivt && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-url
 llvm-build-url:
@@ -114,7 +122,7 @@ llvm-build-url:
 	cd $(LLVM_TEST_BUILD)-url && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/url.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-url && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-url && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-opt
 llvm-build-opt:
@@ -122,30 +130,34 @@ llvm-build-opt:
 	cd $(LLVM_TEST_BUILD)-opt && cmake \
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/opt.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-opt && make VERBOSE=1 SHELL="/bin/bash -x"
+	cd $(LLVM_TEST_BUILD)-opt && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-run
 llvm-run: llvm-build
-	cd $(LLVM_TEST_BUILD) && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD) && lit -v -j `nproc` -o results.json .
+
+.PHONY: llvm-run-aa
+llvm-run-aa: llvm-build-aa
+	cd $(LLVM_TEST_BUILD)-aa && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-cne
 llvm-run-cne: llvm-build-cne
-	cd $(LLVM_TEST_BUILD)-cne && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-cne && lit -v -j `nproc` -o results.json .
 
 # Failing Tests (1):
 #    test-suite :: SingleSource/UnitTests/2004-02-02-NegativeZero.test
 
 .PHONY: llvm-run-dne
 llvm-run-dne: llvm-build-dne
-	cd $(LLVM_TEST_BUILD)-dne && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-dne && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-iln
 llvm-run-iln: llvm-build-iln
-	cd $(LLVM_TEST_BUILD)-iln && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-iln && lit -v -j `nproc` -o results.json .
 
 #Failing Tests (30):
 #    test-suite :: MultiSource/Applications/SIBsim4/SIBsim4.test
@@ -181,43 +193,43 @@ llvm-run-iln: llvm-build-iln
 
 .PHONY: llvm-run-inv
 llvm-run-inv: llvm-build-inv
-	cd $(LLVM_TEST_BUILD)-inv && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-inv && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-psh
 llvm-run-psh: llvm-build-psh
-	cd $(LLVM_TEST_BUILD)-psh && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-psh && lit -v -j `nproc` -o results.json .
 
 # Failing Tests (72):
 
 .PHONY: llvm-run-pll
 llvm-run-pll: llvm-build-pll
-	cd $(LLVM_TEST_BUILD)-pll && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-pll && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-red
 llvm-run-red: llvm-build-red
-	cd $(LLVM_TEST_BUILD)-red && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-red && lit -v -j `nproc` -o results.json .
 
 # Aborts during compilation
 
 .PHONY: llvm-run-ivt
 llvm-run-ivt: llvm-build-ivt
-	cd $(LLVM_TEST_BUILD)-ivt && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-ivt && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-ulr
 llvm-run-url: llvm-build-url
-	cd $(LLVM_TEST_BUILD)-url && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-url && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
 .PHONY: llvm-run-opt
 llvm-run-opt: llvm-build-opt
-	cd $(LLVM_TEST_BUILD)-opt && lit -v -j4 -o results.json .
+	cd $(LLVM_TEST_BUILD)-opt && lit -v -j `nproc` -o results.json .
 
 # No failed tests
 
