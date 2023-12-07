@@ -1,0 +1,30 @@
+name: "Build CIRCT"
+description: "Builds CIRCT, which is used for the HLS backend"
+
+runs:
+  using: "composite"
+  steps:
+    # Extract the CIRCT submodule hash for use in the cache key
+    - name: Get CIRCT hash
+      id: get-circt-hash
+      run: |
+        echo "hash=$(git rev-parse @:./circt)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    # Try to fetch CIRCT from the cache
+    - name: Cache CIRCT
+      id: cache-circt
+      uses: actions/cache@v3
+      with:
+        path: |
+          circt/local
+        key: ${{ runner.os }}-circt-${{ steps.get-circt-hash.outputs.hash }}
+
+    # Build CIRCT if we didn't hit in the cache
+    - name: Rebuild and Install CIRCT
+      if: steps.cache-circt.outputs.cache-hit != 'true'
+      run: |
+        make submodule-circt
+        make circt-build
+      shell: bash
+
