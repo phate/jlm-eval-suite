@@ -221,7 +221,7 @@ llvm-run-ivt: llvm-build-ivt
 
 # No failed tests
 
-.PHONY: llvm-run-ulr
+.PHONY: llvm-run-url
 llvm-run-url: llvm-build-url
 	cd $(LLVM_TEST_BUILD)-url && lit -v -j `nproc` -o results.json .
 
