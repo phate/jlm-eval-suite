@@ -26,10 +26,10 @@ index 08d3dd44..7170c2f3 100644
 +#add_subdirectory(MemFunctions)
 +#add_subdirectory(SLPVectorization)
 diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
-index 0b01602d..3b6777c6 100644
+index a73acd56..5067c1c8 100644
 --- a/MultiSource/Applications/CMakeLists.txt
 +++ b/MultiSource/Applications/CMakeLists.txt
-@@ -11,21 +11,22 @@ add_subdirectory(sgefa)
+@@ -11,21 +11,28 @@ add_subdirectory(sgefa)
  add_subdirectory(spiff)
  add_subdirectory(viterbi)
  
@@ -37,48 +37,55 @@ index 0b01602d..3b6777c6 100644
 -add_subdirectory(hbd)
 -add_subdirectory(lambda-0.1.3)
 -add_subdirectory(minisat)
++# JLC: GlobalAlias constants are not supported.
 +#add_subdirectory(ALAC)
++# JLC: invoke is not supported.
 +#add_subdirectory(hbd)
++# C++ benchmark
 +#add_subdirectory(lambda-0.1.3)
++# JLC: invoke is not supported.
 +#add_subdirectory(minisat)
  if(NOT TARGET_OS STREQUAL "SunOS")
 -  add_subdirectory(hexxagon)
-+#  add_subdirectory(hexxagon)
++  # C++ benchmark
++  #add_subdirectory(hexxagon)
  endif()
  if(NOT DEFINED SMALL_PROBLEM_SIZE)
    add_subdirectory(lua)
  endif()
  if((TARGET_OS STREQUAL "Linux" OR TARGET_OS STREQUAL "Darwin") AND (NOT ARCH STREQUAL "XCore"))
 -  add_subdirectory(obsequi)
-+  # JLC produces incorrect result
++  # JLC produces the wrong result
 +  #add_subdirectory(obsequi)
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
 -  add_subdirectory(kimwitu++)
++# C++ benchmark
 +#  add_subdirectory(kimwitu++)
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
    add_subdirectory(SPASS)
 diff --git a/MultiSource/Applications/JM/CMakeLists.txt b/MultiSource/Applications/JM/CMakeLists.txt
-index 2a0be7f2..c8850501 100644
+index 2a0be7f2..e89d379c 100644
 --- a/MultiSource/Applications/JM/CMakeLists.txt
 +++ b/MultiSource/Applications/JM/CMakeLists.txt
 @@ -1,2 +1,3 @@
  add_subdirectory(ldecod)
 -add_subdirectory(lencod)
-+# JLC produces incorrect result
++# JLC produces the wrong result
 +#add_subdirectory(lencod)
 diff --git a/MultiSource/Benchmarks/CMakeLists.txt b/MultiSource/Benchmarks/CMakeLists.txt
-index 61d1fd08..b9ce5de5 100644
+index 61d1fd08..5911b1ac 100644
 --- a/MultiSource/Benchmarks/CMakeLists.txt
 +++ b/MultiSource/Benchmarks/CMakeLists.txt
-@@ -22,17 +22,17 @@ add_subdirectory(Rodinia)
+@@ -22,17 +22,19 @@ add_subdirectory(Rodinia)
  if((NOT "${TARGET_OS}" STREQUAL "Darwin") OR (NOT "${ARCH}" STREQUAL "ARM"))
    add_subdirectory(TSVC)
  endif()
 -add_subdirectory(Prolangs-C++)
 -add_subdirectory(Bullet)
 -add_subdirectory(tramp3d-v4)
++# C++ benchmarks
 +#add_subdirectory(Prolangs-C++)
 +#add_subdirectory(Bullet)
 +#add_subdirectory(tramp3d-v4)
@@ -91,8 +98,9 @@ index 61d1fd08..b9ce5de5 100644
  if(NOT "${ARCH}" STREQUAL "XCore")
 -  add_subdirectory(7zip)
 -  add_subdirectory(PAQ8p)
-+#  add_subdirectory(7zip)
-+#  add_subdirectory(PAQ8p)
++  # invoke is not supported.
++  #add_subdirectory(7zip)
++  #add_subdirectory(PAQ8p)
  endif()
  if(NOT DEFINED SMALL_PROBLEM_SIZE)
    add_subdirectory(mafft)
@@ -135,6 +143,20 @@ index e8b48a51..4045cba9 100644
  add_subdirectory(12-IOtest)
  add_subdirectory(17-bintr)
  add_subdirectory(18-imp)
+diff --git a/MultiSource/Benchmarks/MiBench/CMakeLists.txt b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
+index e3062a5e..6c44355f 100644
+--- a/MultiSource/Benchmarks/MiBench/CMakeLists.txt
++++ b/MultiSource/Benchmarks/MiBench/CMakeLists.txt
+@@ -2,7 +2,8 @@ add_subdirectory(automotive-basicmath)
+ add_subdirectory(automotive-bitcount)
+ add_subdirectory(automotive-susan)
+ add_subdirectory(consumer-jpeg)
+-add_subdirectory(consumer-typeset)
++# JLC produces the wrong result
++#add_subdirectory(consumer-typeset)
+ add_subdirectory(network-dijkstra)
+ add_subdirectory(network-patricia)
+ add_subdirectory(security-rijndael)
 diff --git a/MultiSource/Benchmarks/Olden/CMakeLists.txt b/MultiSource/Benchmarks/Olden/CMakeLists.txt
 index 0f2dc911..85568da7 100644
 --- a/MultiSource/Benchmarks/Olden/CMakeLists.txt
@@ -177,31 +199,27 @@ index b375382d..4b0b2bc8 100644
 -add_subdirectory(mpeg2)
 +# JLC produces incorrect FP result
 +#add_subdirectory(mpeg2)
-diff --git a/MultiSource/CMakeLists.txt b/MultiSource/CMakeLists.txt
-index dcbdf914..aae47fa3 100644
---- a/MultiSource/CMakeLists.txt
-+++ b/MultiSource/CMakeLists.txt
-@@ -1,7 +1,7 @@
--add_subdirectory(Applications)
--add_subdirectory(Benchmarks)
-+#add_subdirectory(Applications)
-+#add_subdirectory(Benchmarks)
- if(NOT TEST_SUITE_BENCHMARKING_ONLY)
--  add_subdirectory(UnitTests)
-+#  add_subdirectory(UnitTests)
+diff --git a/MultiSource/UnitTests/CMakeLists.txt b/MultiSource/UnitTests/CMakeLists.txt
+index e5b90a91..fa3c0fe4 100644
+--- a/MultiSource/UnitTests/CMakeLists.txt
++++ b/MultiSource/UnitTests/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-add_subdirectory(C++11)
++#add_subdirectory(C++11)
+ if(ARCH STREQUAL "Mips")
+   add_subdirectory(Mips)
  endif()
- 
- file(COPY lit.local.cfg DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 diff --git a/SingleSource/Benchmarks/CMakeLists.txt b/SingleSource/Benchmarks/CMakeLists.txt
-index 72ce8b06..a0d862bb 100644
+index 72ce8b06..15cab078 100644
 --- a/SingleSource/Benchmarks/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/CMakeLists.txt
-@@ -1,14 +1,15 @@
+@@ -1,14 +1,17 @@
 -add_subdirectory(Adobe-C++)
 +#add_subdirectory(Adobe-C++)
  add_subdirectory(BenchmarkGame)
 -add_subdirectory(CoyoteBench)
 -add_subdirectory(Dhrystone)
++# invoke is not supported.
 +#add_subdirectory(CoyoteBench)
 +# JLC executable never finishes
 +#add_subdirectory(Dhrystone)
@@ -217,38 +235,49 @@ index 72ce8b06..a0d862bb 100644
 -add_subdirectory(Shootout-C++)
 -add_subdirectory(SmallPT)
 +#add_subdirectory(Shootout-C++)
++# C++ benchmark
 +#add_subdirectory(SmallPT)
  add_subdirectory(Stanford)
 diff --git a/SingleSource/Benchmarks/Misc/CMakeLists.txt b/SingleSource/Benchmarks/Misc/CMakeLists.txt
-index 533d1a4e..73ff5735 100644
+index 533d1a4e..48dc4111 100644
 --- a/SingleSource/Benchmarks/Misc/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/Misc/CMakeLists.txt
-@@ -3,7 +3,7 @@ list(APPEND CFLAGS -Wno-implicit-int)
+@@ -3,7 +3,8 @@ list(APPEND CFLAGS -Wno-implicit-int)
  set(FP_TOLERANCE 0.001)
  set(Source
    ReedSolomon.c
 -  evalloop.c
-+  #  evalloop.c
++  # Blockaddress constants are not supported.
++  #evalloop.c
    fbench.c
    ffbench.c
    flops-1.c
+@@ -30,6 +31,6 @@ set(Source
+   whetstone.c
+ )
+ if(NOT ARCH STREQUAL "PowerPC" OR NOT TARGET_OS STREQUAL "Darwin")
+-  list(APPEND Source dt.c)
++	list(APPEND Source dt.c)
+ endif()
+ llvm_singlesource()
 diff --git a/SingleSource/Regression/C/CMakeLists.txt b/SingleSource/Regression/C/CMakeLists.txt
-index 3ec1c078..d0563a64 100644
+index 3f224e27..08f773f5 100644
 --- a/SingleSource/Regression/C/CMakeLists.txt
 +++ b/SingleSource/Regression/C/CMakeLists.txt
-@@ -4,6 +4,10 @@ if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
+@@ -5,6 +5,11 @@ if(ARCH MATCHES "x86" OR ARCH MATCHES "riscv" OR
    add_subdirectory(gcc-c-torture)
  endif()
  
 +# Remove tests that doesn't work with JLC
 +file(GLOB Source RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.c)
++# Blockaddress constants are not supported.
 +list(REMOVE_ITEM Source 2004-03-15-IndirectGoto.c)
 +
  list(APPEND LDFLAGS -lm)
  list(APPEND CFLAGS -Wno-implicit-int)
  llvm_singlesource(PREFIX "Regression-C-")
 diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
-index a36e8c6f..9932a5d8 100644
+index acbc0798..96db1069 100644
 --- a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 +++ b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 @@ -1,7 +1,7 @@
@@ -260,12 +289,13 @@ index a36e8c6f..9932a5d8 100644
  
  set(TestsToSkip)
  
-@@ -12,6 +12,108 @@ set(TestsToSkip)
+@@ -12,6 +12,113 @@ set(TestsToSkip)
  # Tests with features unsupported by Clang (usually GCC extensions)
  # (Big list of naughty tests)
  file(GLOB UnsupportedTests CONFIGURE_DEPENDS
 +  # JLC UNREACHABLE executed at
 +  # libjlm/src/frontend/llvm/LlvmInstructionConversion.cpp:45
++  # Github issue #216
 +  20001009-2.c
 +  20030222-1.c
 +  20050203-1.c
@@ -330,6 +360,7 @@ index a36e8c6f..9932a5d8 100644
 +  pr88904.c
 +  stkalign.c
 +  # JLC blockaddress constants are not supported
++  # Github issue #217
 +  20040302-1.c
 +  20041214-1.c
 +  20071220-1.c
@@ -341,14 +372,17 @@ index a36e8c6f..9932a5d8 100644
 +  920501-5.c
 +  comp-goto-1.c
 +  # JLC invalid type
++  # Github issue #218
 +  20050316-1.c
 +  20050316-2.c
 +  20050316-3.c
 +  20050607-1.c
 +  simd-4.c
 +  # JLC segmentation fault
++  # Github issue #219
 +  20071120-1.c
 +  # JLC GlobalAlias constants are not supported
++  # Github issue #220
 +  alias-2.c
 +  alias-3.c
 +  alias-4.c
