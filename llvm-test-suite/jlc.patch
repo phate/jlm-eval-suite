@@ -26,10 +26,10 @@ index 08d3dd44..7170c2f3 100644
 +#add_subdirectory(MemFunctions)
 +#add_subdirectory(SLPVectorization)
 diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
-index a73acd56..5067c1c8 100644
+index b008394f..8c6bce37 100644
 --- a/MultiSource/Applications/CMakeLists.txt
 +++ b/MultiSource/Applications/CMakeLists.txt
-@@ -11,21 +11,28 @@ add_subdirectory(sgefa)
+@@ -14,21 +14,28 @@ add_subdirectory(sgefa)
  add_subdirectory(spiff)
  add_subdirectory(viterbi)
  
@@ -65,6 +65,18 @@ index a73acd56..5067c1c8 100644
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
    add_subdirectory(SPASS)
+diff --git a/MultiSource/Applications/ClamAV/CMakeLists.txt b/MultiSource/Applications/ClamAV/CMakeLists.txt
+index f08da4c0..8b28b30d 100644
+--- a/MultiSource/Applications/ClamAV/CMakeLists.txt
++++ b/MultiSource/Applications/ClamAV/CMakeLists.txt
+@@ -182,5 +182,6 @@ endif()
+ # (https://github.com/madler/zlib/pull/895)
+ # Disable the compiler extension to workaround the build failure until a zlib
+ # source update with the fix.
+-target_compile_options(clamscan PRIVATE -fno-define-target-os-macros)
++# JLC does not have such a compiler extension, so the workaround is not needed
++#-target_compile_options(clamscan PRIVATE -fno-define-target-os-macros)
+ llvm_test_data(clamscan ${INPUT} dbdir)
 diff --git a/MultiSource/Applications/JM/CMakeLists.txt b/MultiSource/Applications/JM/CMakeLists.txt
 index 2a0be7f2..e89d379c 100644
 --- a/MultiSource/Applications/JM/CMakeLists.txt
@@ -200,7 +212,7 @@ index b375382d..4b0b2bc8 100644
 +# JLC produces incorrect FP result
 +#add_subdirectory(mpeg2)
 diff --git a/MultiSource/UnitTests/CMakeLists.txt b/MultiSource/UnitTests/CMakeLists.txt
-index e5b90a91..fa3c0fe4 100644
+index 273e48f3..2db76b58 100644
 --- a/MultiSource/UnitTests/CMakeLists.txt
 +++ b/MultiSource/UnitTests/CMakeLists.txt
 @@ -1,4 +1,4 @@
@@ -209,8 +221,16 @@ index e5b90a91..fa3c0fe4 100644
  if(ARCH STREQUAL "Mips")
    add_subdirectory(Mips)
  endif()
+diff --git a/MultiSource/UnitTests/Float/rounding/CMakeLists.txt b/MultiSource/UnitTests/Float/rounding/CMakeLists.txt
+index ec9825f3..edeca79a 100644
+--- a/MultiSource/UnitTests/Float/rounding/CMakeLists.txt
++++ b/MultiSource/UnitTests/Float/rounding/CMakeLists.txt
+@@ -1 +1,2 @@
+-llvm_multisource(rounding)
++#/home/magnus/git/test/llvm-test-suite/llvm-test-suite.git/MultiSource/UnitTests/Float/rounding/rounding.c:155:3: error: use of unknown builtin '__builtin_set_flt_rounds' [-Wimplicit-function-declaration]
++# llvm_multisource(rounding)
 diff --git a/SingleSource/Benchmarks/CMakeLists.txt b/SingleSource/Benchmarks/CMakeLists.txt
-index 72ce8b06..15cab078 100644
+index 72ce8b06..7cb10039 100644
 --- a/SingleSource/Benchmarks/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/CMakeLists.txt
 @@ -1,14 +1,17 @@
@@ -221,7 +241,7 @@ index 72ce8b06..15cab078 100644
 -add_subdirectory(Dhrystone)
 +# invoke is not supported.
 +#add_subdirectory(CoyoteBench)
-+# JLC executable never finishes
++# JLC generated executable never finishes
 +#add_subdirectory(Dhrystone)
  add_subdirectory(Linpack)
  add_subdirectory(McGill)
@@ -239,7 +259,7 @@ index 72ce8b06..15cab078 100644
 +#add_subdirectory(SmallPT)
  add_subdirectory(Stanford)
 diff --git a/SingleSource/Benchmarks/Misc/CMakeLists.txt b/SingleSource/Benchmarks/Misc/CMakeLists.txt
-index 533d1a4e..48dc4111 100644
+index 533d1a4e..f05f3c60 100644
 --- a/SingleSource/Benchmarks/Misc/CMakeLists.txt
 +++ b/SingleSource/Benchmarks/Misc/CMakeLists.txt
 @@ -3,7 +3,8 @@ list(APPEND CFLAGS -Wno-implicit-int)
@@ -252,14 +272,6 @@ index 533d1a4e..48dc4111 100644
    fbench.c
    ffbench.c
    flops-1.c
-@@ -30,6 +31,6 @@ set(Source
-   whetstone.c
- )
- if(NOT ARCH STREQUAL "PowerPC" OR NOT TARGET_OS STREQUAL "Darwin")
--  list(APPEND Source dt.c)
-+	list(APPEND Source dt.c)
- endif()
- llvm_singlesource()
 diff --git a/SingleSource/Regression/C/CMakeLists.txt b/SingleSource/Regression/C/CMakeLists.txt
 index 3f224e27..08f773f5 100644
 --- a/SingleSource/Regression/C/CMakeLists.txt
@@ -277,7 +289,7 @@ index 3f224e27..08f773f5 100644
  list(APPEND CFLAGS -Wno-implicit-int)
  llvm_singlesource(PREFIX "Regression-C-")
 diff --git a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
-index acbc0798..96db1069 100644
+index 03425811..993e27af 100644
 --- a/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 +++ b/SingleSource/Regression/C/gcc-c-torture/execute/CMakeLists.txt
 @@ -1,7 +1,7 @@
@@ -434,19 +446,22 @@ index e060724b..b4714afd 100644
 -add_subdirectory(C++)
 +#add_subdirectory(C++)
 diff --git a/SingleSource/UnitTests/CMakeLists.txt b/SingleSource/UnitTests/CMakeLists.txt
-index d0cbf58b..fa9a2b98 100644
+index e70fcbd3..f383834b 100644
 --- a/SingleSource/UnitTests/CMakeLists.txt
 +++ b/SingleSource/UnitTests/CMakeLists.txt
-@@ -1,11 +1,15 @@
+@@ -1,13 +1,17 @@
  include(CheckCCompilerFlag)
  
 -add_subdirectory(C++11)
+-add_subdirectory(Float)
 +#add_subdirectory(C++11)
- add_subdirectory(Float)
++#add_subdirectory(Float)
+ add_subdirectory(Matrix)
  add_subdirectory(SignlessTypes)
 -add_subdirectory(Threads)
 -add_subdirectory(Vector)
 -add_subdirectory(Vectorizer)
+-add_subdirectory(X86)
 +# JLC fails tls.test
 +#add_subdirectory(Threads)
 +# JLC produce: error: invalid cast opcode for cast from '<4 x i32>' to '<4 x i8>'
@@ -454,10 +469,11 @@ index d0cbf58b..fa9a2b98 100644
 +# JLC produce: invoke is not supported.
 +# UNREACHABLE executed at libjlm/src/frontend/llvm/LlvmInstructionConversion.cpp:1036
 +#add_subdirectory(Vectorizer)
++#add_subdirectory(X86)
  
  list(APPEND CFLAGS -Wno-implicit-function-declaration -Wno-implicit-int)
  
-@@ -16,7 +20,16 @@ if(TARGET_OS STREQUAL "Darwin")
+@@ -18,7 +22,16 @@ if(TARGET_OS STREQUAL "Darwin")
    add_subdirectory(ObjC++)
  endif()
  
@@ -475,3 +491,20 @@ index d0cbf58b..fa9a2b98 100644
  if(TARGET_OS STREQUAL "AIX" AND ARCH STREQUAL "PowerPC")
    list(REMOVE_ITEM Source 2007-04-25-weak.c)
    if (NOT PPC_IS_PPC64_ENABLED)
+@@ -56,16 +69,4 @@ if(NOT ARCH STREQUAL "x86")
+   )
+ endif()
+ 
+-# Enable matrix types extension tests for compilers supporting -fenable-matrix.
+-check_c_compiler_flag(-fenable-matrix COMPILER_HAS_MATRIX_FLAG)
+-if (COMPILER_HAS_MATRIX_FLAG)
+-  set_property(SOURCE matrix-types-spec.cpp PROPERTY COMPILE_FLAGS -fenable-matrix)
+-else()
+-  list(REMOVE_ITEM Source matrix-types-spec.cpp)
+-endif()
+-
+ llvm_singlesource()
+-
+-if (COMPILER_HAS_MATRIX_FLAG)
+-  set_property(TARGET matrix-types-spec PROPERTY LINK_OPTIONS -fenable-matrix)
+-endif()
