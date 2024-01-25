@@ -1,6 +1,8 @@
 name: Tests
 
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -9,10 +11,10 @@ jobs:
   build-jlm:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Cache build
       id: cache-build
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -31,9 +33,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: "Cache"
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -48,9 +50,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: "Cache"
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -67,9 +69,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: "Cache"
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
