@@ -107,7 +107,7 @@ submodule-all: submodule submodule-cpu2017
 
 ### JLM
 
-CIRCT_PATH = $(JLM_ROOT)/build-circt/circt
+CIRCT_PATH ?= $(JLM_ROOT)/build-circt/circt
 
 .PHONY: jlm-configure-debug
 jlm-configure-debug:

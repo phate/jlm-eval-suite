@@ -27,27 +27,33 @@ TESTLOG = true
 .PHONY: hls-test-run
 hls-test-run: hls-test-run-base hls-test-run-polybench hls-test-run-dynamatic
 
-$(HLS_TEST_BUILD)/%.c.hls: $(HLS_TEST_SRC)/%.c
-	@mkdir -p $(HLS_TEST_BUILD)/dynamatic
+# Generic build target used by the various tests
+$(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
+	@mkdir -p $(@D)
 	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $@ 
-	$(HLS) $^ --circt --hls-function=$(HLS_FUNCTION) -o $@ > /dev/null
+	@$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
+	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.o $@.rest.ll
+	@TMPDIR=`mktemp -d`; \
+	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
+	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe --trace-fst -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.o $@.harness.cpp > /dev/null
+
 
 HLS_TEST_FILES = \
-	test-return.c \
-	test-arithmetic.c \
-	test-loop.c \
-	test-nested-loops.c \
-	test-conditional.c \
-	test-load.c \
-	test-array.c \
-	test-gep.c \
-	test-global.c \
-	test-matrix.c \
-	test-cpu.c \
+	test_return \
+	test_arithmetic \
+	test_loop \
+	test_nested_loops \
+	test_conditional \
+	test_load \
+	test_array \
+	test_gep \
+	test_global \
+	test_matrix \
+	test_cpu \
 
 .PHONY: hls-test-run-base
-hls-test-run-base: HLS_FUNCTION=run
-hls-test-run-base: $(patsubst %.c, $(HLS_TEST_BUILD)/%.c.hls, $(HLS_TEST_FILES))
+hls-test-run-base: HLS_TEST_FUNCTION=run
+hls-test-run-base: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_FILES))
 	@rm -rf $(HLS_TEST_ROOT)/hls-test-base.log
 	@cd $(HLS_TEST_BUILD) && \
 	for TEST in $(HLS_TEST_FILES) ; do \
@@ -64,44 +70,24 @@ hls-test-run-base: $(patsubst %.c, $(HLS_TEST_BUILD)/%.c.hls, $(HLS_TEST_FILES))
 	else \
 		printf '$(GREEN)%s\n$(NC)' "All hls-base-tests passed" ; fi ;
 
-#
-# Polybench
-#
-
 HLS_POLYBENCH_SRC = $(HLS_TEST_ROOT)/src/polybench
 
 HLS_POLYBENCH_FILES = \
-	correlation.c \
-	jacobi-1d.c \
-
-.PHONY: hls-test-polybench
-hls-test-polybench:
-	@mkdir -p $(HLS_TEST_BUILD)
-	@cd $(HLS_TEST_BUILD) && \
-		set -e ; \
-		for TEST in $(HLS_POLYBENCH_FILES) ; do \
-			printf '$(BLUE)Building: $(NC)%s\n' $$TEST ; \
-			LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) $(HLS) $(HLS_POLYBENCH_SRC)/$$TEST \
-				$(HLS_POLYBENCH_SRC)/polybench.c \
-				-I$(HLS_POLYBENCH_SRC) \
-				-D=DATA_TYPE_IS_INT \
-				-D=POLYBENCH_DUMP_ARRAYS \
-				-D=POLYBENCH_USE_C99_PROTO \
-				-D=MINI_DATASET \
-				--circt \
-				--hls-function=kernel \
-				-o $(HLS_TEST_BUILD)/$$TEST.out \
-				> /dev/null ; \
-		done ;
+	correlation \
+	jacobi_1d \
 
 .PHONY: hls-test-run-polybench
-hls-test-run-polybench: hls-test-polybench
+hls-test-run-polybench: HLS_TEST_FUNCTION=kernel
+hls-test-run-polybench: HLS_TEST_ADDITIONAL_SRC = $(HLS_POLYBENCH_SRC)/polybench.c
+hls-test-run-polybench: HLS_TEST_ADDITIONAL_FLAGS = -I$(HLS_POLYBENCH_SRC) -D=DATA_TYPE_IS_INT -D=POLYBENCH_DUMP_ARRAYS -D=POLYBENCH_USE_C99_PROTO -D=MINI_DATASET
+hls-test-run-polybench: $(patsubst %, $(HLS_TEST_BUILD)/polybench/%.hls, $(HLS_POLYBENCH_FILES))
 	@rm -rf $(HLS_TEST_ROOT)/hls-test-polybench.log
-	@cd $(HLS_TEST_BUILD) && \
+	@cd $(HLS_TEST_BUILD)/polybench && \
+	set -e ; \
 	for TEST in $(HLS_POLYBENCH_FILES) ; do \
 		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
 		$(TESTLOG) -n "$$TEST: " ; \
-		if $(HLS_TEST_BUILD)/$$TEST.out >> $(HLS_TEST_ROOT)/hls-test-polybench.log 2>&1 ; then \
+		if $(HLS_TEST_BUILD)/polybench/$$TEST.hls >> $(HLS_TEST_ROOT)/hls-test-polybench.log 2>&1 ; then \
 			$(TESTLOG) pass ; \
 		else \
 			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
@@ -113,50 +99,48 @@ hls-test-run-polybench: hls-test-polybench
 		printf '$(GREEN)%s\n$(NC)' "All hls-polybench-tests passed" ; fi ;
 
 
-HLS_DYNAMATIC_SRC = $(HLS_TEST_ROOT)/src/dynamatic
-
 HLS_DYNAMATIC_FILES = \
-	fir.c \
-	gaussian.c \
-	if_loop_1.c \
-	if_loop_2.c \
-	if_loop_3.c \
-	iir.c \
-	image_resize.c \
-	insertion_sort.c \
-	kernel_2mm.c \
-	kernel_3mm.c \
-	loop_array.c \
-	matrix.c \
-	memory_loop.c \
-	mul_example.c \
-	pivot.c \
-	simple_example_1.c \
-	simple_example_2.c \
-	stencil_2d.c \
-	sumi3_mem.c \
-	test_memory_1.c \
-	test_memory_2.c \
-	test_memory_3.c \
-	test_memory_4.c \
-	test_memory_5.c \
-	test_memory_6.c \
-	test_memory_7.c \
-	test_memory_8.c \
-	test_memory_9.c \
-	test_memory_10.c \
-	threshold.c \
-	vector_rescale.c \
-	video_filter.c \
-	bicg.c \
-	gemver.c \
-	matrix_power.c \
-	matvec.c \
-	triangular.c \
+	fir \
+	gaussian \
+	if_loop_1 \
+	if_loop_2 \
+	if_loop_3 \
+	iir \
+	image_resize \
+	insertion_sort \
+	kernel_2mm \
+	kernel_3mm \
+	loop_array \
+	matrix \
+	memory_loop \
+	mul_example \
+	pivot \
+	simple_example_1 \
+	simple_example_2 \
+	stencil_2d \
+	sumi3_mem \
+	test_memory_1 \
+	test_memory_2 \
+	test_memory_3 \
+	test_memory_4 \
+	test_memory_5 \
+	test_memory_6 \
+	test_memory_7 \
+	test_memory_8 \
+	test_memory_9 \
+	test_memory_10 \
+	threshold \
+	vector_rescale \
+	video_filter \
+	bicg \
+	gemver \
+	matrix_power \
+	matvec \
+	triangular \
 
 .PHONY: hls-test-run-dynamatic
-hls-test-run-dynamatic: HLS_FUNCTION=kernel
-hls-test-run-dynamatic: $(patsubst %.c, $(HLS_TEST_BUILD)/dynamatic/%.c.hls, $(HLS_DYNAMATIC_FILES))
+hls-test-run-dynamatic: HLS_TEST_FUNCTION=kernel
+hls-test-run-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/dynamatic/%.hls, $(HLS_DYNAMATIC_FILES))
 	@set -e ; \
 	$(foreach TEST, $(HLS_DYNAMATIC_FILES), \
 		$(eval DIFF = $(HLS_TEST_ROOT)/utilities/diff.sh) \

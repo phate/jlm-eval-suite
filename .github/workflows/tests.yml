@@ -1,8 +1,6 @@
 name: Tests
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -11,10 +9,10 @@ jobs:
   build-jlm:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Cache build
       id: cache-build
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -33,9 +31,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: "Cache"
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -50,9 +48,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: "Cache"
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -69,9 +67,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: "Cache"
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/jlm/*
         key: ${{ runner.os }}-${{ github.sha }}-jlm
@@ -80,4 +78,4 @@ jobs:
     - name: "Install verilator"
       run: sudo apt-get install verilator
     - name: "Run HLS test suite"
-      run: make hls-test-run
+      run: make CIRCT_PATH=${{ github.workspace }}/build-circt/circt hls-test-run
