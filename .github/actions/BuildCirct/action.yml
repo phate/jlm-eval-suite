@@ -4,27 +4,27 @@ description: "Builds CIRCT, which is used for the HLS backend"
 runs:
   using: "composite"
   steps:
-    # Extract the CIRCT submodule hash for use in the cache key
-    - name: Get CIRCT hash
+    - name: "Get the commit used for building CIRCT and use it as the cache key"
       id: get-circt-hash
       run: |
-        echo "hash=$(git rev-parse @:./circt)" >> $GITHUB_OUTPUT
+        echo "hash=$(./jlm/scripts/build-circt.sh --get-commit-hash)" >> $GITHUB_OUTPUT
       shell: bash
 
-    # Try to fetch CIRCT from the cache
-    - name: Cache CIRCT
+    - name: "Try to fetch CIRCT from the cache"
       id: cache-circt
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
-          circt/local
+          ${{ github.workspace }}/build-circt/circt
         key: ${{ runner.os }}-circt-${{ steps.get-circt-hash.outputs.hash }}
 
-    # Build CIRCT if we didn't hit in the cache
-    - name: Rebuild and Install CIRCT
+    - name: "Install LLVM, Clang, MLIR, and Ninja"
+      uses: ./.github/actions/InstallLlvmDependencies
+
+    - name: "Build CIRCT if we didn't hit in the cache"
       if: steps.cache-circt.outputs.cache-hit != 'true'
       run: |
-        make submodule-circt
-        make circt-build
+        ./jlm/scripts/build-circt.sh \
+          --build-path ${{ github.workspace }}/build-circt \
+          --install-path ${{ github.workspace }}/build-circt/circt
       shell: bash
-

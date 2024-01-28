@@ -1,49 +1,81 @@
 name: Tests
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
 
-  polybench:
+  build-jlm:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - name: "Install LLVM and Clang"
-      uses: ./.github/actions/InstallLlvmDependencies
-    - name: Update jlm submodule
+    - uses: actions/checkout@v4
+    - name: Cache build
+      id: cache-build
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/jlm/*
+        key: ${{ runner.os }}-${{ github.sha }}-jlm
+    - name: "Update jlm submodule"
       run: git submodule update --init jlm/
-    - name: Checkout master of jlm
-      run: cd jlm && git checkout master
-    - name: Compile jlm
-      run: make jlm-release -j `nproc`
-    - name: Update polybench submodule
+    - name: "Build CIRCT"
+      uses: ./.github/actions/BuildCirct
+    - name: "Configure jlm"
+      run: |
+        cd jlm && \
+        ./configure.sh --enable-asserts --enable-hls ${{ github.workspace }}/build-circt/circt CXX=clang++-16
+    - name: "Compile jlm"
+      run: make jlm-build
+
+  polybench:
+    runs-on: ubuntu-22.04
+    needs: build-jlm
+    steps:
+    - uses: actions/checkout@v4
+    - name: "Cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/jlm/*
+        key: ${{ runner.os }}-${{ github.sha }}-jlm
+    - name: "Install LLVM, Clang, MLIR, and Ninja"
+      uses: ./.github/actions/InstallLlvmDependencies
+    - name: "Update polybench submodule"
       run: git submodule update --init polybench/
-    - name: Checkout master of polybench
-      run: cd polybench && git checkout master
-    - name: Check polybench
-      run: make polybench-check -j `nproc`
+    - name: "Check polybench"
+      run: make polybench-check
 
   llvm-test-suite:
     runs-on: ubuntu-22.04
+    needs: build-jlm
     steps:
-    - uses: actions/checkout@v3
-    - name: "Install LLVM and Clang"
+    - uses: actions/checkout@v4
+    - name: "Cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/jlm/*
+        key: ${{ runner.os }}-${{ github.sha }}-jlm
+    - name: "Install LLVM, Clang, MLIR, and Ninja"
       uses: ./.github/actions/InstallLlvmDependencies
-    - name: Update jlm submodule
-      run: git submodule update --init jlm/
-    - name: Checkout master of jlm
-      run: cd jlm && git checkout master
-    - name: Compile jlm
-      run: make jlm-release -j `nproc`
-    - name: Update llvm-test-suite submodule
+    - name: "Update llvm-test-suite submodule"
       run: git submodule update --init llvm-test-suite/llvm-test-suite.git
-    - name: Install lit
-      run: make install-lit
-    - name: Apply patch
+    - name: "Apply patch"
       run: make apply-llvm-git-patch
-    - name: Run llvm-test-suite
+    - name: "Run llvm-test-suite"
       run: make llvm-run-opt
+
+  hls-test-suite:
+    runs-on: ubuntu-22.04
+    needs: build-jlm
+    steps:
+    - uses: actions/checkout@v4
+    - name: "Cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/jlm/*
+        key: ${{ runner.os }}-${{ github.sha }}-jlm
+    - name: "Build CIRCT as we need firtool"
+      uses: ./.github/actions/BuildCirct
+    - name: "Install verilator"
+      run: sudo apt-get install verilator
+    - name: "Run HLS test suite"
+      run: make hls-test-run
