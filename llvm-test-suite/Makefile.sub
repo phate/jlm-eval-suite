@@ -23,6 +23,7 @@ install-lit:
 
 .PHONY: apply-llvm-git-patch
 apply-llvm-git-patch:
+	git submodule update --init --recursive --force $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_GIT) && git apply $(LLVM_TEST_ROOT)/jlc.patch
 
 # Use cmake with -LAH to see all configuration options
@@ -51,6 +52,13 @@ llvm-build-aa:
 		$(CMAKE_CONFIG) \
 		-C$(LLVM_TEST_ROOT)/cmake/aa.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-aa && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
+
+.PHONY: llvm-build-andersen
+llvm-build-andersen:
+	cmake $(CMAKE_CONFIG) \
+		-B$(LLVM_TEST_BUILD)-andersen \
+		-C$(LLVM_TEST_ROOT)/cmake/Andersen.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-andersen && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-cne
 llvm-build-cne:
@@ -141,6 +149,12 @@ llvm-run-aa: llvm-build-aa
 	cd $(LLVM_TEST_BUILD)-aa && lit -v -j `nproc` -o results.json .
 
 # No failed tests
+
+# Make sure you apply the andersen
+.PHONY: llvm-run-andersen
+llvm-run-andersen: llvm-build-andersen
+	cd $(LLVM_TEST_BUILD)-andersen && lit -v -j `nproc` -o results.json .
+
 
 .PHONY: llvm-run-cne
 llvm-run-cne: llvm-build-cne
