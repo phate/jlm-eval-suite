@@ -56,12 +56,27 @@ jobs:
         key: ${{ runner.os }}-${{ github.sha }}-jlm
     - name: "Install LLVM, Clang, MLIR, and Ninja"
       uses: ./.github/actions/InstallLlvmDependencies
-    - name: "Update llvm-test-suite submodule"
-      run: git submodule update --init llvm-test-suite/llvm-test-suite.git
-    - name: "Apply patch"
+    - name: "Update llvm-test-suite submodule and apply patch"
       run: make apply-llvm-git-patch
     - name: "Run llvm-test-suite"
       run: make llvm-run-opt
+
+  llvm-test-suite-andersen:
+    runs-on: ubuntu-22.04
+    needs: build-jlm
+    steps:
+    - uses: actions/checkout@v4
+    - name: "Cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/jlm/*
+        key: ${{ runner.os }}-${{ github.sha }}-jlm
+    - name: "Install LLVM, Clang, MLIR, and Ninja"
+      uses: ./.github/actions/InstallLlvmDependencies
+    - name: "Update llvm-test-suite submodule and apply patch"
+      run: make apply-llvm-git-patch
+    - name: "Run llvm-test-suite"
+      run: make llvm-run-andersen
 
   hls-test-suite:
     runs-on: ubuntu-22.04
