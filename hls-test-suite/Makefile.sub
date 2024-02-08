@@ -138,6 +138,8 @@ HLS_DYNAMATIC_FILES = \
 	matvec \
 	triangular \
 
+HLS_DYNAMATIC_SRC = $(HLS_TEST_SRC)/dynamatic
+
 .PHONY: hls-test-run-dynamatic
 hls-test-run-dynamatic: HLS_TEST_FUNCTION=kernel
 hls-test-run-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/dynamatic/%.hls, $(HLS_DYNAMATIC_FILES))
@@ -148,7 +150,7 @@ hls-test-run-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/dynamatic/%.hls, $(HLS_D
 		printf '$(BLUE)Running: $(NC)%s\n' $(TEST) ; \
 		$(HLS_TEST_BUILD)/dynamatic/$(TEST).hls > $(HLS_TEST_BUILD)/$(TEST).log ; \
 		tail -n +2 $(HLS_TEST_BUILD)/$(TEST).log > $(HLS_TEST_BUILD)/$(TEST).log2 ; \
-		$(DIFF) $(HLS_TEST_BUILD)/$(TEST).log2 $(HLS_DYNAMATIC_SRC)/$(TEST).gcc-log ; \
+		$(DIFF) $(HLS_TEST_BUILD)/$(TEST).log2 $(HLS_DYNAMATIC_SRC)/$(TEST).c.gcc-log ; \
 	)
 
 .PHONY: hls-test-clean
