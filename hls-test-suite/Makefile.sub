@@ -2,17 +2,17 @@ define HELP_TEXT_HLS_TEST
 echo ""
 echo "HLS_TEST_SUITE Make Targets"
 echo "--------------------------------------------------------------------------------"
-echo "hls-test-run           Compiles and runs all tests"
-echo "hls-test-run-base      Compiles and runs basic tests"
-echo "hls-test-run-dynamatic Compiles and runs all test from the dynamitcs git repo"
-echo "hls-test-run-polybench Compiles and runs supported polybench benchmarks"
+echo "hls-test               Compiles and runs all tests"
+echo "hls-test-base          Compiles and runs basic tests"
+echo "hls-test-dynamatic     Compiles and runs all test from the dynamitcs git repo"
+echo "hls-test-polybench     Compiles and runs supported polybench benchmarks"
+echo "hls-test-clean         Deletes build directory [$(HLS_TEST_BUILD)]"
 echo "hls-test-help          Prints this help text"
 endef
 
 .PHONY: hls-test-help
 hls-test-help:
 	@$(HELP_TEXT_HLS_TEST)
-
 
 HLS_TEST_SRC = $(HLS_TEST_ROOT)/src
 HLS_TEST_BUILD = $(HLS_TEST_ROOT)/build
@@ -22,10 +22,12 @@ RED=\033[0;31m
 GREEN=\033[0;32m
 BLUE=\033[1;34m
 
-TESTLOG = true
 
 .PHONY: hls-test-run
-hls-test-run: hls-test-run-base hls-test-run-polybench hls-test-run-dynamatic
+hls-test-run: hls-test
+
+.PHONY: hls-test
+hls-test: hls-test-base hls-test-polybench hls-test-dynamatic
 
 # Generic build target used by the various tests
 $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
@@ -37,121 +39,110 @@ $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
 	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe --trace-fst -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.o $@.harness.cpp > /dev/null
 
-
-HLS_TEST_FILES = \
-	test_return \
-	test_arithmetic \
-	test_loop \
-	test_nested_loops \
-	test_conditional \
-	test_load \
-	test_array \
-	test_gep \
-	test_global \
-	test_matrix \
-	test_cpu \
-
-.PHONY: hls-test-run-base
-hls-test-run-base: HLS_TEST_FUNCTION=run
-hls-test-run-base: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_FILES))
-	@rm -rf $(HLS_TEST_ROOT)/hls-test-base.log
-	@cd $(HLS_TEST_BUILD) && \
-	for TEST in $(HLS_TEST_FILES) ; do \
-		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
-		$(TESTLOG) -n "$$TEST: " ; \
-		if $(HLS_TEST_BUILD)/$$TEST.hls >> $(HLS_TEST_ROOT)/hls-test-base.log 2>&1 ; then \
-			$(TESTLOG) pass ; \
-		else \
-			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
-	done ; \
-	set -e ; \
-	if [ "x$$FAILED_TESTS" != x ] ; then \
-		printf '$(RED)%s$(NC)%s\n' "Failed hls-base-tests:" "$$FAILED_TESTS" ; exit 1 ; \
-	else \
-		printf '$(GREEN)%s\n$(NC)' "All hls-base-tests passed" ; fi ;
-
-HLS_POLYBENCH_SRC = $(HLS_TEST_ROOT)/src/polybench
-
-HLS_POLYBENCH_FILES = \
-	correlation \
-	jacobi_1d \
-
-.PHONY: hls-test-run-polybench
-hls-test-run-polybench: HLS_TEST_FUNCTION=kernel
-hls-test-run-polybench: HLS_TEST_ADDITIONAL_SRC = $(HLS_POLYBENCH_SRC)/polybench.c
-hls-test-run-polybench: HLS_TEST_ADDITIONAL_FLAGS = -I$(HLS_POLYBENCH_SRC) -D=DATA_TYPE_IS_INT -D=POLYBENCH_DUMP_ARRAYS -D=POLYBENCH_USE_C99_PROTO -D=MINI_DATASET
-hls-test-run-polybench: $(patsubst %, $(HLS_TEST_BUILD)/polybench/%.hls, $(HLS_POLYBENCH_FILES))
-	@rm -rf $(HLS_TEST_ROOT)/hls-test-polybench.log
-	@cd $(HLS_TEST_BUILD)/polybench && \
-	set -e ; \
-	for TEST in $(HLS_POLYBENCH_FILES) ; do \
-		printf '$(BLUE)Running: $(NC)%s\n' $$TEST ; \
-		$(TESTLOG) -n "$$TEST: " ; \
-		if $(HLS_TEST_BUILD)/polybench/$$TEST.hls >> $(HLS_TEST_ROOT)/hls-test-polybench.log 2>&1 ; then \
-			$(TESTLOG) pass ; \
-		else \
-			$(TESTLOG) FAIL ; FAILED_TESTS="$$FAILED_TESTS $$TEST" ; fi ; \
-	done ; \
-	set -e ; \
-	if [ "x$$FAILED_TESTS" != x ] ; then \
-		printf '$(RED)%s$(NC)%s\n' "Failed hls-polybench-tests:" "$$FAILED_TESTS" ; exit 1 ; \
-	else \
-		printf '$(GREEN)%s\n$(NC)' "All hls-polybench-tests passed" ; fi ;
-
-
-HLS_DYNAMATIC_FILES = \
-	fir \
-	gaussian \
-	if_loop_1 \
-	if_loop_2 \
-	if_loop_3 \
-	iir \
-	image_resize \
-	insertion_sort \
-	kernel_2mm \
-	kernel_3mm \
-	loop_array \
-	matrix \
-	memory_loop \
-	mul_example \
-	pivot \
-	simple_example_1 \
-	simple_example_2 \
-	stencil_2d \
-	sumi3_mem \
-	test_memory_1 \
-	test_memory_2 \
-	test_memory_3 \
-	test_memory_4 \
-	test_memory_5 \
-	test_memory_6 \
-	test_memory_7 \
-	test_memory_8 \
-	test_memory_9 \
-	test_memory_10 \
-	threshold \
-	vector_rescale \
-	video_filter \
-	bicg \
-	gemver \
-	matrix_power \
-	matvec \
-	triangular \
-
-HLS_DYNAMATIC_SRC = $(HLS_TEST_SRC)/dynamatic
-
-.PHONY: hls-test-run-dynamatic
-hls-test-run-dynamatic: HLS_TEST_FUNCTION=kernel
-hls-test-run-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/dynamatic/%.hls, $(HLS_DYNAMATIC_FILES))
+# This target is used for running and checking built tests
+.PHONY: hls-test-run/%.hls
+hls-test-run/%.hls:
 	@set -e ; \
-	$(foreach TEST, $(HLS_DYNAMATIC_FILES), \
-		$(eval DIFF = $(HLS_TEST_ROOT)/utilities/diff.sh) \
-		\
-		printf '$(BLUE)Running: $(NC)%s\n' $(TEST) ; \
-		$(HLS_TEST_BUILD)/dynamatic/$(TEST).hls > $(HLS_TEST_BUILD)/$(TEST).log ; \
-		tail -n +2 $(HLS_TEST_BUILD)/$(TEST).log > $(HLS_TEST_BUILD)/$(TEST).log2 ; \
-		$(DIFF) $(HLS_TEST_BUILD)/$(TEST).log2 $(HLS_DYNAMATIC_SRC)/$(TEST).c.gcc-log ; \
-	)
+	printf '$(BLUE)Running: $(NC)%s\n' $* ; \
+	if $(HLS_TEST_BUILD)/$*.hls >> /dev/null 2>&1 ; then \
+		printf '    $(GREEN)%s\n$(NC)' "SUCCESS" ; \
+	else \
+		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; \
+		exit 1 ; \
+	fi ;
+
+# This target is used for running and checking built Dynamatic tests
+.PHONY: hls-test-run-dynamatic/%.hls
+hls-test-run-dynamatic/%.hls:
+	@set -e ; \
+	printf '$(BLUE)Running: $(NC)%s\n' $* ; \
+	$(HLS_TEST_BUILD)/$*.hls > $(HLS_TEST_BUILD)/$*.log ; \
+	tail -n +2 $(HLS_TEST_BUILD)/$*.log > $(HLS_TEST_BUILD)/$*.log2 ; \
+	\
+	DIFF=$(diff -q $1 $2) ; \
+	if [ "$$DIFF" != "" ]; then \
+		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; exit 1 ; \
+		exit -1 ; \
+	else \
+		printf '    $(GREEN)%s\n$(NC)' "SUCCESS" ; \
+	fi ;
+
+
+HLS_TEST_BASE_FILES = \
+	base/test_return \
+	base/test_arithmetic \
+	base/test_loop \
+	base/test_nested_loops \
+	base/test_conditional \
+	base/test_load \
+	base/test_array \
+	base/test_gep \
+	base/test_global \
+	base/test_matrix \
+	base/test_cpu \
+
+.PHONY: hls-test-base
+hls-test-base: HLS_TEST_FUNCTION=run
+hls-test-base: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_BASE_FILES))
+hls-test-base: $(patsubst %, hls-test-run/%.hls, $(HLS_TEST_BASE_FILES))
+
+
+HLS_TEST_POLYBENCH_FILES = \
+	polybench/correlation \
+	polybench/jacobi_1d \
+
+.PHONY: hls-test-polybench
+hls-test-polybench: HLS_TEST_FUNCTION=kernel
+hls-test-polybench: HLS_TEST_ADDITIONAL_SRC = $(HLS_TEST_SRC)/polybench/polybench.c
+hls-test-polybench: HLS_TEST_ADDITIONAL_FLAGS = -I$(HLS_TEST_SRC)/polybench -D=DATA_TYPE_IS_INT -D=POLYBENCH_DUMP_ARRAYS -D=POLYBENCH_USE_C99_PROTO -D=MINI_DATASET
+hls-test-polybench: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_POLYBENCH_FILES))
+hls-test-polybench: $(patsubst %, hls-test-run/%.hls, $(HLS_TEST_POLYBENCH_FILES))
+
+
+HLS_TEST_DYNAMATIC_FILES = \
+	dynamatic/fir \
+	dynamatic/gaussian \
+	dynamatic/if_loop_1 \
+	dynamatic/if_loop_2 \
+	dynamatic/if_loop_3 \
+	dynamatic/iir \
+	dynamatic/image_resize \
+	dynamatic/insertion_sort \
+	dynamatic/kernel_2mm \
+	dynamatic/kernel_3mm \
+	dynamatic/loop_array \
+	dynamatic/matrix \
+	dynamatic/memory_loop \
+	dynamatic/mul_example \
+	dynamatic/pivot \
+	dynamatic/simple_example_1 \
+	dynamatic/simple_example_2 \
+	dynamatic/stencil_2d \
+	dynamatic/sumi3_mem \
+	dynamatic/test_memory_1 \
+	dynamatic/test_memory_2 \
+	dynamatic/test_memory_3 \
+	dynamatic/test_memory_4 \
+	dynamatic/test_memory_5 \
+	dynamatic/test_memory_6 \
+	dynamatic/test_memory_7 \
+	dynamatic/test_memory_8 \
+	dynamatic/test_memory_9 \
+	dynamatic/test_memory_10 \
+	dynamatic/threshold \
+	dynamatic/vector_rescale \
+	dynamatic/video_filter \
+	dynamatic/bicg \
+	dynamatic/gemver \
+	dynamatic/matrix_power \
+	dynamatic/matvec \
+	dynamatic/triangular \
+
+.PHONY: hls-test-dynamatic
+hls-test-dynamatic: HLS_TEST_FUNCTION=kernel
+hls-test-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
+hls-test-dynamatic: $(patsubst %, hls-test-run-dynamatic/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
+
 
 .PHONY: hls-test-clean
 hls-test-clean:
