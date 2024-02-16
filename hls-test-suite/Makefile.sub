@@ -33,7 +33,7 @@ hls-test: hls-test-base hls-test-polybench hls-test-dynamatic
 $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	@mkdir -p $(@D)
 	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $@ 
-	$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
+	@$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
 	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.o $@.rest.ll
 	@TMPDIR=`mktemp -d`; \
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
