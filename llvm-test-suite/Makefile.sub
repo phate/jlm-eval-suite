@@ -60,6 +60,13 @@ llvm-build-andersen:
 		-C$(LLVM_TEST_ROOT)/cmake/Andersen.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-andersen && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
+.PHONY llvm-build-steensgaard
+llvm-build-steensgaard:
+	cmake $(CMAKE_CONFIG)
+		-B $(LLVM_TEST_BUILD)-steensgaard \
+		-C $(LLVM_TEST_ROOT)/cmake/Steensgaard.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-steensgaard && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
+
 .PHONY: llvm-build-cne
 llvm-build-cne:
 	mkdir -p $(LLVM_TEST_BUILD)-cne
@@ -153,6 +160,10 @@ llvm-run-aa: llvm-build-aa
 # Make sure you apply the andersen
 .PHONY: llvm-run-andersen
 llvm-run-andersen: llvm-build-andersen
+	cd $(LLVM_TEST_BUILD)-andersen && lit -v -j `nproc` -o results.json .
+
+.PHONY: llvm-run-steensgaard
+llvm-run-steensgaard: llvm-build-steensgaard
 	cd $(LLVM_TEST_BUILD)-andersen && lit -v -j `nproc` -o results.json .
 
 
