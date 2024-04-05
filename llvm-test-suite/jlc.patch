@@ -26,16 +26,17 @@ index 08d3dd44..7170c2f3 100644
 +#add_subdirectory(MemFunctions)
 +#add_subdirectory(SLPVectorization)
 diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
-index b008394f..be7b37e4 100644
+index b008394f..189a1ba5 100644
 --- a/MultiSource/Applications/CMakeLists.txt
 +++ b/MultiSource/Applications/CMakeLists.txt
-@@ -8,30 +8,43 @@ add_subdirectory(d)
+@@ -8,30 +8,44 @@ add_subdirectory(d)
  if(NOT ARCH STREQUAL "PowerPC")
  # This test has problems running on powerpc starting with r295538 and should
  # be restored when the issue is corrected.
 -  add_subdirectory(oggenc)
-+  if(NOT DEFINED JLC_WITH_ANDERSEN)
++  if((NOT DEFINED JLC_WITH_ANDERSEN) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
 +    # JLC: Andersen runs out of memory
++    # JLC: Steensgaard with agnostic encoding runs out of memory
 +    add_subdirectory(oggenc)
 +  endif()
  endif()
@@ -82,13 +83,14 @@ index b008394f..be7b37e4 100644
  endif()
  if(NOT ARCH STREQUAL "XCore")
    add_subdirectory(ClamAV)
-@@ -39,7 +52,10 @@ if(NOT ARCH STREQUAL "XCore")
+@@ -39,7 +53,11 @@ if(NOT ARCH STREQUAL "XCore")
    add_subdirectory(siod)
  endif()
  if((NOT ARCH STREQUAL "PowerPC") AND (NOT ARCH STREQUAL "XCore"))
 -  add_subdirectory(sqlite3)
-+  if(NOT DEFINED JLC_WITH_ANDERSEN)
++  if((NOT DEFINED JLC_WITH_ANDERSEN) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
 +    # JLC: Andersen runs out of memory
++    # JLC: Steensgaard with agnostic encoding runs out of memory
 +    add_subdirectory(sqlite3)
 +  endif()
  endif()
@@ -116,10 +118,24 @@ index 2a0be7f2..e89d379c 100644
 +# JLC produces the wrong result
 +#add_subdirectory(lencod)
 diff --git a/MultiSource/Benchmarks/CMakeLists.txt b/MultiSource/Benchmarks/CMakeLists.txt
-index 61d1fd08..5911b1ac 100644
+index 61d1fd08..43b06c81 100644
 --- a/MultiSource/Benchmarks/CMakeLists.txt
 +++ b/MultiSource/Benchmarks/CMakeLists.txt
-@@ -22,17 +22,19 @@ add_subdirectory(Rodinia)
+@@ -4,7 +4,12 @@ add_subdirectory(BitBench)
+ add_subdirectory(Fhourstones)
+ add_subdirectory(Fhourstones-3.1)
+ add_subdirectory(FreeBench)
+-add_subdirectory(MallocBench)
++
++if(NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED)
++  # JLC: Steensgaard with agnotic encoding leads to test failure
++  add_subdirectory(MallocBench)
++endif()
++
+ add_subdirectory(McCat)
+ add_subdirectory(NPB-serial)
+ add_subdirectory(Olden)
+@@ -22,17 +27,19 @@ add_subdirectory(Rodinia)
  if((NOT "${TARGET_OS}" STREQUAL "Darwin") OR (NOT "${ARCH}" STREQUAL "ARM"))
    add_subdirectory(TSVC)
  endif()

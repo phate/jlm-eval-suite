@@ -60,6 +60,13 @@ llvm-build-andersen:
 		-C$(LLVM_TEST_ROOT)/cmake/Andersen.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-andersen && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
+.PHONY: llvm-build-steensgaard-agnostic
+llvm-build-steensgaard-agnostic:
+	cmake $(CMAKE_CONFIG) \
+		-B $(LLVM_TEST_BUILD)-steensgaard-agnostic \
+		-C $(LLVM_TEST_ROOT)/cmake/SteensgaardAgnostic.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-steensgaard-agnostic && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
+
 .PHONY: llvm-build-cne
 llvm-build-cne:
 	mkdir -p $(LLVM_TEST_BUILD)-cne
@@ -154,6 +161,10 @@ llvm-run-aa: llvm-build-aa
 .PHONY: llvm-run-andersen
 llvm-run-andersen: llvm-build-andersen
 	cd $(LLVM_TEST_BUILD)-andersen && lit -v -j `nproc` -o results.json .
+
+.PHONY: llvm-run-steensgaard-agnostic
+llvm-run-steensgaard-agnostic: llvm-build-steensgaard-agnostic
+	cd $(LLVM_TEST_BUILD)-steensgaard-agnostic && lit -v -j `nproc` -o results.json .
 
 
 .PHONY: llvm-run-cne
