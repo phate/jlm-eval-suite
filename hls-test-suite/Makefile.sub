@@ -27,17 +27,18 @@ BLUE=\033[1;34m
 hls-test-run: hls-test
 
 .PHONY: hls-test
-hls-test: hls-test-base hls-test-polybench hls-test-dynamatic
+hls-test: hls-test-base hls-test-dynamatic hls-test-polybench
 
 # Generic build target used by the various tests
 $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	@mkdir -p $(@D)
-	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $@ 
+	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $*
 	@$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
-	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.o $@.rest.ll
+	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.rest.o $@.rest.ll
+	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.ref.o $@.ref.ll
 	@TMPDIR=`mktemp -d`; \
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
-	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe --trace-fst -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.o $@.harness.cpp > /dev/null
+	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe --trace-fst -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.rest.o $@.ref.o $@.harness.cpp > /dev/null
 
 # This target is used for running and checking built tests
 .PHONY: hls-test-run/%.hls
