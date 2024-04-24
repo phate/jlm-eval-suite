@@ -27,7 +27,7 @@ BLUE=\033[1;34m
 hls-test-run: hls-test
 
 .PHONY: hls-test
-hls-test: hls-test-base hls-test-dynamatic hls-test-polybench
+hls-test: hls-test-base hls-test-dynamatic hls-test-benchmark hls-test-polybench
 
 # Generic build target used by the various tests
 $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
@@ -131,6 +131,14 @@ HLS_TEST_DYNAMATIC_FILES = \
 	dynamatic/test_memory_8 \
 	dynamatic/test_memory_9 \
 	dynamatic/test_memory_10 \
+	dynamatic/test_memory_11 \
+	dynamatic/test_memory_12 \
+	dynamatic/test_memory_13 \
+	dynamatic/test_memory_14 \
+	dynamatic/test_memory_15 \
+	dynamatic/test_memory_16 \
+	dynamatic/test_memory_17 \
+	dynamatic/test_memory_18 \
 	dynamatic/threshold \
 	dynamatic/vector_rescale \
 	dynamatic/video_filter \
@@ -139,12 +147,34 @@ HLS_TEST_DYNAMATIC_FILES = \
 	dynamatic/matrix_power \
 	dynamatic/matvec \
 	dynamatic/triangular \
+	\
+	dynamatic/binary_search \
+	dynamatic/gcd \
+	dynamatic/polyn_mult \
+	dynamatic/sobel \
 
 .PHONY: hls-test-dynamatic
 hls-test-dynamatic: HLS_TEST_FUNCTION=kernel
 hls-test-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
 hls-test-dynamatic: $(patsubst %, hls-test-run-dynamatic/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
 
+
+HLS_TEST_BENCHMARK_FILES = \
+	benchmarks/DSS/getTanh \
+	benchmarks/DSS/smm \
+	benchmarks/Inter-block/histogram \
+	benchmarks/Inter-block/matrixtrans \
+	benchmarks/Inter-block/substring \
+	benchmarks/PNAnalyser/vecTrans \
+	benchmarks/PNAnalyser/vecTrans2 \
+#	benchmarks/PNAnalyser/chaosNCG \
+	benchmarks/Inter-block/los \
+	benchmarks/DSS/bnn \
+
+.PHONY: hls-test-benchmark
+hls-test-benchmark: HLS_TEST_FUNCTION=kernel
+hls-test-benchmark: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_BENCHMARK_FILES))
+hls-test-benchmark: $(patsubst %, hls-test-run/%.hls, $(HLS_TEST_BENCHMARK_FILES))
 
 .PHONY: hls-test-clean
 hls-test-clean:

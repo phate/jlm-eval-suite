@@ -5,9 +5,8 @@
 #define AMOUNT_OF_TEST 1
 
 void kernel(inout_int_t a[4], in_int_t n) {
-	int x;
 	for (int i = 2; i < n; i++) {
-		x = a[i-1] + a[i-2] + 5;
+		int x = a[i-1] + a[i-2] + 5;
 		if (x > 0) {
 			a[i-1] = a[i];
 			a[i] = 0;

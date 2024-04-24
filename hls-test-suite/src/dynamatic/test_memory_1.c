@@ -3,7 +3,6 @@
 #include "test_memory_1.h"
 
 void kernel(inout_int_t a[4], in_int_t n) {
-	int x;
 	for (int i = 0; i < n; i++) {
 		a[i] = a[i] + 5;
 	}
