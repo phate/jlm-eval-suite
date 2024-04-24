@@ -34,11 +34,10 @@ $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	@mkdir -p $(@D)
 	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $*
 	@$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
-	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.rest.o $@.rest.ll
-	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.ref.o $@.ref.ll
+	@for file in $@.re*.ll ; do llc-16 -O0 --relocation-model=pic -filetype=obj -o $$file.o $$file ; done
 	@TMPDIR=`mktemp -d`; \
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
-	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.rest.o $@.ref.o $@.harness.cpp > /dev/null
+	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@*.o $@.harness.cpp > /dev/null
 
 # This target is used for running and checking built tests
 .PHONY: hls-test-run/%.hls
@@ -55,12 +54,14 @@ hls-test-run/%.hls:
 # This target is used for running and checking built Dynamatic tests
 .PHONY: hls-test-run-dynamatic/%.hls
 hls-test-run-dynamatic/%.hls:
-	@set -e ; \
-	printf '$(BLUE)Running: $(NC)%s\n' $* ; \
+	@printf '$(BLUE)Running: $(NC)%s\n' $* ; \
 	$(HLS_TEST_BUILD)/$*.hls > $(HLS_TEST_BUILD)/$*.log ; \
 	tail -n +2 $(HLS_TEST_BUILD)/$*.log > $(HLS_TEST_BUILD)/$*.log2 ; \
 	\
-	DIFF=$(diff -q $1 $2) ; \
+	gcc $(HLS_TEST_SRC)/$*.c -o $(HLS_TEST_BUILD)/$*.gcc ; \
+	$(HLS_TEST_BUILD)/$*.gcc > $(HLS_TEST_BUILD)/$*.gcc.log ; \
+	\
+	DIFF=$$(diff -q $(HLS_TEST_BUILD)/$*.log2 $(HLS_TEST_BUILD)/$*.gcc.log) ; \
 	if [ "$$DIFF" != "" ]; then \
 		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; exit 1 ; \
 		exit -1 ; \
