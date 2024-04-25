@@ -27,17 +27,17 @@ BLUE=\033[1;34m
 hls-test-run: hls-test
 
 .PHONY: hls-test
-hls-test: hls-test-base hls-test-polybench hls-test-dynamatic
+hls-test: hls-test-base hls-test-dynamatic hls-test-benchmark hls-test-polybench
 
 # Generic build target used by the various tests
 $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	@mkdir -p $(@D)
-	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $@ 
+	@set -e && printf '$(BLUE)Building: $(NC)%s\n' $*
 	@$(HLS) $^ $(HLS_TEST_ADDITIONAL_SRC) $(HLS_TEST_ADDITIONAL_FLAGS) --circt --hls-function=$(HLS_TEST_FUNCTION) -o $@ > /dev/null
-	@llc-16 -O0 --relocation-model=pic -filetype=obj -o $@.o $@.rest.ll
+	@for file in $@.re*.ll ; do llc-16 -O0 --relocation-model=pic -filetype=obj -o $$file.o $$file ; done
 	@TMPDIR=`mktemp -d`; \
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
-	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe --trace-fst -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@.o $@.harness.cpp > /dev/null
+	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@*.o $@.harness.cpp > /dev/null
 
 # This target is used for running and checking built tests
 .PHONY: hls-test-run/%.hls
@@ -54,12 +54,14 @@ hls-test-run/%.hls:
 # This target is used for running and checking built Dynamatic tests
 .PHONY: hls-test-run-dynamatic/%.hls
 hls-test-run-dynamatic/%.hls:
-	@set -e ; \
-	printf '$(BLUE)Running: $(NC)%s\n' $* ; \
+	@printf '$(BLUE)Running: $(NC)%s\n' $* ; \
 	$(HLS_TEST_BUILD)/$*.hls > $(HLS_TEST_BUILD)/$*.log ; \
 	tail -n +2 $(HLS_TEST_BUILD)/$*.log > $(HLS_TEST_BUILD)/$*.log2 ; \
 	\
-	DIFF=$(diff -q $1 $2) ; \
+	gcc $(HLS_TEST_SRC)/$*.c -o $(HLS_TEST_BUILD)/$*.gcc ; \
+	$(HLS_TEST_BUILD)/$*.gcc > $(HLS_TEST_BUILD)/$*.gcc.log ; \
+	\
+	DIFF=$$(diff -q $(HLS_TEST_BUILD)/$*.log2 $(HLS_TEST_BUILD)/$*.gcc.log) ; \
 	if [ "$$DIFF" != "" ]; then \
 		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; exit 1 ; \
 		exit -1 ; \
@@ -129,6 +131,14 @@ HLS_TEST_DYNAMATIC_FILES = \
 	dynamatic/test_memory_8 \
 	dynamatic/test_memory_9 \
 	dynamatic/test_memory_10 \
+	dynamatic/test_memory_11 \
+	dynamatic/test_memory_12 \
+	dynamatic/test_memory_13 \
+	dynamatic/test_memory_14 \
+	dynamatic/test_memory_15 \
+	dynamatic/test_memory_16 \
+	dynamatic/test_memory_17 \
+	dynamatic/test_memory_18 \
 	dynamatic/threshold \
 	dynamatic/vector_rescale \
 	dynamatic/video_filter \
@@ -137,12 +147,34 @@ HLS_TEST_DYNAMATIC_FILES = \
 	dynamatic/matrix_power \
 	dynamatic/matvec \
 	dynamatic/triangular \
+	\
+	dynamatic/binary_search \
+	dynamatic/gcd \
+	dynamatic/polyn_mult \
+	dynamatic/sobel \
 
 .PHONY: hls-test-dynamatic
 hls-test-dynamatic: HLS_TEST_FUNCTION=kernel
 hls-test-dynamatic: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
 hls-test-dynamatic: $(patsubst %, hls-test-run-dynamatic/%.hls, $(HLS_TEST_DYNAMATIC_FILES))
 
+
+HLS_TEST_BENCHMARK_FILES = \
+	benchmarks/DSS/getTanh \
+	benchmarks/DSS/smm \
+	benchmarks/Inter-block/histogram \
+	benchmarks/Inter-block/matrixtrans \
+	benchmarks/Inter-block/substring \
+	benchmarks/PNAnalyser/vecTrans \
+	benchmarks/PNAnalyser/vecTrans2 \
+#	benchmarks/PNAnalyser/chaosNCG \
+	benchmarks/Inter-block/los \
+	benchmarks/DSS/bnn \
+
+.PHONY: hls-test-benchmark
+hls-test-benchmark: HLS_TEST_FUNCTION=kernel
+hls-test-benchmark: $(patsubst %, $(HLS_TEST_BUILD)/%.hls, $(HLS_TEST_BENCHMARK_FILES))
+hls-test-benchmark: $(patsubst %, hls-test-run/%.hls, $(HLS_TEST_BENCHMARK_FILES))
 
 .PHONY: hls-test-clean
 hls-test-clean:
