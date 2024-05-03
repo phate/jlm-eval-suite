@@ -166,6 +166,7 @@ HLS_TEST_BENCHMARK_FILES = \
 	benchmarks/Inter-block/substring \
 	benchmarks/PNAnalyser/vecTrans \
 	benchmarks/PNAnalyser/vecTrans2 \
+	# Histogram fails when included in the GitHub CI
 #	benchmarks/Inter-block/histogram \
 	benchmarks/PNAnalyser/chaosNCG \
 	benchmarks/Inter-block/los \
