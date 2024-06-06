@@ -17,6 +17,12 @@ hls-test-help:
 HLS_TEST_SRC = $(HLS_TEST_ROOT)/src
 HLS_TEST_BUILD = $(HLS_TEST_ROOT)/build
 
+# Verilator trace config
+VCD_TRACE = --trace -CFLAGS -DTRACE_SIGNALS
+FST_TRACE = --trace -CFLAGS -DTRACE_SIGNALS -CFLAGS -DFST
+# Comment out if tracing is not wanted
+#VERILATOR_TRACE = $(VCD_TRACE)
+
 NC=\033[0m
 RED=\033[0;31m
 GREEN=\033[0;32m
@@ -37,14 +43,15 @@ $(HLS_TEST_BUILD)/%.hls: $(HLS_TEST_SRC)/%.c
 	@for file in $@.re*.ll ; do llc-16 -O0 --relocation-model=pic -filetype=obj -o $$file.o $$file ; done
 	@TMPDIR=`mktemp -d`; \
 	$(CIRCT_PATH)/bin/firtool -format=fir --verilog $@.fir > $$TMPDIR/jlm_hls.v; \
-	VERILATOR_ROOT=/usr/share/verilator verilator_bin --cc --build --exe -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@*.o $@.harness.cpp > /dev/null
+	VERILATOR_ROOT=/usr/share/verilator verilator_bin $(VERILATOR_TRACE) --cc --build --exe -Wno-WIDTH -j -Mdir $$TMPDIR -MAKEFLAGS CXX=g++ -CFLAGS -g --assert -CFLAGS " -fPIC" -o $@ $$TMPDIR/jlm_hls.v $@*.o $@.harness.cpp > /dev/null
 
 # This target is used for running and checking built tests
 .PHONY: hls-test-run/%.hls
 hls-test-run/%.hls:
 	@set -e ; \
 	printf '$(BLUE)Running: $(NC)%s\n' $* ; \
-	if $(HLS_TEST_BUILD)/$*.hls >> /dev/null 2>&1 ; then \
+	cd $(HLS_TEST_BUILD) ; \
+	if $*.hls >> /dev/null 2>&1 ; then \
 		printf '    $(GREEN)%s\n$(NC)' "SUCCESS" ; \
 	else \
 		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; \
@@ -55,13 +62,14 @@ hls-test-run/%.hls:
 .PHONY: hls-test-run-dynamatic/%.hls
 hls-test-run-dynamatic/%.hls:
 	@printf '$(BLUE)Running: $(NC)%s\n' $* ; \
-	$(HLS_TEST_BUILD)/$*.hls > $(HLS_TEST_BUILD)/$*.log ; \
-	tail -n +2 $(HLS_TEST_BUILD)/$*.log > $(HLS_TEST_BUILD)/$*.log2 ; \
+	cd $(HLS_TEST_BUILD) ; \
+	$*.hls > $*.log ; \
+	tail -n +2 $*.log > $*.log2 ; \
 	\
-	gcc $(HLS_TEST_SRC)/$*.c -o $(HLS_TEST_BUILD)/$*.gcc ; \
-	$(HLS_TEST_BUILD)/$*.gcc > $(HLS_TEST_BUILD)/$*.gcc.log ; \
+	gcc $(HLS_TEST_SRC)/$*.c -o $*.gcc ; \
+	$*.gcc > $*.gcc.log ; \
 	\
-	DIFF=$$(diff -q $(HLS_TEST_BUILD)/$*.log2 $(HLS_TEST_BUILD)/$*.gcc.log) ; \
+	DIFF=$$(diff -q $*.log2 $*.gcc.log) ; \
 	if [ "$$DIFF" != "" ]; then \
 		printf '    $(RED)%s$(NC)%s\n' "FAILURE" ; exit 1 ; \
 		exit -1 ; \
