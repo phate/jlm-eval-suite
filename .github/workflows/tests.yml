@@ -61,7 +61,7 @@ jobs:
     - name: "Run llvm-test-suite"
       run: make llvm-run-opt
 
-  llvm-test-suite-andersen:
+  llvm-test-suite-andersen-agnostic:
     runs-on: ubuntu-22.04
     needs: build-jlm
     steps:
@@ -76,7 +76,7 @@ jobs:
     - name: "Update llvm-test-suite submodule and apply patch"
       run: make apply-llvm-git-patch
     - name: "Run llvm-test-suite"
-      run: make llvm-run-andersen
+      run: make llvm-run-andersen-agnostic
 
   llvm-test-suite-steensgaard-agnostic:
     runs-on: ubuntu-22.04
