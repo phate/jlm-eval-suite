@@ -31,10 +31,13 @@ help:
 SHELL=/bin/bash
 
 # LLVM related variables
+LLVMCONFIG=llvm-config-16
 CLANG_BIN=$(shell $(LLVMCONFIG) --bindir)
 CLANG=$(CLANG_BIN)/clang
+LLC=$(CLANG_BIN)/llc
 CC=$(CLANG)
 CXX=$(CLANG_BIN)/clang++
+LD_LIBRARY_PATH=$(shell $(LLVMCONFIG) --libdir)
 
 # Necessary variables
 DIR            := $(PWD)
@@ -107,7 +110,7 @@ submodule-all: submodule submodule-cpu2017
 
 ### JLM
 
-CIRCT_PATH ?= $(JLM_ROOT)/build-circt/circt
+CIRCT_PATH ?= $(JLM_ROOT)/usr
 
 .PHONY: jlm-configure-debug
 jlm-configure-debug:

@@ -23,7 +23,7 @@ jobs:
     - name: "Configure jlm"
       run: |
         cd jlm && \
-        ./configure.sh --enable-asserts --enable-hls ${{ github.workspace }}/build-circt/circt CXX=clang++-16
+        ./configure.sh --enable-asserts --enable-hls ${{ github.workspace }}/jlm/usr CXX=clang++-16
     - name: "Compile jlm"
       run: make jlm-build
 
@@ -110,4 +110,4 @@ jobs:
     - name: "Install verilator"
       run: sudo apt-get install verilator
     - name: "Run HLS test suite"
-      run: make CIRCT_PATH=${{ github.workspace }}/build-circt/circt hls-test-run
+      run: make hls-test-run

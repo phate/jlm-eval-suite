@@ -23,5 +23,8 @@ runs:
       shell: bash
 
     - name: "Install lit"
-      run: sudo python3 /usr/lib/llvm-16/build/utils/lit/setup.py install
+      run: |
+        sudo apt-get install llvm-16-dev
+        pip install "lit~=16.0"
+        pip show lit
       shell: bash

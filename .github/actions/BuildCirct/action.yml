@@ -15,7 +15,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: |
-          ${{ github.workspace }}/build-circt/circt
+          ${{ github.workspace }}/jlm/usr
         key: ${{ runner.os }}-circt-${{ steps.get-circt-hash.outputs.hash }}
 
     - name: "Install LLVM, Clang, MLIR, and Ninja"
@@ -26,5 +26,6 @@ runs:
       run: |
         ./jlm/scripts/build-circt.sh \
           --build-path ${{ github.workspace }}/build-circt \
-          --install-path ${{ github.workspace }}/build-circt/circt
+          --install-path ${{ github.workspace }}/jlm/usr \
+          --llvm-lit-path ~/.local/bin/lit
       shell: bash
