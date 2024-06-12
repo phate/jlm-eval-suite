@@ -26,7 +26,7 @@ index 08d3dd44..7170c2f3 100644
 +#add_subdirectory(MemFunctions)
 +#add_subdirectory(SLPVectorization)
 diff --git a/MultiSource/Applications/CMakeLists.txt b/MultiSource/Applications/CMakeLists.txt
-index b008394f..189a1ba5 100644
+index b008394f..fb0cf2ff 100644
 --- a/MultiSource/Applications/CMakeLists.txt
 +++ b/MultiSource/Applications/CMakeLists.txt
 @@ -8,30 +8,44 @@ add_subdirectory(d)
@@ -34,8 +34,8 @@ index b008394f..189a1ba5 100644
  # This test has problems running on powerpc starting with r295538 and should
  # be restored when the issue is corrected.
 -  add_subdirectory(oggenc)
-+  if((NOT DEFINED JLC_WITH_ANDERSEN) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
-+    # JLC: Andersen runs out of memory
++  if((NOT DEFINED JLC_WITH_ANDERSEN_AGNOSTIC) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
++    # JLC: Andersen with agnostic encoding runs out of memory
 +    # JLC: Steensgaard with agnostic encoding runs out of memory
 +    add_subdirectory(oggenc)
 +  endif()
@@ -76,8 +76,8 @@ index b008394f..189a1ba5 100644
  endif()
  if(NOT TARGET_OS STREQUAL "SunOS")
 -  add_subdirectory(SPASS)
-+  if(NOT DEFINED JLC_WITH_ANDERSEN)
-+    # JLC: Andersen runs out of memory
++  if(NOT DEFINED JLC_WITH_ANDERSEN_AGNOSTIC)
++    # JLC: Andersen with agnostic encoding runs out of memory
 +    add_subdirectory(SPASS)
 +  endif()
  endif()
@@ -88,8 +88,8 @@ index b008394f..189a1ba5 100644
  endif()
  if((NOT ARCH STREQUAL "PowerPC") AND (NOT ARCH STREQUAL "XCore"))
 -  add_subdirectory(sqlite3)
-+  if((NOT DEFINED JLC_WITH_ANDERSEN) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
-+    # JLC: Andersen runs out of memory
++  if((NOT DEFINED JLC_WITH_ANDERSEN_AGNOSTIC) AND (NOT DEFINED STEENSGAARD_AGNOSTIC_ENABLED))
++    # JLC: Andersen with agnostic encoding runs out of memory
 +    # JLC: Steensgaard with agnostic encoding runs out of memory
 +    add_subdirectory(sqlite3)
 +  endif()

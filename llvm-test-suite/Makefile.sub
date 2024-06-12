@@ -53,12 +53,12 @@ llvm-build-aa:
 		-C$(LLVM_TEST_ROOT)/cmake/aa.cmake $(LLVM_TEST_GIT)
 	cd $(LLVM_TEST_BUILD)-aa && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
-.PHONY: llvm-build-andersen
-llvm-build-andersen:
+.PHONY: llvm-build-andersen-agnostic
+llvm-build-andersen-agnostic:
 	cmake $(CMAKE_CONFIG) \
-		-B$(LLVM_TEST_BUILD)-andersen \
-		-C$(LLVM_TEST_ROOT)/cmake/Andersen.cmake $(LLVM_TEST_GIT)
-	cd $(LLVM_TEST_BUILD)-andersen && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
+		-B$(LLVM_TEST_BUILD)-andersen-agnostic \
+		-C$(LLVM_TEST_ROOT)/cmake/AndersenAgnostic.cmake $(LLVM_TEST_GIT)
+	cd $(LLVM_TEST_BUILD)-andersen-agnostic && make -j `nproc` VERBOSE=1 SHELL="/bin/bash -x"
 
 .PHONY: llvm-build-steensgaard-agnostic
 llvm-build-steensgaard-agnostic:
@@ -158,9 +158,9 @@ llvm-run-aa: llvm-build-aa
 # No failed tests
 
 # Make sure you apply the andersen
-.PHONY: llvm-run-andersen
-llvm-run-andersen: llvm-build-andersen
-	cd $(LLVM_TEST_BUILD)-andersen && lit -v -j `nproc` -o results.json .
+.PHONY: llvm-run-andersen-agnostic
+llvm-run-andersen-agnostic: llvm-build-andersen-agnostic
+	cd $(LLVM_TEST_BUILD)-andersen-agnostic && lit -v -j `nproc` -o results.json .
 
 .PHONY: llvm-run-steensgaard-agnostic
 llvm-run-steensgaard-agnostic: llvm-build-steensgaard-agnostic
