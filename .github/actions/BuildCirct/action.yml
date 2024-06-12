@@ -26,6 +26,6 @@ runs:
       run: |
         ./jlm/scripts/build-circt.sh \
           --build-path ${{ github.workspace }}/build-circt \
-          --install-path ${{ github.workspace }}/usr \
+          --install-path ${{ github.workspace }}/jlm/usr \
           --llvm-lit-path ~/.local/bin/lit
       shell: bash
